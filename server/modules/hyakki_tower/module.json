@@ -1,0 +1,35 @@
+{
+  "id": "hyakki_tower",
+  "name": "百鬼塔",
+  "note": "原創；戰鬥為主（鉄環地方・三年目の鬼祓い）。",
+  "slots": {
+    "mob": {
+      "key": "mobs",
+      "event": "mob_killed",
+      "name_jp": "小怪",
+      "name_cn": "小怪",
+      "note": "節點上的小怪數量欄位與「擊破」事件；換世界就改這裡（例 shades／shade_slain）。"
+    },
+    "coin": {
+      "key": "star_coins",
+      "name_jp": "貨幣",
+      "name_cn": "货币",
+      "note": "這一桌的貨幣（席位錢包欄位）。⚠ 賬號層的跨局錢包固定叫 star_coins，與這裡解耦。"
+    },
+    "lift": {
+      "key": "elevator",
+      "event": "elevator",
+      "name_jp": "昇降機",
+      "name_cn": "升降机",
+      "note": "層與層之間的載具：board.json 的節點 type 與換層事件都用這個字。"
+    },
+    "sanctum": {
+      "key": "white_room",
+      "event": "white_room",
+      "name_jp": "塔外",
+      "name_cn": "白色房间",
+      "note": "記憶見底時被送回的起點房間。"
+    }
+  },
+  "slots_note": "★ 2026-10-20：棋盤機制的**泛用槽位**。引擎只認 mob／coin／lift／sanctum 四個名字，實際字串由這裡決定（沒有這段＝用預設，等於現在的值）。換一個世界只要改這四組 key／event／顯示名，引擎不動。劇本層的 scenario.json 也可以寫 slots 覆蓋本檔（近的贏）。"
+}

@@ -1,0 +1,294 @@
+{
+  "kind": "skills",
+  "doc": "技能表（原創，参考『示範模組』的技能描述與元素／風格語彙）。每一條＝純資料：用哪個屬性檢定（`attr`）、熟練加值（`prof`）、消耗（`cost`：先扣，不足就拒絕）、難度（`dc`，GM 可覆寫）、等級需求（`lvl`）、要不要目標（`target`: foe/self/none）、效果（`effects`：同一套 effect 語意——`damage`／`heal` 走引擎的算式，`condition_set` 需要這張桌也啟用帶條件表的包）。改數值＝改這張表。",
+  "rows": [
+    {
+      "id": "hoshikuzu_giri",
+      "name_jp": "星屑斬り",
+      "name_cn": "星屑斬",
+      "element": "Terra",
+      "style": "Steady",
+      "attr": "str",
+      "prof": 2,
+      "dc": 12,
+      "lvl": 1,
+      "target": "foe",
+      "cost": {
+        "resource": "mana",
+        "value": 1
+      },
+      "effects": [
+        {
+          "damage": {
+            "seat": "target",
+            "die": 8,
+            "attr": "str",
+            "bonus": 1
+          }
+        }
+      ],
+      "desc": "星屑の碎光を刀身に纏わせて振り下ろす。華はないが、塔の中で一番よく使われる一振り。"
+    },
+    {
+      "id": "aogiri_shot",
+      "name_jp": "青桐の射撃",
+      "name_cn": "青桐射擊",
+      "element": "Ventus",
+      "style": "Adventurous",
+      "attr": "agi",
+      "prof": 2,
+      "dc": 12,
+      "lvl": 1,
+      "target": "foe",
+      "cost": {
+        "resource": "ammo",
+        "value": 1
+      },
+      "effects": [
+        {
+          "damage": {
+            "seat": "target",
+            "die": 6,
+            "attr": "agi",
+            "bonus": 0
+          }
+        }
+      ],
+      "desc": "風を読んで撃つ。塔の狭い通路でも、小怪の関節だけを狙える。"
+    },
+    {
+      "id": "hyousou_no_sho",
+      "name_jp": "氷装の書",
+      "name_cn": "冰裝之書",
+      "element": "Aqua",
+      "style": "Inquisitive",
+      "attr": "wil",
+      "prof": 3,
+      "dc": 13,
+      "lvl": 2,
+      "target": "foe",
+      "cost": {
+        "resource": "mana",
+        "value": 2
+      },
+      "effects": [
+        {
+          "damage": {
+            "seat": "target",
+            "die": 6,
+            "attr": "wil",
+            "bonus": 0
+          }
+        },
+        {
+          "condition_set": {
+            "id": "chill",
+            "seat": "target",
+            "turns": 2
+          }
+        }
+      ],
+      "desc": "魔導書の頁が凍りつき、撃ち出される。当たった相手は動きが鈍る。"
+    },
+    {
+      "id": "kagaribi",
+      "name_jp": "篝火",
+      "name_cn": "篝火",
+      "element": "Ignis",
+      "style": "Creative",
+      "attr": "wil",
+      "prof": 2,
+      "dc": 12,
+      "lvl": 1,
+      "target": "foe",
+      "cost": {
+        "resource": "mana",
+        "value": 1
+      },
+      "effects": [
+        {
+          "damage": {
+            "seat": "target",
+            "die": 6,
+            "attr": "wil",
+            "bonus": 0
+          }
+        },
+        {
+          "condition_set": {
+            "id": "burn",
+            "seat": "target",
+            "turns": 2
+          }
+        }
+      ],
+      "desc": "小さな火を飛ばす。消えそうで消えない火は、戦いのあとも相手に纏わりつく。"
+    },
+    {
+      "id": "kageotoshi",
+      "name_jp": "影落とし",
+      "name_cn": "影落",
+      "element": "Umbra",
+      "style": "Collector",
+      "attr": "agi",
+      "prof": 3,
+      "dc": 14,
+      "lvl": 3,
+      "target": "foe",
+      "cost": {
+        "resource": "mana",
+        "value": 2
+      },
+      "effects": [
+        {
+          "damage": {
+            "seat": "target",
+            "die": 6,
+            "attr": "agi",
+            "bonus": 0
+          }
+        },
+        {
+          "attr_mod": {
+            "seat": "target",
+            "attr": "agi",
+            "value": -1,
+            "note": "影落とし"
+          }
+        }
+      ],
+      "desc": "影を踏ませて足を止める。痛みより、次の一手が遅れるほうが効く。"
+    },
+    {
+      "id": "inori_no_tomoshibi",
+      "name_jp": "祈りの灯",
+      "name_cn": "祈禱之燈",
+      "element": "Lux",
+      "style": "Steady",
+      "attr": "wil",
+      "prof": 2,
+      "dc": 11,
+      "lvl": 1,
+      "target": "self",
+      "cost": {
+        "resource": "mana",
+        "value": 2
+      },
+      "effects": [
+        {
+          "heal": {
+            "seat": "me",
+            "die": 6,
+            "bonus": 2
+          }
+        }
+      ],
+      "desc": "灯を掲げて息を整える。願いの形は人それぞれで、その灯も人それぞれの色をしている。"
+    },
+    {
+      "id": "meisou_no_me",
+      "name_jp": "迷走の眼",
+      "name_cn": "迷走之眼",
+      "element": "Umbra",
+      "style": "Inquisitive",
+      "attr": "wil",
+      "prof": 2,
+      "dc": 13,
+      "lvl": 2,
+      "target": "foe",
+      "cost": {
+        "resource": "mana",
+        "value": 1
+      },
+      "effects": [
+        {
+          "condition_set": {
+            "id": "confuse",
+            "seat": "target",
+            "turns": 1
+          }
+        }
+      ],
+      "desc": "視界をゆがませる。小怪には効きにくいが、人にはよく効く。"
+    },
+    {
+      "id": "soukou_no_kamae",
+      "name_jp": "装甲の構え",
+      "name_cn": "裝甲架勢",
+      "element": "Terra",
+      "style": "Steady",
+      "attr": "str",
+      "prof": 1,
+      "dc": 10,
+      "lvl": 1,
+      "target": "self",
+      "cost": {},
+      "effects": [
+        {
+          "emit": {
+            "type": "status_set",
+            "seat": "me",
+            "status": "defending",
+            "value": true
+          }
+        }
+      ],
+      "desc": "盾を構えて重心を落とす。地味だが、塔で一番長生きする構え。"
+    },
+    {
+      "id": "kizuna_no_ichigeki",
+      "name_jp": "絆の一撃",
+      "name_cn": "绊之一击",
+      "element": "Terra",
+      "style": "Steady",
+      "attr": "str",
+      "prof": 2,
+      "dc": 12,
+      "lvl": 1,
+      "target": "foe",
+      "cost": {
+        "resource": "mana",
+        "value": 1
+      },
+      "effects": [
+        {
+          "damage": {
+            "seat": "target",
+            "die": 8,
+            "attr": "str",
+            "bonus": 2,
+            "ally_bonus": 2
+          }
+        }
+      ],
+      "desc": "同じ場所に立つ仲間の気配を刃に変える一撃。一緒に戦うほど重くなる（同じノードに味方が1人増えるごとに＋2）。"
+    },
+    {
+      "id": "tomoshibi_no_wa",
+      "name_jp": "灯火の輪",
+      "name_cn": "灯火之环",
+      "element": "Ignis",
+      "style": "Creative",
+      "attr": "wil",
+      "prof": 2,
+      "dc": 12,
+      "lvl": 1,
+      "target": "foe",
+      "cost": {
+        "resource": "mana",
+        "value": 1
+      },
+      "effects": [
+        {
+          "damage": {
+            "seat": "target",
+            "die": 6,
+            "attr": "wil",
+            "bonus": 3
+          }
+        }
+      ],
+      "desc": "仲間の灯を束ねて放つ一矢。硬い相手に少ない手数で届かせるために。"
+    }
+  ]
+}

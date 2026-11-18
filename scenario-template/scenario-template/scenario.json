@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "id": "my_scenario",
+    "rules_version": "1.0",
+    "note": "L1 規則資料：願望判據（requirements）／表層判據（surface）／NPC 專屬知識（entities）／難度（difficulty_presets）／導演（director）／結局（endings）／觸發（triggers）。沒有這份檔＝引擎走舊的 legacy 分支。語法與詞彙表見 SCENARIO_FORMAT.md §3。"
+  },
+
+  "entities": {
+    "npc_x": {
+      "kind": "npc",
+      "display": "（NPC 名字）",
+      "knowledge": [
+        "（他知道的事 1——只寫他『真的該知道』的）",
+        "（他知道的事 2）",
+        "（他知道的事 3）"
+      ],
+      "note": "只講上面範圍內的事；被問到範圍外，用他的口吻含糊過去或岔開。"
+    }
+  },
+
+  "requirements": {
+    "g_a": {
+      "doc": "角色 A 的願望：拿到結論 c_1 ＋ 人在塔裡任一層",
+      "expr": {
+        "and": [
+          {"in": ["c_1", {"var": "me.claims"}],
+           "why": {"need_claims": ["c_1"], "you_have_claims": {"var": "me.claims"}}},
+          {"in": [{"var": "me.node"}, ["tow_f1", "tow_f2", "tow_f3"]],
+           "why": {"need_node": ["tow_f1", "tow_f2", "tow_f3"], "you_are": {"var": "me.node"}}}
+        ]
+      }
+    },
+    "g_b": {
+      "doc": "角色 B 的願望：拿到結論 c_2 ＋ 至少一個『別人』向我出示過碎片。★ 這裡示範「兩條路」：拿不到 c_2，也可以用 c_1 ＋ 兩個不同的人向我出示過碎片（＝自己拼出來的旁證）——別把願望綁死在單一結論上（design_lint 的 goal.single_route）。",
+      "expr": {
+        "and": [
+          {"or": [
+            {"in": ["c_2", {"var": "me.claims"}],
+             "why": {"need_claims": ["c_2"], "you_have_claims": {"var": "me.claims"}}},
+            {"and": [
+              {"in": ["c_1", {"var": "me.claims"}],
+               "why": {"need_claims": ["c_1"], "you_have_claims": {"var": "me.claims"}}},
+              {">=": [{"len": {"var": "me.fragment_sources"}}, 2],
+               "why": {"need_sources": 2, "have": {"var": "me.fragment_sources"}}}
+            ]}
+          ]},
+          {">=": [{"len": {"var": "me.fragment_sources"}}, 1],
+           "why": {"need_sources": 1, "have": {"var": "me.fragment_sources"}}}
+        ]
+      }
+    }
+  },
+
+  "surface": {
+    "reached_top": {
+      "doc": "有人站上最上層（tow_f3）",
+      "expr": {"in": ["tow_f3", {"pluck": [{"values": {"var": "seats"}}, "node"]}]}
+    },
+    "wish_touched": {
+      "doc": "最深層的祈願箱被動過（有先手紀錄）＝表層共同目標的門檻",
+      "expr": {"exists": "world.pray_first.tow_f3"}
+    }
+  },
+
+  "difficulty_presets": {
+    "relaxed": {"doc": "鬆（賞）：檢定 DC −1、每回合行動格 +1", "dc_mod": -1, "act_mod": 1},
+    "normal":  {"doc": "標準（預設）：不動", "dc_mod": 0, "act_mod": 0},
+    "tight":   {"doc": "緊（罰）：檢定 DC +1、每回合行動格 −1", "dc_mod": 1, "act_mod": -1}
+  },
+
+  "director": {
+    "doc": "L3 導演＝超出劇本預期時的糾正力量：主線卡住＝收緊（罰）、跑得順＝放鬆（賞）。指標只吃『距離／窗口』（stall_hands／recent_idle／progress_recent），不用累計數（長局一定飽和）。門檻是難度設計 ⇒ 要開由作者決定。",
+    "track": false,
+    "window": 8,
+    "progress_on": ["mob_killed", "entered_tower", "elevator", "boss_defeated", "wish_done", "fragment_granted", "scene_open", "entrance_found"],
+    "policy": [
+      {"when": {">=": [{"var": "signals.stall_hands"}, 20]}, "preset": "tight",
+       "why": "卡了 {stall_hands} 手沒有主線推進——收緊（DC +1／行動格 −1）"},
+      {"when": {">=": [{"var": "signals.progress_recent"}, 2]}, "preset": "relaxed",
+       "why": "最近 {window} 手推進了 {progress_recent} 次——放鬆（DC −1／行動格 +1）"},
+      {"when": true, "preset": "normal", "why": "回到標準難度"}
+    ]
+  },
+
+  "endings": [
+    {"id": "e_win", "kind": "win", "doc": "最強的小怪被擊破",
+     "when": {"==": [{"var": "world.event.type"}, "boss_defeated"]}},
+    {"id": "e_party_down", "kind": "lose", "doc": "全桌可動的人都倒了",
+     "when": {"and": [{">=": [{"len": {"var": "seats"}}, 2]},
+                      {"==": [{"len": {"var": "world.up"}}, 0]}]}},
+    {"id": "e_retreat", "kind": "neutral",
+     "doc": "★ 撤退：第 3 景之後全員回到城鎮 ⇒ 這一局以「撤退」收尾。失敗也要有出口——不然卡住的桌只能一直空轉，或等一個幾乎不會成立的 lose（design_lint 的 ending.no_neutral）",
+     "when": {"and": [{">=": [{"var": "world.scene_no"}, 3]},
+                      {"in": ["town", {"pluck": [{"values": {"var": "seats"}}, "node"]}]}]}}
+  ],
+
+  "triggers": [
+    {"id": "t_first_mob",
+     "doc": "示範觸發：第一次打死小怪 ⇒ 寫一條事實（之後的 AST 可以用 facts.killed_mob 查它）。要發一筆看得到的敘述就改用 emit（可帶 text 或 text_key）。",
+     "on": ["mob_killed"],
+     "once": true,
+     "when": {"==": [{"var": "world.event.type"}, "mob_killed"]},
+     "then": [{"fact_set": {"key": "killed_mob", "value": true}}]},
+    {"id": "t_night_falls",
+     "doc": "★ 世界自己的時鐘（fronts／clocks）：不是等玩家成功才動，而是「時間到了就動」。第 4 景之後夜就深了 ⇒ facts.night_falls，之後的判據／GM 的語氣／NPC 的耐心都可以吃它。做法就是 on=turn_ended ＋ 景號門檻 ＋ once：每一階段寫一條。",
+     "on": ["turn_ended"],
+     "once": true,
+     "when": {">=": [{"var": "world.scene_no"}, 4]},
+     "then": [{"fact_set": {"key": "night_falls", "value": true}}]}
+  ]
+}

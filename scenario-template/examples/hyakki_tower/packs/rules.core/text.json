@@ -1,0 +1,9 @@
+{
+  "skill.cast": "{seat} の「{skill}」",
+  "skill.hit": "「{skill}」が決まった",
+  "skill.miss": "「{skill}」は外れた",
+  "skill.no_resource": "「{skill}」に必要な{resource}が足りない",
+  "skill.unknown": "そんな技は知らない（{skill}）",
+  "exp.gained": "{seat} は経験を得た（+{amount}）",
+  "level.up": "{seat} はレベル{level}になった"
+}

@@ -1,0 +1,113 @@
+{
+ "schema": 1,
+ "kind": "avatar",
+ "module": "hyakki_tower",
+ "count": {
+  "files": 10,
+  "aliases": 10
+ },
+ "files": {
+  "avatar/char_a": {
+   "alpha": true,
+   "bytes": 13786,
+   "h": 218,
+   "kind": "avatar",
+   "path": "avatar/char_a.webp",
+   "sha256": "62b1f15ea00ba51e",
+   "w": 256
+  },
+  "avatar/char_b": {
+   "alpha": true,
+   "bytes": 17448,
+   "h": 256,
+   "kind": "avatar",
+   "path": "avatar/char_b.webp",
+   "sha256": "fd88872748c96329",
+   "w": 240
+  },
+  "avatar/gai": {
+   "alpha": true,
+   "bytes": 15328,
+   "h": 200,
+   "kind": "avatar",
+   "path": "avatar/gai.webp",
+   "sha256": "0d5ea4e3e7b1b1ec",
+   "w": 256
+  },
+  "avatar/homura": {
+   "alpha": true,
+   "bytes": 21018,
+   "h": 170,
+   "kind": "avatar",
+   "path": "avatar/homura.webp",
+   "sha256": "4602adcc2f546ceb",
+   "w": 256
+  },
+  "avatar/isuka": {
+   "alpha": true,
+   "bytes": 15632,
+   "h": 184,
+   "kind": "avatar",
+   "path": "avatar/isuka.webp",
+   "sha256": "0fbbc81c9f20402b",
+   "w": 256
+  },
+  "avatar/nagi": {
+   "alpha": true,
+   "bytes": 19416,
+   "h": 219,
+   "kind": "avatar",
+   "path": "avatar/nagi.webp",
+   "sha256": "31c91893d17784c8",
+   "w": 256
+  },
+  "avatar/rize": {
+   "alpha": true,
+   "bytes": 15120,
+   "h": 256,
+   "kind": "avatar",
+   "path": "avatar/rize.webp",
+   "sha256": "e72df669fa6ff859",
+   "w": 238
+  },
+  "avatar/sane": {
+   "alpha": true,
+   "bytes": 14532,
+   "h": 237,
+   "kind": "avatar",
+   "path": "avatar/sane.webp",
+   "sha256": "8ad258418c7e0810",
+   "w": 256
+  },
+  "avatar/setsu": {
+   "alpha": true,
+   "bytes": 11498,
+   "h": 197,
+   "kind": "avatar",
+   "path": "avatar/setsu.webp",
+   "sha256": "35ce364ab645b53b",
+   "w": 256
+  },
+  "avatar/tsurugi": {
+   "alpha": true,
+   "bytes": 14052,
+   "h": 256,
+   "kind": "avatar",
+   "path": "avatar/tsurugi.webp",
+   "sha256": "dbbaa0d311815247",
+   "w": 202
+  }
+ },
+ "aliases": {
+  "avatar:char_a": "avatar/char_a",
+  "avatar:char_b": "avatar/char_b",
+  "avatar:gai": "avatar/gai",
+  "avatar:homura": "avatar/homura",
+  "avatar:isuka": "avatar/isuka",
+  "avatar:nagi": "avatar/nagi",
+  "avatar:rize": "avatar/rize",
+  "avatar:sane": "avatar/sane",
+  "avatar:setsu": "avatar/setsu",
+  "avatar:tsurugi": "avatar/tsurugi"
+ }
+}

@@ -1,0 +1,101 @@
+{
+ "schema": 1,
+ "accounts": {
+  "acct_gm-agent": {
+   "display": "gm-agent",
+   "kind": "gm",
+   "chars": {},
+   "note": "由 seats.json 的 gm 播種"
+  },
+  "acct_npc-agent": {
+   "display": "npc-agent",
+   "kind": "npc",
+   "chars": {
+    "tsurugi": {
+     "level": 1,
+     "exp": 0,
+     "note": "跨局成長（局內資源：貨幣／道具／記憶不帶走）"
+    }
+   },
+   "note": "由 seats.json 的 npc1 播種"
+  },
+  "acct_player1": {
+   "display": "player1",
+   "kind": "human",
+   "chars": {
+    "char_a": {
+     "level": 1,
+     "exp": 6,
+     "note": "跨局成長（局內資源：貨幣／道具／記憶不帶走）"
+    }
+   },
+   "note": "由 seats.json 的 p1 播種"
+  },
+  "acct_player2": {
+   "display": "player2",
+   "kind": "human",
+   "chars": {
+    "char_b": {
+     "level": 1,
+     "exp": 6,
+     "note": "跨局成長（局內資源：貨幣／道具／記憶不帶走）"
+    }
+   },
+   "note": "由 seats.json 的 p2 播種"
+  },
+  "acct_agent-p3": {
+   "display": "agent-p3",
+   "kind": "agent",
+   "chars": {
+    "homura": {
+     "level": 1,
+     "exp": 6,
+     "note": "跨局成長（局內資源：貨幣／道具／記憶不帶走）"
+    }
+   },
+   "note": "由 seats.json 的 p3 播種"
+  },
+  "acct_bridge-p4": {
+   "display": "bridge-p4",
+   "kind": "agent",
+   "chars": {
+    "isuka": {
+     "level": 1,
+     "exp": 6,
+     "note": "跨局成長（局內資源：貨幣／道具／記憶不帶走）"
+    }
+   },
+   "note": "由 seats.json 的 p4 播種"
+  }
+ },
+ "session": {
+  "table": "hyakki_tower",
+  "seats": {
+   "gm": {
+    "account": "acct_gm-agent",
+    "char": null
+   },
+   "npc1": {
+    "account": "acct_npc-agent",
+    "char": "tsurugi"
+   },
+   "p1": {
+    "account": "acct_player1",
+    "char": "char_a"
+   },
+   "p2": {
+    "account": "acct_player2",
+    "char": "char_b"
+   },
+   "p3": {
+    "account": "acct_agent-p3",
+    "char": "homura"
+   },
+   "p4": {
+    "account": "acct_bridge-p4",
+    "char": "isuka"
+   }
+  }
+ },
+ "_doc": "account 層（**不進版控**的是 accounts.json；這份是形狀範例）：account →（角色選擇）char 實例 →（劇情包 seats.json 的 seat→character）seat。token 只存 sha256（`tools/trpg_accounts.py issue` 發明文一次）。"
+}

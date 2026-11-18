@@ -1,0 +1,92 @@
+{
+ "id": "board",
+ "name": "棋盤／塔",
+ "version": 1,
+ "doc": "城鎮＋荒野＋塔的地圖玩法（節點圖住 board.json；規則住 board.py）。",
+ "requires": [
+  "d20core"
+ ],
+ "optional": [],
+ "provides": {
+  "defaults": {
+   "board": {
+    "file": "board.json",
+    "travel_attr": "agi",
+    "travel_dc_by_danger": [
+     8,
+     11,
+     14,
+     17
+    ],
+    "entrance_search_dc": 12,
+    "mob_dc": 13,
+    "visibility": {
+     "tower_inside_hides_floor": true,
+     "applies_to_kinds": [
+      "human",
+      "agent"
+     ],
+     "hide_gm": true
+    }
+   }
+  },
+  "actions": [
+   {
+    "id": "move",
+    "label": "移動",
+    "desc": "走到相鄰節點；進塔／上下樓／出塔也走這一手（高層出塔要先下到 1 階）"
+   },
+   {
+    "id": "search",
+    "label": "探索",
+    "desc": "搜這一格：塔入口／敵人／道具"
+   },
+   {
+    "id": "fight",
+    "label": "戰鬥",
+    "desc": "清這一格的敵人"
+   },
+   {
+    "id": "pray",
+    "label": "祈願",
+    "desc": "開寶箱換神器（付記憶）"
+   },
+   {
+    "id": "buy",
+    "label": "購買",
+    "desc": "在商店買東西"
+   },
+   {
+    "id": "rest",
+    "label": "休息",
+    "desc": "在這一格歇一會兒"
+   },
+   {
+    "id": "game",
+    "label": "遊戲房",
+    "desc": "遊戲房的玩法"
+   }
+  ],
+  "events": [
+   "move",
+   "entrance_found",
+   "entered_tower",
+   "elevator",
+   "mob_killed",
+   "boss_defeated",
+   "artifact_gained",
+   "memory_change",
+   "tower_exit",
+   "white_room",
+   "assimilated",
+   "shop_buy",
+   "search_loot",
+   "monster_damaged"
+  ],
+  "state_keys": [
+   "board"
+  ],
+  "signals": []
+ },
+ "params": {}
+}

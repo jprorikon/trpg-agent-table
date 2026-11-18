@@ -1,0 +1,16 @@
+{
+  "doc": "模組的 **NPC 表**（設計者 2026-10-19 拍板：「NPC 和敵人都各自單獨建表」）。列出本世界觀的所有常駐/劇情 NPC。`portrait_dir` 指的是素材包或 assets/ 裡的立繪目錄（圖不進版控）。引擎不直接讀（給 GM／agent／出圖／查證用），立繪索引對應 `npc:<id>`。",
+  "source": "world-setting:npcs",
+  "count": 1,
+  "rows": [
+    {
+      "id": "guide_elder",
+      "name": "導引長老",
+      "faction": "導師同盟",
+      "cv": "",
+      "wiki": "",
+      "portrait_dir": "Guide Elder",
+      "note": "駐守起始城鎮的引導長老，為初入世界的旅人提供指引。"
+    }
+  ]
+}

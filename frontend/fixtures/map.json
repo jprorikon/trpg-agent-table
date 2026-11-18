@@ -1,0 +1,331 @@
+{
+ "board_name": "鉄環地方",
+ "work": "百鬼塔（原創）",
+ "start_node": "teckan",
+ "nodes": [
+  {
+   "id": "teckan",
+   "jp": "鉄環市",
+   "cn": "铁环市",
+   "type": "city",
+   "danger": 0,
+   "x": -6,
+   "y": 3,
+   "tags": [
+    "city",
+    "rest",
+    "shop",
+    "guild",
+    "arena"
+   ],
+   "depth": null,
+   "wish_box": null,
+   "shop": true,
+   "game_room": true
+  },
+  {
+   "id": "w_teckan",
+   "jp": "北の荒道",
+   "cn": "北荒野道",
+   "type": "wild",
+   "danger": 1,
+   "x": -3,
+   "y": 3,
+   "tags": [
+    "wild"
+   ],
+   "depth": null,
+   "wish_box": null,
+   "shop": false,
+   "game_room": false
+  },
+  {
+   "id": "hyakki",
+   "jp": "百鬼塔・正面",
+   "cn": "百鬼塔·正面",
+   "type": "monolith_entry",
+   "danger": 2,
+   "x": 0,
+   "y": 3,
+   "tags": [
+    "monolith_entry",
+    "wild_entry"
+   ],
+   "depth": null,
+   "wish_box": null,
+   "shop": false,
+   "game_room": false
+  },
+  {
+   "id": "hyakki_f1",
+   "jp": "百鬼塔 1階",
+   "cn": "百鬼塔 1F",
+   "type": "tower_floor",
+   "danger": 2,
+   "x": 0,
+   "y": 2,
+   "tags": [
+    "tower",
+    "battle_domain"
+   ],
+   "depth": 1,
+   "wish_box": null,
+   "shop": false,
+   "game_room": false
+  },
+  {
+   "id": "hyakki_f2",
+   "jp": "百鬼塔 2階",
+   "cn": "百鬼塔 2F",
+   "type": "tower_floor",
+   "danger": 2,
+   "x": 0,
+   "y": 1,
+   "tags": [
+    "tower",
+    "battle_domain"
+   ],
+   "depth": 2,
+   "wish_box": null,
+   "shop": false,
+   "game_room": false
+  },
+  {
+   "id": "hyakki_f3",
+   "jp": "百鬼塔 3階・補給所",
+   "cn": "百鬼塔 3F·补给所",
+   "type": "tower_floor",
+   "danger": 1,
+   "x": 0,
+   "y": 0,
+   "tags": [
+    "tower",
+    "shop"
+   ],
+   "depth": 3,
+   "wish_box": null,
+   "shop": true,
+   "game_room": false
+  },
+  {
+   "id": "hyakki_f4",
+   "jp": "百鬼塔 4階",
+   "cn": "百鬼塔 4F",
+   "type": "tower_floor",
+   "danger": 3,
+   "x": 0,
+   "y": -1,
+   "tags": [
+    "tower",
+    "battle_domain"
+   ],
+   "depth": 4,
+   "wish_box": null,
+   "shop": false,
+   "game_room": false
+  },
+  {
+   "id": "hyakki_f5",
+   "jp": "百鬼塔 5階",
+   "cn": "百鬼塔 5F",
+   "type": "tower_floor",
+   "danger": 3,
+   "x": 0,
+   "y": -2,
+   "tags": [
+    "tower",
+    "battle_domain",
+    "wish_box"
+   ],
+   "depth": 5,
+   "wish_box": {
+    "tier": 2
+   },
+   "shop": false,
+   "game_room": false
+  },
+  {
+   "id": "hyakki_f6",
+   "jp": "百鬼塔・最上階",
+   "cn": "百鬼塔·顶层",
+   "type": "tower_floor",
+   "danger": 4,
+   "x": 0,
+   "y": -3,
+   "tags": [
+    "tower",
+    "boss",
+    "wish_box"
+   ],
+   "depth": 6,
+   "wish_box": {
+    "tier": 3
+   },
+   "shop": false,
+   "game_room": false
+  },
+  {
+   "id": "hyakki_back",
+   "jp": "百鬼塔・裏口",
+   "cn": "百鬼塔·后门",
+   "type": "monolith_entry",
+   "danger": 2,
+   "x": 3,
+   "y": -1,
+   "tags": [
+    "monolith_entry"
+   ],
+   "depth": null,
+   "wish_box": null,
+   "shop": false,
+   "game_room": false
+  },
+  {
+   "id": "w_minato",
+   "jp": "南の海道",
+   "cn": "南海岸道",
+   "type": "wild",
+   "danger": 2,
+   "x": 5,
+   "y": -1,
+   "tags": [
+    "wild"
+   ],
+   "depth": null,
+   "wish_box": null,
+   "shop": false,
+   "game_room": false
+  },
+  {
+   "id": "minato",
+   "jp": "港町ミナト",
+   "cn": "港町米纳托",
+   "type": "city",
+   "danger": 0,
+   "x": 7,
+   "y": -1,
+   "tags": [
+    "city",
+    "rest",
+    "shop",
+    "port"
+   ],
+   "depth": null,
+   "wish_box": null,
+   "shop": true,
+   "game_room": false
+  },
+  {
+   "id": "w_yamato",
+   "jp": "山あいの道",
+   "cn": "山间道",
+   "type": "wild",
+   "danger": 2,
+   "x": 7,
+   "y": 1,
+   "tags": [
+    "wild"
+   ],
+   "depth": null,
+   "wish_box": null,
+   "shop": false,
+   "game_room": false
+  },
+  {
+   "id": "yamato",
+   "jp": "砦ヤマト",
+   "cn": "山砦大和",
+   "type": "city",
+   "danger": 0,
+   "x": 7,
+   "y": 3,
+   "tags": [
+    "city",
+    "rest",
+    "shop",
+    "dojo"
+   ],
+   "depth": null,
+   "wish_box": null,
+   "shop": true,
+   "game_room": false
+  }
+ ],
+ "edges": [
+  {
+   "from": "teckan",
+   "to": "w_teckan",
+   "kind": "road"
+  },
+  {
+   "from": "teckan",
+   "to": "w_yamato",
+   "kind": "road"
+  },
+  {
+   "from": "w_teckan",
+   "to": "hyakki",
+   "kind": "wild"
+  },
+  {
+   "from": "hyakki",
+   "to": "hyakki_f1",
+   "kind": "entrance"
+  },
+  {
+   "from": "hyakki_f1",
+   "to": "hyakki_f2",
+   "kind": "elevator"
+  },
+  {
+   "from": "hyakki_f2",
+   "to": "hyakki_f3",
+   "kind": "elevator"
+  },
+  {
+   "from": "hyakki_f3",
+   "to": "hyakki_f4",
+   "kind": "elevator"
+  },
+  {
+   "from": "hyakki_f4",
+   "to": "hyakki_f5",
+   "kind": "elevator"
+  },
+  {
+   "from": "hyakki_f4",
+   "to": "hyakki_back",
+   "kind": "exit"
+  },
+  {
+   "from": "hyakki_f5",
+   "to": "hyakki_f6",
+   "kind": "elevator"
+  },
+  {
+   "from": "hyakki_back",
+   "to": "w_minato",
+   "kind": "road"
+  },
+  {
+   "from": "w_minato",
+   "to": "minato",
+   "kind": "wild"
+  },
+  {
+   "from": "w_minato",
+   "to": "w_yamato",
+   "kind": "wild"
+  },
+  {
+   "from": "minato",
+   "to": "w_yamato",
+   "kind": "wild"
+  },
+  {
+   "from": "w_yamato",
+   "to": "yamato",
+   "kind": "road"
+  }
+ ]
+}

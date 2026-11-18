@@ -1,0 +1,46 @@
+{
+  "kind": "rescue",
+  "doc": "救起規則（★1）：把倒地（`down`）的人拉回來。三條規則由 `config.rules.rescue` 選（省略＝第一列 `first_aid`）。⚠ 數值都是佔位——設計者定版改這裡，不改程式。",
+  "rows": [
+    {
+      "id": "first_aid",
+      "name_jp": "介抱",
+      "name_cn": "急救",
+      "attr": "wil",
+      "prof": 0,
+      "dc": 12,
+      "heal": {"die": 6, "bonus": 2},
+      "risk": [
+        {"condition_set": {"id": "wound_chest", "seat": "me", "note": "急救失敗，自己也被拖傷"}}
+      ],
+      "note": "空手也能做：把同伴翻正、壓住傷口。擲 1d6+2 把他拉回站著；失敗的話自己也吃一道胸傷（代價是「手忙腳亂」）。"
+    },
+    {
+      "id": "field_dressing",
+      "name_jp": "野戦手当",
+      "name_cn": "野战包扎",
+      "attr": "wil",
+      "prof": 1,
+      "dc": 14,
+      "heal": {"die": 12, "bonus": 3},
+      "require_item": "heal_pack",
+      "cost": {"resource": "mana", "value": 1},
+      "risk": [],
+      "note": "要一條回復の包（用掉）＋一點魔力：把傷口真的縫起來（1d12+3）。沒有失敗代價——東西都備好了。"
+    },
+    {
+      "id": "star_mending",
+      "name_jp": "星繕い",
+      "name_cn": "星之修补",
+      "attr": "wil",
+      "prof": 2,
+      "dc": 17,
+      "heal": {"die": 12, "bonus": 8},
+      "cost": {"resource": "mana", "value": 3},
+      "risk": [
+        {"condition_set": {"id": "confuse", "seat": "me", "turns": 2, "note": "星力反噬"}}
+      ],
+      "note": "把星屑的碎片按進傷口（魔力 ×3）：躺著的人直接站起來（1d12+8）。失敗＝星力反噬，自己混亂 2 回合。"
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+{
+  "notes": "碎片＝證據（玩家互相出示的東西），claims＝結論（願望判據比對的是結論）。碎片 text 是私密正文：只有持有人看得到，GM 想轉述會被洩漏閘擋 ⇒ 每一枚都寫成「只有拿到的人才看得懂」的物件。 ★ 2026-10-20 依設計手冊補：c_blade 3 枚、c_night 3 枚；另拆出 c_fire（火の責任）與 c_backdoor（裏口）——原本 5 條願望擠在 2 條結論上（c_night 被 3 人共用），現在各自有路。",
+  "claims": [
+    {
+      "id": "c_blade",
+      "text": "百鬼夜行の主は、十年前に折れた大剣の半身を腹に呑んでいる（最上階にいる）。"
+    },
+    {
+      "id": "c_night",
+      "text": "十年前の夜、塔を高くしたのは鬼ではなく、火を落とさなかった一人の鍛冶だった。"
+    },
+    {
+      "id": "c_fire",
+      "text": "鉄環市の炉は十年前の夜から火を落としていない——落とさなかったから、塔は高くなった。"
+    },
+    {
+      "id": "c_backdoor",
+      "text": "百鬼塔には裏口がある（港側の崖を降りたところ）。"
+    }
+  ],
+  "fragments": [
+    {
+      "id": "f_edge",
+      "pool": "tower",
+      "supports": [
+        "c_blade"
+      ],
+      "weight": 2,
+      "text": "鞘から抜けない折れ刃。断面だけが新しい——十年前の斬り口ではない。"
+    },
+    {
+      "id": "f_teeth",
+      "pool": "tower",
+      "supports": [
+        "c_blade"
+      ],
+      "weight": 1,
+      "text": "主の腹の内側に触れた者の手記。「あの中には、剣がある。剣の形をした、十年ぶんの夜がある」"
+    },
+    {
+      "id": "f_ledger",
+      "pool": "outside",
+      "supports": [
+        "c_night"
+      ],
+      "weight": 2,
+      "text": "運び屋の組合の古い台帳。十年前の頁だけ、墨が二度重ねて書かれている——あとから書き直されている。"
+    },
+    {
+      "id": "f_tongs",
+      "pool": "tower",
+      "supports": [
+        "c_night"
+      ],
+      "weight": 1,
+      "text": "焦げた火箸の片方。柄の焼け跡が指の形にへこんでいる——三本ぶん、欠けている。"
+    },
+    {
+      "id": "f_scabbard",
+      "pool": "tower",
+      "supports": [
+        "c_blade"
+      ],
+      "weight": 1,
+      "text": "折れた剣の鞘。内側に爪の跡が三本——剣を抜かずに、中身だけを持ち去った者がいる。"
+    },
+    {
+      "id": "f_order",
+      "pool": "outside",
+      "supports": [
+        "c_night"
+      ],
+      "weight": 1,
+      "text": "組合の依頼票。十年前の夜だけ、宛先が「炉」になっている——人ではなく、火に宛てた仕事だ。"
+    },
+    {
+      "id": "f_ash",
+      "pool": "tower",
+      "supports": [
+        "c_fire"
+      ],
+      "weight": 2,
+      "text": "冷めない灰。触るとまだ温かい——十年ぶんの夜が、この灰の中で燃え続けている。"
+    },
+    {
+      "id": "f_bell",
+      "pool": "outside",
+      "supports": [
+        "c_fire"
+      ],
+      "weight": 1,
+      "text": "炉番の鐘。撞いた記録が十年前で止まっている。止めたのは誰かではなく、誰も撞かなかったからだ。"
+    },
+    {
+      "id": "f_mark",
+      "pool": "tower",
+      "supports": [
+        "c_fire"
+      ],
+      "weight": 1,
+      "text": "炉の内壁に爪で刻んだ数字。一年ごとに一つ、十まで。刻んだ者は毎年夜にここへ来ていた。"
+    },
+    {
+      "id": "f_map",
+      "pool": "outside",
+      "supports": [
+        "c_backdoor"
+      ],
+      "weight": 2,
+      "text": "運び屋の組合の古地図。正面の門だけ赤く塗り潰され、裏手に細い線が一本引いてある。"
+    },
+    {
+      "id": "f_rope",
+      "pool": "tower",
+      "supports": [
+        "c_backdoor"
+      ],
+      "weight": 1,
+      "text": "崖に打ち込まれた古い杭と、すり切れた縄。荷車を降ろした痕が、下の岩に残っている。"
+    },
+    {
+      "id": "f_tally",
+      "pool": "outside",
+      "supports": [
+        "c_backdoor"
+      ],
+      "weight": 1,
+      "text": "宿の勘定書。同じ夜に「担架二台、裏から」と書かれた頁が何度もある——戻ってきた者たちの記録だ。"
+    },
+    {
+      "id": "f_requiem",
+      "pool": "outside",
+      "supports": [
+        "c_blade"
+      ],
+      "weight": 1,
+      "text": "組合の追悼名簿。十年前の夜、炉の前にいた者の欄だけ、名前が二度書かれている——一人は戻り、一人は戻らなかった。"
+    }
+  ],
+  "drop_policy": {
+    "on_pray_to": "anyone_but_requester",
+    "prefer_unheld": true,
+    "count_per_pray": 1,
+    "note": "祈願一次落一枚，落在提出者以外的人手上（seed 決定、可重現）。`outside` 池的碎片由 GM 用 fragment_drop 在城中投放（例：組合の台帳）。"
+  }
+}

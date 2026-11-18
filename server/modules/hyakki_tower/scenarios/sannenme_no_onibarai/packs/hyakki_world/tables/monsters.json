@@ -1,0 +1,166 @@
+{
+  "kind": "monsters",
+  "doc": "百鬼塔で出会う相手（★4）。選ばれ方が「`nodes` 指定 ＞ `depth` 範圍 ＞ 通用」、沒命中的欄位**逐欄回退**舊預設（`tower.mob_damage_die`／`star_coin_per_kill`／`params.exp_per_star_kill`）。**遭遇の数**は board.json の mobs（節点ごと）。⚠ 經驗**只從這裡來**（本桌沒有任何 growth_gain 觸發）——數字就是升級速度的油門。 2026-10-20 定版：**9 種全部上表**（`onibi` 下層 f1/f2・`jorougumo` 4 階・`hitotsume` 5 階），採「同格多種」——`nodes` 指到同一格＝並存、遭遇數由 `count`／mobs 平分（1・2 階三種、4 階餓鬼＋蜘蛛、5 階鬼將＋獨眼），**沒有擠掉任何一種**。3 階是補給所（mobs 0）刻意不放怪。每種怪可寫 `hp`（不寫＝1，一擊必殺）／`count`（同格幾隻）／`active`（true 或 {chance, max_targets}；收景階段按機率咬同格玩家）。數值梯度：dc 11→19、exp 4→40、damage_die 3→10（下層練手／上層見血）。",
+  "rows": [
+    {
+      "id": "yabusame",
+      "name_jp": "野伏せの鬼",
+      "name_cn": "伏路鬼",
+      "dc": 12,
+      "check": "agi",
+      "coins": 2,
+      "exp": 5,
+      "damage_die": 4,
+      "note": "通用（哪一格都可能遇到）。**最弱的那一種**——負責讓「打一場」有基本回收。",
+      "hp": 2
+    },
+    {
+      "id": "hone_musha",
+      "name_jp": "骸骨武者",
+      "name_cn": "骸骨武者",
+      "depth_min": 1,
+      "depth_max": 2,
+      "dc": 13,
+      "check": "agi",
+      "coins": 2,
+      "exp": 9,
+      "damage_die": 5,
+      "note": "1～2 階（下層）。動作很規矩——十年ぶんの癖が抜けていない。",
+      "hp": 2,
+      "nodes": [
+        "hyakki_f1",
+        "hyakki_f2"
+      ]
+    },
+    {
+      "id": "gaki",
+      "name_jp": "餓鬼",
+      "name_cn": "饿鬼",
+      "depth_min": 3,
+      "depth_max": 4,
+      "dc": 15,
+      "check": "agi",
+      "coins": 3,
+      "exp": 14,
+      "damage_die": 6,
+      "note": "3～4 階（中層）。數が多いので、**回復を切らすと死ぬ**（死ぬと街に送り返される）。",
+      "hp": 3
+    },
+    {
+      "id": "oni_sho",
+      "name_jp": "鬼将",
+      "name_cn": "鬼将",
+      "depth_min": 5,
+      "depth_max": 6,
+      "dc": 17,
+      "check": "agi",
+      "coins": 4,
+      "exp": 17,
+      "damage_die": 8,
+      "note": "5～6 階（上層）。一撃が重い——部位受傷（wound）が付く場面はここ。",
+      "hp": 4,
+      "active": {
+        "chance": 0.4,
+        "max_targets": 2
+      }
+    },
+    {
+      "id": "hyakki_no_aruji",
+      "name_jp": "百鬼夜行の主",
+      "name_cn": "百鬼夜行之主",
+      "nodes": [
+        "hyakki_f6"
+      ],
+      "boss": true,
+      "dc": 19,
+      "check": "agi",
+      "coins": 10,
+      "exp": 40,
+      "damage_die": 10,
+      "note": "最上階の主。腹に十年前の折れ剣を呑んでいる。倒すと `boss_defeated`（＝勝利結局＋★3 の事實）。",
+      "hp": 24,
+      "active": {
+        "chance": 0.5,
+        "max_targets": 3
+      }
+    },
+    {
+      "id": "hone_yumi",
+      "name_jp": "骨弓兵",
+      "name_cn": "骨弓兵",
+      "nodes": [
+        "hyakki_f1",
+        "hyakki_f2"
+      ],
+      "dc": 13,
+      "check": "agi",
+      "coins": 2,
+      "exp": 9,
+      "damage_die": 5,
+      "note": "2 階（下層）の射手。骸骨武者と同じ列に立つが、こちらは通路の奥から撃つ。近づけば脆い。※2026-10-19 追加",
+      "hp": 2,
+      "active": {
+        "chance": 0.3,
+        "max_targets": 1
+      }
+    },
+    {
+      "id": "onibi",
+      "name_jp": "鬼火",
+      "name_cn": "鬼火",
+      "nodes": [
+        "hyakki_f1",
+        "hyakki_f2"
+      ],
+      "dc": 11,
+      "check": "agi",
+      "coins": 1,
+      "exp": 4,
+      "damage_die": 3,
+      "note": "塔の踊り場を漂う火。**一撃で消える**（hp 1）が、数で来るので油断すると記憶を削られる。下層の「数合わせ」——回復を切らさないための訓練台。",
+      "hp": 1,
+      "active": {
+        "chance": 0.2,
+        "max_targets": 1
+      }
+    },
+    {
+      "id": "jorougumo",
+      "name_jp": "女郎蜘蛛",
+      "name_cn": "女郎蜘蛛",
+      "nodes": [
+        "hyakki_f4"
+      ],
+      "dc": 15,
+      "check": "agi",
+      "coins": 3,
+      "exp": 13,
+      "damage_die": 6,
+      "note": "中層の天井から糸を垂らす。**足を取る**（糸に絡まると移動が重い——GM は `op=attr_mod` で agi −1）。4 階は餓鬼と同格に立つ＝「数で押す餓鬼」と「動きを止める蜘蛛」の組み合わせ。",
+      "hp": 3,
+      "active": {
+        "chance": 0.35,
+        "max_targets": 1
+      }
+    },
+    {
+      "id": "hitotsume",
+      "name_jp": "一つ目鬼",
+      "name_cn": "独眼鬼",
+      "nodes": [
+        "hyakki_f5"
+      ],
+      "dc": 16,
+      "check": "agi",
+      "coins": 4,
+      "exp": 18,
+      "damage_die": 7,
+      "note": "**見られている間だけ強い**——こちらが視線を切ると dc が下がる（GM 裁定：`op=dc` で −3）。5 階で鬼将と同格。上層は「重い一撃（鬼将）」と「見られている圧（一つ目）」の二択になる。",
+      "hp": 4,
+      "active": {
+        "chance": 0.4,
+        "max_targets": 1
+      }
+    }
+  ]
+}

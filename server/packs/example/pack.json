@@ -1,0 +1,35 @@
+{
+  "id": "example",
+  "name": "樣板包",
+  "version": 1,
+  "doc": "**可以直接複製去改**的最小包（對應 acdts 的 skill0 樣板）。它什麼都不做，只用來示範 `pack.json` 的每一格長什麼樣；預設**不啟用**。",
+  "requires": [
+    "d20core"
+  ],
+  "optional": [],
+  "conflicts": [],
+  "provides": {
+    "actions": [],
+    "effects": [
+      "fact_set"
+    ],
+    "events": [
+      "say"
+    ],
+    "text_keys": [
+      "example.hello"
+    ],
+    "state_keys": [
+      "facts"
+    ],
+    "signals": [
+      "progress"
+    ],
+    "tables": [
+      "tables/example.json"
+    ]
+  },
+  "params": {
+    "example_bonus": 1
+  }
+}

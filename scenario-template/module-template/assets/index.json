@@ -1,0 +1,33 @@
+{
+  "schema": 2,
+  "module": "example",
+  "generated_at": "2026-10-20T00:00:00+09:00",
+  "doc": "素材清單（schema 2）：本檔只放索引，內容按類拆在 `index/<類>.json`。前端照 `parts` 逐份抓取後合併；`source`／`missing` 留在這裡。注意：圖片二進位檔案本體不進版本控制，只版管清單與 README.md。",
+  "parts": {
+    "portrait": "index/portrait.json",
+    "avatar": "index/avatar.json",
+    "npc": "index/npc.json",
+    "enemy": "index/enemy.json",
+    "bg": "index/bg.json",
+    "crowd": "index/crowd.json",
+    "icon": "index/icon.json"
+  },
+  "counts": {
+    "portrait": {"files": 0, "aliases": 0},
+    "avatar": {"files": 0, "aliases": 0},
+    "npc": {"files": 0, "aliases": 0},
+    "enemy": {"files": 0, "aliases": 0},
+    "bg": {"files": 0, "aliases": 0},
+    "crowd": {"files": 0, "aliases": 0},
+    "icon": {"files": 0, "aliases": 0}
+  },
+  "totals": {
+    "files": 0,
+    "aliases": 0
+  },
+  "source": {
+    "copyright": "模組原創素材或遵循官方二次創作規範。私用／不公開再發布。",
+    "origin": "（填寫素材來源說明）"
+  },
+  "missing": []
+}

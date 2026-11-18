@@ -1,0 +1,9 @@
+# 本地杂物
+__pycache__/
+*.pyc
+.DS_Store
+.venv/
+*.log
+# 别把带凭据的地址提交进来
+.netrc
+*credential*

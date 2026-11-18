@@ -1,0 +1,9 @@
+{
+  "_doc": "模組服務端措辭表（一桌一本）：覆寫引擎中性預設文案（presentation.TEXT 那一套，外加動作目錄的 action.<id>.label／action.<id>.desc）。由 packs.text_bank_for 疊在包的 text.json 之上；劇本層 <劇本>/text.json 可以再覆蓋。改字只影響之後的新事件。",
+  "white_room.text": "意識中斷——回過神時已回到初始之地。",
+  "white_room.reason": "生命耗盡（命運的交匯點）",
+  "boss_defeated.text": "擊敗了強大的領主魔物——深處的寶箱開啟了",
+  "action.fight.desc": "清除這一格的魔物",
+  "action.search.desc": "探索這一格：入口／魔物／道具",
+  "board.err.no_foes": "這個區域已經沒有魔物了（已經討伐完畢）"
+}

@@ -1,0 +1,23 @@
+{
+  "module": "hyakki_tower",
+  "note": "模組的角色表：**角色的類（`class`）由模組決定**；劇本用 `scenarios/<劇本>/seats.json` 決定這一局**哪些角色參與、坐哪一席**。帳號進場＝在模組底下建立／沿用一個角色**實例**。",
+  "characters": [
+    {
+      "id": "tsurugi",
+      "class": "npc",
+      "name": "ツルギ",
+      "note": "港町の宿『折れ杭』の主。元鍛冶。右手の指が三本ない。鬼の話になると声が落ちる。",
+      "start_node": "minato"
+    },
+    {
+      "id": "char_a",
+      "class": "player",
+      "name": "カガリ"
+    },
+    {
+      "id": "char_b",
+      "class": "player",
+      "name": "シズク"
+    }
+  ]
+}

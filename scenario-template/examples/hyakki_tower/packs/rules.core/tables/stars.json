@@ -1,0 +1,66 @@
+{
+  "kind": "stars",
+  "doc": "★ 升星表（原創）。⚠ **升星靠劇情事件，不靠數字累積**：每一列寫一個 AST 判據 `when`，引擎**每一筆事件後對每一席各判一次**（判據裡的 `me`＝那一席），成立就升、可連升。數值（gains／unlocks／title）都是佔位，設計者定版就改這裡。",
+  "rows": [
+    {
+      "star": 2,
+      "name_jp": "星の担い手",
+      "name_cn": "星之承担者",
+      "title": "星の担い手",
+      "when": {
+        "or": [
+          {"var": "me.goal_achieved"},
+          {"==": [{"var": "world.event_type"}, "boss_defeated"]}
+        ]
+      },
+      "gains": {"max_hp": 4, "attrs": {"wil": 1}, "resources": {"mana": 1}},
+      "unlocks": ["hyousou_no_sho", "meisou_no_me"],
+      "note": "完成自己的願望（或最強小怪被討伐）⇒ ★2。原本要 Lv2 才學得到的兩招，這條路也開。"
+    },
+    {
+      "star": 3,
+      "name_jp": "塔の踏破者",
+      "name_cn": "踏破塔者",
+      "title": "塔の踏破者",
+      "when": {
+        "or": [
+          {"exists": "world.pray_first.hyakki_f4"},
+          {"exists": "facts.tower_cleared"}
+        ]
+      },
+      "gains": {"max_hp": 4, "attrs": {"str": 1}, "resources": {"mana": 1}},
+      "unlocks": ["kageotoshi"],
+      "note": "有人先手開了大祈願箱（＝塔已通）⇒ ★3；順手解鎖原本 Lv3 的「影落とし」。"
+    },
+    {
+      "star": 4,
+      "name_jp": "星屑の蒐集家",
+      "name_cn": "星屑收藏家",
+      "title": "星屑の蒐集家",
+      "when": {
+        "or": [
+          {">=": [{"var": "round_no"}, 40]},
+          {"exists": "facts.star_trial_done"}
+        ]
+      },
+      "gains": {"max_hp": 6, "attrs": {"agi": 1}, "resources": {"mana": 2}},
+      "unlocks": [],
+      "note": "走過 40 輪以上的歷練（或劇本自己寫下 `facts.star_trial_done`）⇒ ★4。**佔位**：設計者要改成別的事（撿幾件神器／打幾隻小怪）就改這個 when。"
+    },
+    {
+      "star": 5,
+      "name_jp": "星の王",
+      "name_cn": "星之王",
+      "title": "星の王",
+      "when": {
+        "or": [
+          {"==": [{"var": "world.event.kind"}, "win"]},
+          {"exists": "facts.star_of_the_king"}
+        ]
+      },
+      "gains": {"max_hp": 8, "attrs": {"str": 1, "agi": 1, "wil": 1}, "resources": {"mana": 3}},
+      "unlocks": [],
+      "note": "判到**勝利**結局（或劇本寫下 `facts.star_of_the_king`）⇒ ★5。佔位，等你定。"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "kind": "levels",
+  "doc": "等級表：need ＝ 累計經驗值門檻；gains ＝ 升級時獲得的永久加成（屬性、生命值上限、通用資源）。開局自動賦予第 1 級。",
+  "base": 1,
+  "rows": [
+    {
+      "level": 1,
+      "need": 0,
+      "gains": {"max_hp": 0, "attrs": {}, "resources": {"mana": 3}},
+      "note": "見習冒險者（初始等級）"
+    },
+    {
+      "level": 2,
+      "need": 30,
+      "gains": {"max_hp": 4, "attrs": {"agi": 1}, "resources": {"mana": 2}},
+      "note": "初露鋒芒"
+    },
+    {
+      "level": 3,
+      "need": 80,
+      "gains": {"max_hp": 4, "attrs": {"wil": 1}, "resources": {"mana": 2}},
+      "note": "身經百戰"
+    }
+  ]
+}

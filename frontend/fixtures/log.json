@@ -1,0 +1,333 @@
+{
+ "events": [
+  {
+   "seq": 1,
+   "ts": 1794965706.753397,
+   "type": "table_created",
+   "scenario": "百鬼塔 ── 鉄環地方・三年目の鬼祓い（原創；戰鬥為主）",
+   "seed": 20261101,
+   "rules": "minimal-d20",
+   "run_id": "acbcc256fa01436b950c8719c5aee608",
+   "packs": [
+    "d20core",
+    "board",
+    "semic",
+    "wound",
+    "death",
+    "rules.core",
+    "mode.turn",
+    "hyakki_world"
+   ],
+   "packs_hash": "746aae481c6911ab"
+  },
+  {
+   "seq": 2,
+   "ts": 1794965706.758983,
+   "type": "seat_joined",
+   "public": true,
+   "seat": "gm",
+   "name": "GM",
+   "kind": "gm",
+   "attrs": {
+    "str": 2,
+    "agi": 2,
+    "wil": 2,
+    "luck": 2
+   },
+   "attrs_rolled": false,
+   "hp": 12,
+   "order": null,
+   "node": null,
+   "memory": null,
+   "roster": null,
+   "wake_url": null
+  },
+  {
+   "seq": 4,
+   "ts": 1794965706.7591941,
+   "type": "seat_joined",
+   "public": true,
+   "seat": "npc1",
+   "name": "ツルギ",
+   "kind": "npc",
+   "attrs": {
+    "str": 3,
+    "agi": 1,
+    "wil": 5,
+    "luck": 2
+   },
+   "attrs_rolled": false,
+   "hp": 14,
+   "order": null,
+   "node": "minato",
+   "memory": 60,
+   "roster": "ツルギ",
+   "wake_url": null
+  },
+  {
+   "seq": 5,
+   "ts": 1794965706.8961549,
+   "type": "seat_joined",
+   "public": true,
+   "seat": "p1",
+   "name": "カガリ",
+   "kind": "human",
+   "attrs": {
+    "str": 5,
+    "agi": 3,
+    "wil": 2,
+    "luck": 1
+   },
+   "attrs_rolled": false,
+   "hp": 18,
+   "order": 3,
+   "node": "teckan",
+   "memory": 60,
+   "roster": "カガリ",
+   "wake_url": null
+  },
+  {
+   "seq": 8,
+   "ts": 1794965706.898955,
+   "type": "seat_joined",
+   "public": true,
+   "seat": "p2",
+   "name": "シズク",
+   "kind": "agent",
+   "attrs": {
+    "str": 2,
+    "agi": 4,
+    "wil": 4,
+    "luck": 3
+   },
+   "attrs_rolled": false,
+   "hp": 12,
+   "order": 4,
+   "node": "teckan",
+   "memory": 60,
+   "roster": "シズク",
+   "wake_url": null
+  },
+  {
+   "seq": 11,
+   "ts": 1794965706.902026,
+   "type": "round_started",
+   "public": true,
+   "no": 1
+  },
+  {
+   "seq": 12,
+   "ts": 1794965706.902256,
+   "type": "turn_started",
+   "public": true,
+   "seat": "p1",
+   "index": 0,
+   "deadline_at": 1794966306.902254,
+   "reason": "manual"
+  },
+  {
+   "seq": 13,
+   "ts": 1794965706.904233,
+   "type": "say",
+   "public": true,
+   "seat": "p1",
+   "text": "今日こそ塔に入る。シズク、記録は頼んだ。"
+  },
+  {
+   "seq": 17,
+   "ts": 1794965706.907321,
+   "type": "action_declared",
+   "public": true,
+   "seat": "p1",
+   "action": "move",
+   "target": "w_teckan",
+   "note": null
+  },
+  {
+   "seq": 18,
+   "ts": 1794965706.9075148,
+   "type": "move",
+   "public": true,
+   "seat": "p1",
+   "frm": "teckan",
+   "to": "w_teckan",
+   "kind": "road"
+  },
+  {
+   "seq": 20,
+   "ts": 1794965707.063798,
+   "type": "say",
+   "public": true,
+   "seat": "p2",
+   "text": "了解。塔の入口は毎回変わるから、まずは探そう。"
+  },
+  {
+   "seq": 23,
+   "ts": 1794965707.065363,
+   "type": "turn_ended",
+   "public": true,
+   "seat": "p1",
+   "turn_seq": 12,
+   "reason": "demo"
+  },
+  {
+   "seq": 24,
+   "ts": 1794965707.065537,
+   "type": "turn_started",
+   "public": true,
+   "seat": "p2",
+   "index": 1,
+   "deadline_at": 1794966307.065536,
+   "reason": "next"
+  },
+  {
+   "seq": 35,
+   "ts": 1794965707.074086,
+   "type": "action_declared",
+   "public": true,
+   "seat": "p2",
+   "action": "move",
+   "target": "hyakki_f1",
+   "note": null
+  },
+  {
+   "seq": 36,
+   "ts": 1794965707.074183,
+   "type": "entered_tower",
+   "public": true,
+   "seat": "p2",
+   "node": "hyakki",
+   "floor": "hyakki_f1",
+   "consumed": true
+  },
+  {
+   "seq": 38,
+   "ts": 1794965707.0791209,
+   "type": "say",
+   "public": true,
+   "seat": "p1",
+   "text": "骨の床だ……鳴いてる。"
+  },
+  {
+   "seq": 40,
+   "ts": 1794965707.080522,
+   "type": "action_declared",
+   "public": true,
+   "seat": "p2",
+   "action": "fight",
+   "target": null,
+   "note": null
+  },
+  {
+   "seq": 41,
+   "ts": 1794965707.080674,
+   "type": "roll",
+   "public": true,
+   "roll_seq": 1,
+   "seat": "p2",
+   "kind": "fight",
+   "die": 20,
+   "value": 6,
+   "mod": 8,
+   "total": 14,
+   "dc": 15,
+   "success": false,
+   "reason": "fight 骸骨武者",
+   "rng": "seed:20261101:1"
+  },
+  {
+   "seq": 42,
+   "ts": 1794965707.080788,
+   "type": "damage",
+   "public": true,
+   "target": "p2",
+   "amount": 7,
+   "hp_after": 5,
+   "src": "hone_musha"
+  },
+  {
+   "seq": 45,
+   "ts": 1794965707.086302,
+   "type": "action_declared",
+   "public": true,
+   "seat": "p2",
+   "action": "fight",
+   "target": null,
+   "note": null
+  },
+  {
+   "seq": 46,
+   "ts": 1794965707.086454,
+   "type": "roll",
+   "public": true,
+   "roll_seq": 2,
+   "seat": "p2",
+   "kind": "fight",
+   "die": 20,
+   "value": 18,
+   "mod": 8,
+   "total": 26,
+   "dc": 15,
+   "success": true,
+   "reason": "fight 骸骨武者",
+   "rng": "seed:20261101:2"
+  },
+  {
+   "seq": 48,
+   "ts": 1794965707.086669,
+   "type": "mob_killed",
+   "public": true,
+   "seat": "p2",
+   "node": "hyakki_f1",
+   "coins": 3,
+   "monster": "hone_musha",
+   "uid": "hyakki_f1:hone_musha:0",
+   "name": "骸骨武者"
+  },
+  {
+   "seq": 52,
+   "ts": 1794965707.087028,
+   "type": "turn_ended",
+   "public": true,
+   "seat": "p2",
+   "turn_seq": 24,
+   "reason": "action"
+  },
+  {
+   "seq": 54,
+   "ts": 1794965707.087258,
+   "type": "round_started",
+   "public": true,
+   "no": 2
+  },
+  {
+   "seq": 55,
+   "ts": 1794965707.087348,
+   "type": "turn_started",
+   "public": true,
+   "seat": "p1",
+   "index": 2,
+   "deadline_at": 1794966307.087347,
+   "reason": "next"
+  },
+  {
+   "seq": 63,
+   "ts": 1794965707.096221,
+   "type": "turn_ended",
+   "public": true,
+   "seat": "p1",
+   "turn_seq": 55,
+   "reason": "demo"
+  },
+  {
+   "seq": 65,
+   "ts": 1794965707.096461,
+   "type": "turn_started",
+   "public": true,
+   "seat": "p2",
+   "index": 3,
+   "deadline_at": 1794966307.09646,
+   "reason": "next"
+  }
+ ]
+}

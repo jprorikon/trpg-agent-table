@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<!-- 對應 API: 2026-10-19.3（大廳：Query.me 在根端點可用、TableInfo.scene/sceneOpen/paused/waiting、ModuleInfo.assets） -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#263a65">
+<title>TRPG 大廳</title>
+<style>
+/* ==========================================================================
+   大廳（2026-10-19 改版）：與桌面（index.html）同一套設計語彙——
+   浅色＝情報頁紙面＋深海軍藍標題帶＋青綠主操作；深色＝靛藍。所有尺寸／顏色走變數。
+   作品的封面、名字譯名、一句話介紹**全由模組給**（`/assets/<模組>/locale.json` 的 lobby／glossary、
+   素材表的別名）；這一頁不內建任何作品的內容。
+   ========================================================================== */
+:root{
+  --bg:#eef1f7;--surface:#fff;--surface2:#f4f6fa;--surface3:#e8ecf4;
+  --line:#dfe3ee;--line2:#c8cee0;--tx:#2b3a67;--tx2:#4a5880;--tx3:#6b7898;
+  --navy:#263a65;--navy-ink:#eef3ff;--acc:#0abec5;--acc-d:#007d88;--acc-ink:#03343a;--acc-soft:rgba(10,190,197,.14);
+  --gold:#a2660f;--gold-soft:rgba(162,102,15,.12);--ok:#1d8a63;--ok-soft:rgba(29,138,99,.12);
+  --warn:#b4471b;--warn-soft:rgba(180,71,27,.12);
+  --sh1:0 3px 0 rgba(53,60,108,.07),0 8px 20px rgba(53,60,108,.06);--sh2:0 14px 40px rgba(26,36,78,.22);
+  --r-s:6px;--r-m:10px;--r-l:16px;--sp1:4px;--sp2:8px;--sp3:12px;--sp4:16px;--sp5:22px;--sp6:30px;
+  --fs-xs:12px;--fs-s:13px;--fs-m:15px;--fs-l:17px;--fs-xl:20px;--fs-2xl:26px;
+  --theme-color:#263a65;
+}
+html[data-theme="dark"]{
+  --bg:#1f2650;--surface:#2c3466;--surface2:#262d5c;--surface3:#363f78;
+  --line:#434c86;--line2:#5c66a3;--tx:#f1f3ff;--tx2:#c9d0ef;--tx3:#a5afd6;
+  --navy:#16204a;--navy-ink:#eef3ff;--acc-soft:rgba(10,190,197,.22);
+  --gold:#f0c46a;--gold-soft:rgba(240,196,106,.14);--ok:#5fd6a6;--ok-soft:rgba(95,214,166,.14);
+  --warn:#ff9a72;--warn-soft:rgba(255,154,114,.14);
+  --sh1:0 3px 0 rgba(0,0,0,.18),0 8px 20px rgba(0,0,0,.18);--theme-color:#16204a;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{min-height:100vh;background:var(--bg);color:var(--tx);font-size:var(--fs-m);line-height:1.6;
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Microsoft JhengHei","Noto Sans CJK TC","Noto Sans TC",system-ui,sans-serif;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='104' height='104'%3E%3Cpath fill='%238a91be' fill-opacity='.08' d='M26 4 33 20 50 26 33 33 26 50 20 33 4 26 20 20ZM78 56 85 72 102 78 85 85 78 102 72 85 56 78 72 72Z'/%3E%3C/svg%3E");}
+html:lang(ja) body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI","Yu Gothic",Meiryo,"Noto Sans CJK JP","Noto Sans JP",system-ui,sans-serif}
+html:lang(zh-Hans) body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Noto Sans CJK SC","Noto Sans SC",system-ui,sans-serif}
+.ic{width:20px;height:20px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle}
+.ic.sm{width:16px;height:16px}
+a{color:inherit}
+button,.btn{font:inherit;font-size:var(--fs-s);font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  min-height:36px;padding:6px 14px;border-radius:999px;border:1px solid var(--line2);background:var(--surface);color:var(--tx);
+  cursor:pointer;text-decoration:none;white-space:nowrap;transition:background .15s,border-color .15s,filter .15s}
+button:hover,.btn:hover{border-color:var(--acc);background:var(--acc-soft)}
+button:focus-visible,.btn:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid #245d82;outline-offset:2px}
+.btn.pri,button.pri{background:var(--acc);border-color:transparent;color:var(--acc-ink)}
+.btn.pri:hover,button.pri:hover{filter:brightness(1.07);background:var(--acc)}
+.btn.ghost,button.ghost{background:transparent}
+button:disabled{opacity:.5;cursor:not-allowed}
+input{font:inherit;font-size:var(--fs-m);min-height:42px;padding:8px 12px;border-radius:var(--r-s);border:1px solid var(--line2);
+  background:var(--surface);color:var(--tx);width:100%}
+
+/* ── 頂欄：左＝地點緞帶（遊戲的「📍 畫面名」），右＝帳號＋⚙ ── */
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:var(--sp3);padding:12px max(16px,calc(50% - 600px));
+  background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.ribbon{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:var(--navy-ink);font-weight:800;font-size:var(--fs-l);
+  padding:8px 26px 8px 16px;letter-spacing:.04em;clip-path:polygon(0 0,100% 0,calc(100% - 14px) 100%,0 100%);border-radius:var(--r-s) 0 0 var(--r-s)}
+.top .sub{color:var(--tx3);font-size:var(--fs-s);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.top .spacer{flex:1}
+.acct{display:inline-flex;align-items:center;gap:6px;color:var(--tx2);font-size:var(--fs-s);font-weight:700}
+.pref{position:relative}
+.pref>summary{list-style:none;cursor:pointer;width:40px;height:40px;border-radius:999px;display:grid;place-items:center;
+  border:1px solid var(--line2);background:var(--surface);color:var(--tx2)}
+.pref>summary::-webkit-details-marker{display:none}
+.pref-body{position:absolute;right:0;top:calc(100% + 8px);z-index:30;display:flex;flex-wrap:wrap;gap:8px;padding:12px;min-width:240px;
+  background:var(--surface);border:1px solid var(--line2);border-radius:var(--r-m);box-shadow:var(--sh2)}
+.pref-body .lbl{flex:1 1 100%;font-size:var(--fs-xs);color:var(--tx3);font-weight:700}
+.pref-body button[aria-pressed="true"]{background:var(--navy);color:var(--navy-ink);border-color:transparent}
+
+main{max-width:1200px;margin:0 auto;padding:var(--sp5) 16px 60px}
+.h{display:flex;align-items:center;gap:10px;margin:var(--sp6) 0 var(--sp3);font-size:var(--fs-l);font-weight:800}
+.h::before{content:"";width:5px;height:20px;background:var(--acc);border-radius:2px}
+.h .n{color:var(--tx3);font-size:var(--fs-s);font-weight:700}
+
+/* ── 繼續遊戲 ── */
+.cont{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:var(--sp3)}
+.ccard{display:flex;align-items:center;gap:var(--sp3);padding:14px 16px;background:var(--surface);border:1px solid var(--line);
+  border-left:5px solid var(--acc);border-radius:var(--r-s) var(--r-m) var(--r-m) var(--r-s);box-shadow:var(--sh1)}
+.ccard.turn{border-left-color:var(--gold)}
+.av{width:52px;height:52px;border-radius:50%;flex:0 0 52px;background:var(--surface3);color:var(--tx2);display:grid;place-items:center;
+  font-weight:800;font-size:var(--fs-xl);overflow:hidden;border:2px solid var(--surface);box-shadow:0 0 0 1px var(--line2)}
+.av img{width:100%;height:100%;object-fit:cover}
+.ccard .txt{flex:1;min-width:0}
+.ccard .k{font-size:var(--fs-xs);color:var(--tx3);font-weight:700}
+.ccard .t{font-size:var(--fs-l);font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ccard .m{font-size:var(--fs-s);color:var(--tx2)}
+.empty{padding:16px;border:1px dashed var(--line2);border-radius:var(--r-m);color:var(--tx2);background:var(--surface2);
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.empty .grow{flex:1;min-width:200px}
+
+/* ── 模組卡 ── */
+.mods{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:var(--sp4)}   /* 模組少時卡片撐寬（像遊戲的主線橫幅）、多時自動排成多欄 */
+.mods .cover{height:clamp(140px,14vw,200px)}
+.mod{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-s) var(--r-l) var(--r-s) var(--r-l);overflow:hidden;box-shadow:var(--sh1);
+  display:flex;flex-direction:column}
+.cover{position:relative;height:150px;background:var(--navy);overflow:hidden}
+.cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s}
+.cover img.on{opacity:1}
+.cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 35%,rgba(12,20,48,.55))}
+.cover .name{position:absolute;left:0;bottom:14px;z-index:1;background:var(--navy);color:var(--navy-ink);font-weight:800;font-size:var(--fs-l);
+  padding:6px 26px 6px 16px;clip-path:polygon(0 0,100% 0,calc(100% - 14px) 100%,0 100%);max-width:88%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cover .cnt{position:absolute;right:12px;top:10px;z-index:1;font-size:var(--fs-xs);font-weight:700;color:#fff;background:rgba(12,20,48,.55);
+  border-radius:999px;padding:2px 10px}
+.mod .tag{padding:10px 16px 0;color:var(--tx2);font-size:var(--fs-s)}
+.rows{padding:4px 16px 8px}
+.row{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px dashed var(--line)}
+.row:last-child{border-bottom:0}
+.row .info{flex:1;min-width:0}
+.row .nm{font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .meta{font-size:var(--fs-xs);color:var(--tx3)}
+.row .acts{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:var(--fs-xs);font-weight:800;padding:2px 10px;border-radius:999px;white-space:nowrap;
+  background:var(--surface3);color:var(--tx2)}
+.chip.live{background:var(--acc-soft);color:var(--acc-d)}
+html[data-theme="dark"] .chip.live{color:#7fe3e8}
+.chip.open{background:var(--ok-soft);color:var(--ok)}
+.chip.turn{background:var(--gold-soft);color:var(--gold)}
+.chip.hold{background:var(--warn-soft);color:var(--warn)}
+.newrun{margin-top:auto;border-top:1px solid var(--line);padding:4px 16px 12px}
+.newrun>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:6px;padding:10px 0 4px;color:var(--acc-d);font-weight:800;font-size:var(--fs-s)}
+html[data-theme="dark"] .newrun>summary{color:#7fe3e8}
+.newrun>summary::-webkit-details-marker{display:none}
+.newrun .opts{display:flex;flex-wrap:wrap;gap:8px;padding-top:6px}
+
+/* ── 維護者資訊（預設收起）── */
+.admin{margin-top:var(--sp6);color:var(--tx3);font-size:var(--fs-s)}
+.admin>summary{cursor:pointer;font-weight:700}
+.admin table{width:100%;border-collapse:collapse;margin-top:8px;font-size:var(--fs-xs)}
+.admin th,.admin td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}
+.admin code{font-size:var(--fs-xs);word-break:break-all}
+.admin table{table-layout:fixed}
+.note{margin-top:var(--sp4);color:var(--tx3);font-size:var(--fs-s)}
+.err{margin:var(--sp3) 0;padding:10px 14px;border-radius:var(--r-s);background:var(--warn-soft);color:var(--warn);font-weight:700}
+
+/* ── 登入彈窗（與桌面同一個樣子：青綠標題帶）── */
+.modal{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(14,20,46,.45);backdrop-filter:blur(6px)}
+.modal.on{display:flex}
+.mpanel{width:min(440px,100%);background:var(--surface);border-radius:var(--r-m);box-shadow:var(--sh2);overflow:hidden}
+.mhd{display:flex;align-items:center;gap:8px;padding:12px 14px;background:#5ac2c9;color:#fff;font-weight:800}
+.mhd .x{margin-left:auto;min-height:32px;width:32px;padding:0;border:0;background:transparent;color:#fff}
+.mbody{padding:16px;display:grid;gap:10px}
+.mbody .hint{font-size:var(--fs-s);color:var(--tx2)}
+.mbody .bad{color:var(--warn);font-size:var(--fs-s);font-weight:700;min-height:1em}
+
+@media (max-width:600px){
+  .top{padding:10px 12px;gap:8px}
+  .top .sub{display:none}
+  .ribbon{font-size:var(--fs-m);padding:7px 22px 7px 12px}
+  .acct .who{max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  main{padding:var(--sp4) 12px 48px}
+  .cover{height:120px}
+  .row{flex-wrap:wrap}
+  .row .acts{flex:1 1 100%;justify-content:flex-start}
+  .ccard{flex-wrap:wrap}
+  .ccard .btn{flex:1 1 100%}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<svg style="display:none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-6-6.5-11a6.5 6.5 0 0113 0c0 5-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20.5c0-4 3.4-6.5 7.5-6.5s7.5 2.5 7.5 6.5"/></symbol>
+<symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 01-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 010-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 014 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 010 4h-.1a1.7 1.7 0 00-1.5 1z"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 6.2 12 6.2 21.5 12 21.5 12 18 17.8 12 17.8 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="2.6"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-redo" viewBox="0 0 24 24"><path d="M20 11a8 8 0 10-2.3 5.7"/><path d="M20 4v7h-7"/></symbol>
+<symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M18.7 5.3l-1.8 1.8M7.1 16.9l-1.8 1.8"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 019.5 4a7 7 0 1010.5 10.5z"/></symbol>
+<symbol id="i-logout" viewBox="0 0 24 24"><path d="M15 4h4a1 1 0 011 1v14a1 1 0 01-1 1h-4"/><path d="M10 12H3M6 9l-3 3 3 3"/></symbol>
+<symbol id="i-hourglass" viewBox="0 0 24 24"><path d="M7 3.5h10M7 20.5h10"/><path d="M8.5 3.5v3L12 11l3.5-4.5v-3M8.5 20.5v-3L12 13l3.5 4.5v3"/></symbol>
+</svg>
+
+<header class="top">
+  <span class="ribbon"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg><span data-i18n="lobby">大廳</span></span>
+  <span class="sub" data-i18n="lobby_sub">選一個世界，進入或開新局</span>
+  <span class="spacer"></span>
+  <span class="acct" id="acct"></span>
+  <details class="pref" id="pref">
+    <summary aria-label="Settings" data-i18n-aria="prefs"><svg class="ic" aria-hidden="true"><use href="#i-gear"/></svg></summary>
+    <div class="pref-body">
+      <span class="lbl" data-i18n="theme">主題</span>
+      <button type="button" data-theme-set="light"><svg class="ic sm" aria-hidden="true"><use href="#i-sun"/></svg><span data-i18n="light">淺色</span></button>
+      <button type="button" data-theme-set="dark"><svg class="ic sm" aria-hidden="true"><use href="#i-moon"/></svg><span data-i18n="dark">深色</span></button>
+      <span class="lbl" data-i18n="language">語言</span>
+      <span id="langs" style="display:contents"></span>
+      <span class="lbl" data-i18n="allow_watch">新開的局</span>
+      <label class="wchk"><input type="checkbox" id="watchable" checked><span data-i18n="allow_watch_on">允許觀戰</span></label>
+    </div>
+  </details>
+</header>
+
+<main>
+  <div id="err"></div>
+  <h2 class="h" data-i18n="continue_h">繼續遊戲</h2>
+  <div id="cont"></div>
+  <h2 class="h"><span data-i18n="worlds_h">世界</span><span class="n" id="modn"></span></h2>
+  <div class="mods" id="mods"></div>
+  <p class="note" data-i18n="rules_note">一組帳號通用所有桌。同一個帳號的同一個角色，不能同時在兩張還沒收局的桌上。</p>
+  <details class="admin" id="admin">
+    <summary data-i18n="admin_h">維護者資訊</summary>
+    <div id="adminbody"></div>
+  </details>
+</main>
+
+<div class="modal" id="newtable" role="dialog" aria-modal="true" aria-labelledby="ntt">
+  <div class="mpanel">
+    <div class="mhd"><svg class="ic" aria-hidden="true"><use href="#i-door"/></svg><span id="ntt" data-i18n="nt_title">開桌設定</span>
+      <button type="button" class="x" id="ntx" aria-label="close" data-i18n-aria="close"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button></div>
+    <div class="mbody">
+      <span class="hint" id="ntsub"></span>
+      <input id="ntname" maxlength="60" data-i18n-ph="nt_name_ph" placeholder="桌名（可留空）">
+      <label class="wchk" style="margin:6px 0"><input type="checkbox" id="ntwatch" checked><span data-i18n="allow_watch_on">允許觀戰</span></label>
+      <span class="hint" data-i18n="nt_hint">開桌的人是這一局的 owner：只有 owner 能呼喚 GM、調整可見性。</span>
+      <span class="bad" id="ntbad"></span>
+      <button class="pri" type="button" id="ntgo" data-i18n="nt_go">開桌</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="login" role="dialog" aria-modal="true" aria-labelledby="logint">
+  <div class="mpanel">
+    <div class="mhd"><svg class="ic" aria-hidden="true"><use href="#i-user"/></svg><span id="logint" data-i18n="login">登入</span>
+      <button type="button" class="x" id="loginx" aria-label="close" data-i18n-aria="close"><svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button></div>
+    <form class="mbody" id="loginf">
+      <span class="hint" data-i18n="login_hint">用桌上那組帳號＋密碼登入（所有桌通用）。</span>
+      <input id="lu" autocomplete="username" data-i18n-ph="username" placeholder="帳號">
+      <input id="lp" type="password" autocomplete="current-password" data-i18n-ph="password" placeholder="密碼">
+      <span class="bad" id="lbad"></span>
+      <button class="pri" type="submit" data-i18n="login_go">登入</button>
+    </form>
+  </div>
+</div>
+
+<script>
+"use strict";
+/* ---------- 三語字典（世界觀用語不在這裡：那些由模組的 locale.json 給） ---------- */
+const I18N = {
+ "zh-Hant": {lang_name:"繁中", lobby:"大廳", lobby_sub:"選一個世界，進入或開新局", prefs:"設定", theme:"主題", light:"淺色", dark:"深色", language:"語言",
+  continue_h:"繼續遊戲", worlds_h:"世界", admin_h:"維護者資訊", rules_note:"一組帳號通用所有桌。同一個帳號的同一個角色，不能同時在兩張還沒收局的桌上。",
+  login:"登入", logout:"登出", login_hint:"用桌上那組帳號＋密碼登入（所有桌通用）。", username:"帳號", password:"密碼", login_go:"登入", login_bad:"帳號或密碼不對",
+  close:"關閉", enter:"進入", back_to_table:"回到桌上", watch:"觀戰", new_run:"再開一局", new_table:"開一局新的", need_login:"登入後才能開局",
+  cont_empty_in:"你現在沒有進行中的桌。從下面挑一個世界加入吧。", cont_empty_out:"登入後，這裡會列出你正在玩的桌。",
+  your_char:"你的角色：{c}", seat:"席 {s}", turn_you:"輪到你了", waiting_n:"還在等 {n} 人",
+  st_off:"離線", st_end:"已收局", st_hold:"暫停中", st_open:"第 {n} 景・進行中", st_closed:"第 {n} 景・等下一景", st_recruit:"等人入座",
+  enter_ended:"查看", nt_title:"開桌設定", nt_name_ph:"桌名（可留空）", nt_go:"開桌", nt_hint:"開桌的人是這一局的 owner：只有 owner 能呼喚 GM、調整可見性。", allow_watch:"觀戰", allow_watch_on:"允許觀戰", seats_n:"{n} 席", seats_nm:"{n}/{m} 席", tables_n:"{n} 張桌", scn_n:"{n} 個劇本", creating:"開桌中…", confirm_newrun:"要為「{t}」開一局新的嗎？舊局會保留、可以回放。",
+  err_load:"讀不到桌子清單：{e}", col_table:"桌", col_scn:"劇本", col_events:"事件", col_session:"這一局", legacy:"舊版大廳"},
+ "zh-Hans": {lang_name:"简中", lobby:"大厅", lobby_sub:"选一个世界，进入或开新局", prefs:"设置", theme:"主题", light:"浅色", dark:"深色", language:"语言",
+  continue_h:"继续游戏", worlds_h:"世界", admin_h:"维护者信息", rules_note:"一组账号通用所有桌。同一个账号的同一个角色，不能同时在两张还没收局的桌上。",
+  login:"登录", logout:"退出", login_hint:"用桌上那组账号＋密码登录（所有桌通用）。", username:"账号", password:"密码", login_go:"登录", login_bad:"账号或密码不对",
+  close:"关闭", enter:"进入", back_to_table:"回到桌上", watch:"观战", new_run:"再开一局", new_table:"开一局新的", need_login:"登录后才能开局",
+  cont_empty_in:"你现在没有进行中的桌。从下面挑一个世界加入吧。", cont_empty_out:"登录后，这里会列出你正在玩的桌。",
+  your_char:"你的角色：{c}", seat:"席 {s}", turn_you:"轮到你了", waiting_n:"还在等 {n} 人",
+  st_off:"离线", st_end:"已收局", st_hold:"暂停中", st_open:"第 {n} 景・进行中", st_closed:"第 {n} 景・等下一景", st_recruit:"等人入座",
+  enter_ended:"查看", nt_title:"开桌设置", nt_name_ph:"桌名（可留空）", nt_go:"开桌", nt_hint:"开桌的人是这一局的 owner：只有 owner 能呼唤 GM、调整可见性。", allow_watch:"观战", allow_watch_on:"允许观战", seats_n:"{n} 席", seats_nm:"{n}/{m} 席", tables_n:"{n} 张桌", scn_n:"{n} 个剧本", creating:"开桌中…", confirm_newrun:"要为「{t}」开一局新的吗？旧局会保留、可以回放。",
+  err_load:"读不到桌子清单：{e}", col_table:"桌", col_scn:"剧本", col_events:"事件", col_session:"这一局", legacy:"旧版大厅"},
+ "ja": {lang_name:"日本語", lobby:"ロビー", lobby_sub:"世界を選んで、入るか新しく始める", prefs:"設定", theme:"テーマ", light:"ライト", dark:"ダーク", language:"言語",
+  continue_h:"続きから", worlds_h:"世界", admin_h:"管理者向け情報", rules_note:"アカウントは全卓共通。同じアカウントの同じキャラは、終わっていない卓に同時には出られません。",
+  login:"ログイン", logout:"ログアウト", login_hint:"卓と同じユーザー名＋パスワードでログイン（全卓共通）。", username:"ユーザー名", password:"パスワード", login_go:"ログイン", login_bad:"ユーザー名かパスワードが違います",
+  close:"閉じる", enter:"入る", back_to_table:"卓に戻る", watch:"観戦", new_run:"もう一局", new_table:"新しく始める", need_login:"始めるにはログインが必要です",
+  cont_empty_in:"進行中の卓はありません。下から世界を選んで参加しましょう。", cont_empty_out:"ログインすると、遊んでいる卓がここに並びます。",
+  your_char:"あなたのキャラ：{c}", seat:"席 {s}", turn_you:"あなたの番", waiting_n:"あと {n} 人待ち",
+  st_off:"オフライン", st_end:"終了", st_hold:"一時停止", st_open:"第{n}景・進行中", st_closed:"第{n}景・次の景待ち", st_recruit:"参加者募集中",
+  enter_ended:"見る", nt_title:"卓の設定", nt_name_ph:"卓の名前（空でも可）", nt_go:"開始", nt_hint:"卓を立てた人がこの局の owner：GM の呼び出しと公開範囲は owner だけ。", allow_watch:"観戦", allow_watch_on:"観戦を許可", seats_n:"{n} 席", seats_nm:"{n}/{m} 席", tables_n:"卓 {n}", scn_n:"シナリオ {n}", creating:"卓を準備中…", confirm_newrun:"「{t}」で新しい局を始めますか？前の局は残り、あとで見返せます。",
+  err_load:"卓の一覧を読めません：{e}", col_table:"卓", col_scn:"シナリオ", col_events:"イベント", col_session:"この局", legacy:"旧ロビー"}
+};
+const LANGS = ["zh-Hant", "zh-Hans", "ja"];
+const LOC_FALL = {"zh-Hant": ["zh-Hant", "zh-Hans"], "zh-Hans": ["zh-Hans", "zh-Hant"], "ja": ["ja"]};
+function guessLang(){
+  const n = (navigator.language || "").toLowerCase();
+  if(n.startsWith("ja")) return "ja";
+  if(n.startsWith("zh")) return /hant|tw|hk|mo/.test(n) ? "zh-Hant" : "zh-Hans";
+  return "zh-Hans";
+}
+const store = {get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } },
+               set(k, v){ try{ v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v); }catch(e){} }};
+let LANG = store.get("trpg_lang") || guessLang();
+/* 2026-10-19（設計者）：「建 run 的時候，可以選擇是否允許觀戰」——大廳這裡記住使用者的選擇，
+   開新局／開新桌時帶進 mutation；預設允許。 */
+let WATCHABLE = store.get("trpg_watchable") !== "0";
+if(!I18N[LANG]) LANG = "zh-Hans";
+const t = (k, v) => {
+  let s = I18N[LANG][k] || I18N["zh-Hans"][k] || k;
+  if(v) for(const key in v) s = s.split("{" + key + "}").join(v[key] == null ? "" : v[key]);
+  return s;
+};
+const $ = id => document.getElementById(id);
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const IC = (n, cls) => `<svg class="ic${cls ? " " + cls : ""}" aria-hidden="true"><use href="#i-${n}"/></svg>`;
+
+/* ---------- GraphQL（同源 `/graphql`；憑證＝與桌面同一把 `trpg_token`，走 Authorization 標頭） ---------- */
+async function gq(query, variables){
+  const h = {"Content-Type": "application/json"};
+  const tok = (store.get("trpg_token") || "").trim();
+  if(tok) h["Authorization"] = "Bearer " + tok;
+  const r = await fetch("/graphql", {method: "POST", headers: h, body: JSON.stringify({query, variables: variables || null})});
+  const j = await r.json();
+  if(j.errors && j.errors.length) throw new Error(j.errors[0].message);
+  return j.data;
+}
+const TBL = "id module scenario scenarioName online ended seats seatCap events watchable session scene sceneOpen paused waiting";
+const Q_MODULES = `{ modules { id name tableCount characters assets { module base index locale } scenarios { id name tableCount tables { ${TBL} } } } }`;
+const Q_ME = `{ me { account display kind tables { seat charId table { ${TBL} } } } }`;
+
+/* ---------- 模組的用語表與素材（封面、頭像）——全由模組給，這一頁不內建作品內容 ---------- */
+const MODLOC = new Map(), MODIDX = new Map(), MODPART = new Map();
+const IMG = new Map();      // 已解析的封面／頭像 URL（輪詢重畫時直接畫上，不再淡入一次）
+const absUrl = (u, base) => { try{ return new URL(u, new URL(base || "/", location.href)).href; }catch(e){ return ""; } };
+function fetchJSON(url){
+  return fetch(url, {cache: "no-cache"}).then(r => r.ok ? r.json() : null).catch(() => null);
+}
+function moduleLocale(m){
+  const u = m.assets && m.assets.locale;
+  if(!u) return Promise.resolve(null);
+  if(!MODLOC.has(m.id)) MODLOC.set(m.id, fetchJSON(absUrl(u)).then(d => (d && d.schema === 1) ? d : null));
+  return MODLOC.get(m.id);
+}
+/* 素材表 schema 1＝單檔；schema 2＝瘦清單＋`parts`（按類拆開）⇒ 只抓用得到的那一類 */
+function moduleIndex(m){
+  const u = m.assets && m.assets.index;
+  if(!u) return Promise.resolve(null);
+  if(!MODIDX.has(m.id)) MODIDX.set(m.id, fetchJSON(absUrl(u)));
+  return MODIDX.get(m.id);
+}
+async function assetAlias(m, alias){
+  if(!alias) return "";
+  const idx = await moduleIndex(m);
+  if(!idx) return "";
+  let part = idx;
+  if(idx.schema === 2 && idx.parts){
+    const kind = String(alias).split(":")[0], rel = idx.parts[kind];
+    if(!rel) return "";
+    const key = m.id + "|" + kind;
+    if(!MODPART.has(key)) MODPART.set(key, fetchJSON(absUrl(rel, absUrl(m.assets.index))));
+    part = await MODPART.get(key);
+    if(!part) return "";
+  }
+  const f = (part.files || {})[(part.aliases || {})[alias]];
+  return f && f.path ? absUrl(f.path, absUrl(m.assets.base || m.assets.index)) : "";
+}
+/* 固有名詞（模組名、劇本名）：原文 → 模組 glossary 的譯名；沒收錄就照原文 */
+function gl(loc, s){
+  const k = String(s == null ? "" : s).trim(), e = loc && loc.glossary && loc.glossary[k];
+  if(!e) return k;
+  if(LANG === "ja") return e.ja || k;
+  for(const l of LOC_FALL[LANG]) if(e[l]) return e[l];
+  return k;
+}
+function locText(o){
+  if(!o) return "";
+  if(typeof o === "string") return o;
+  for(const l of LOC_FALL[LANG]) if(o[l]) return o[l];
+  return o.ja || o["zh-Hant"] || o["zh-Hans"] || "";
+}
+
+/* ---------- 狀態 ---------- */
+let MODS = [], ME = null, LOADERR = "";
+async function load(){
+  try{
+    const tok = (store.get("trpg_token") || "").trim();
+    const [m, me] = await Promise.all([gq(Q_MODULES), tok ? gq(Q_ME).catch(() => ({me: null})) : Promise.resolve({me: null})]);
+    MODS = m.modules || [];
+    ME = me.me || null;
+    LOADERR = "";
+    await Promise.all(MODS.map(moduleLocale));
+  }catch(e){ LOADERR = e && e.message ? e.message : String(e); }
+  render();
+}
+
+function status(tb){
+  if(!tb.online) return {cls: "", tx: t("st_off")};
+  if(tb.ended) return {cls: "", tx: t("st_end")};
+  if(tb.paused) return {cls: "hold", tx: t("st_hold")};
+  if(tb.scene && tb.sceneOpen) return {cls: "live", tx: t("st_open", {n: tb.scene})};
+  if(tb.scene) return {cls: "live", tx: t("st_closed", {n: tb.scene})};
+  return {cls: "open", tx: t("st_recruit")};
+}
+const modOf = id => MODS.find(m => m.id === id) || {id, assets: null};
+
+/* ---------- 畫面 ---------- */
+function applyTexts(){
+  document.documentElement.lang = LANG;
+  document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n); });
+  document.querySelectorAll("[data-i18n-ph]").forEach(el => { el.placeholder = t(el.dataset.i18nPh); });
+  document.querySelectorAll("[data-i18n-aria]").forEach(el => { el.setAttribute("aria-label", t(el.dataset.i18nAria)); });
+  document.title = "TRPG " + t("lobby");
+  $("langs").innerHTML = LANGS.map(l => `<button type="button" data-lang="${l}" aria-pressed="${l === LANG}">${esc(I18N[l].lang_name)}</button>`).join("");
+  const th = document.documentElement.dataset.theme || "light";
+  document.querySelectorAll("[data-theme-set]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.themeSet === th)));
+}
+function renderAcct(){
+  $("acct").innerHTML = ME
+    ? `${IC("user", "sm")}<span class="who">${esc(ME.display || ME.account)}</span>` +
+      `<button type="button" class="ghost" id="logout" title="${esc(t("logout"))}" aria-label="${esc(t("logout"))}">${IC("logout", "sm")}</button>`
+    : `<button type="button" class="pri" id="loginopen">${IC("user", "sm")}${esc(t("login"))}</button>`;
+}
+function renderCont(){
+  const box = $("cont");
+  const mine = (ME && ME.tables || []).filter(x => x.seat && x.table && !x.table.ended);
+  if(!ME){
+    box.className = "";
+    box.innerHTML = `<div class="empty"><span class="grow">${esc(t("cont_empty_out"))}</span>` +
+      `<button type="button" class="pri" data-login>${IC("user", "sm")}${esc(t("login"))}</button></div>`;
+    return;
+  }
+  if(!mine.length){ box.className = ""; box.innerHTML = `<div class="empty"><span class="grow">${esc(t("cont_empty_in"))}</span></div>`; return; }
+  box.className = "cont";
+  box.innerHTML = mine.map(x => {
+    const tb = x.table, m = modOf(tb.module);
+    const st = status(tb), myTurn = tb.sceneOpen && (tb.waiting || []).includes(x.seat);
+    const scn = esc(tb.scenarioName);
+    const avKey = "av|" + tb.module + "|" + String(x.charId || "").toLowerCase(), avUrl = IMG.get(avKey);
+    return `<div class="ccard${myTurn ? " turn" : ""}" data-av="${esc(tb.module)}|${esc(x.charId || "")}">
+      <div class="av">${avUrl ? `<img alt="" src="${esc(avUrl)}">` : esc(String(x.charId || x.seat || "?").slice(0, 1).toUpperCase())}</div>
+      <div class="txt"><div class="k">${esc(m.name || tb.module)}</div>
+        <div class="t" data-scn="${esc(tb.module)}|${esc(tb.scenarioName)}">${scn}</div>
+        <div class="m"><span class="chip ${myTurn ? "turn" : st.cls}">${esc(myTurn ? t("turn_you") : st.tx)}</span>
+          ${(tb.waiting || []).length && !myTurn && tb.sceneOpen ? esc(t("waiting_n", {n: tb.waiting.length})) : ""}</div></div>
+      <a class="btn pri" href="${tb.session ? "/tables/" + encodeURIComponent(tb.session) : "/" + encodeURIComponent(tb.id) + "/"}">${esc(t("back_to_table"))}${IC("arrow", "sm")}</a></div>`;
+  }).join("");
+}
+function rowHTML(m, tb){
+  const st = status(tb), acts = [];
+  /* 2026-10-19（設計者）：「已收局的桌明明還能用 URL 進去，大廳卻沒有進入按鈕」——
+     收了局也給入口（頁面會顯示「已收局」並轉唯讀），只有桌真的沒在線時才不給。 */
+  if(tb.online) acts.push(`<a class="btn ${tb.ended ? "ghost" : "pri"}" href="${tb.session ? "/tables/" + encodeURIComponent(tb.session) : "/" + encodeURIComponent(tb.id) + "/"}">${esc(t(tb.ended ? "enter_ended" : "enter"))}</a>`);
+  if(tb.watchable) acts.push(`<a class="btn ghost" href="${tb.session ? "/watchtables/" + encodeURIComponent(tb.session) : "/" + encodeURIComponent(tb.id) + "/watch/"}">${IC("eye", "sm")}${esc(t("watch"))}</a>`);
+  if(tb.ended && ME) acts.push(`<button type="button" data-newrun="${esc(tb.id)}" data-name="${esc(tb.scenarioName)}">${IC("redo", "sm")}${esc(t("new_run"))}</button>`);
+  const seatTxt = (tb.seatCap != null)
+    ? t("seats_nm", {n: (tb.seats == null ? 0 : tb.seats), m: tb.seatCap})
+    : (tb.seats != null ? t("seats_n", {n: tb.seats}) : "");
+  const meta = [seatTxt, tb.name && tb.name !== tb.scenarioName ? tb.name : ""].filter(Boolean).join(" · ");
+  return `<div class="row"><div class="info"><div class="nm" data-scn="${esc(m.id)}|${esc(tb.scenarioName)}">${esc(tb.scenarioName)}</div>
+    <div class="meta"><span class="chip ${st.cls}">${esc(st.tx)}</span> ${esc(meta)}</div></div>
+    <div class="acts">${acts.join("")}</div></div>`;
+}
+function renderMods(){
+  $("modn").textContent = MODS.length ? t("tables_n", {n: MODS.reduce((a, m) => a + (m.tableCount || 0), 0)}) : "";
+  $("mods").innerHTML = MODS.map(m => {
+    const tables = [];
+    (m.scenarios || []).forEach(s => (s.tables || []).forEach(tb => tables.push(tb)));
+    tables.sort((a, b) => (a.ended - b.ended) || String(a.id).localeCompare(String(b.id)));
+    const opts = (m.scenarios || []).map(s =>
+      `<button type="button" data-create="${esc(m.id)}|${esc(s.id)}"><span data-scn="${esc(m.id)}|${esc(s.name)}">${esc(s.name)}</span></button>`).join("");
+    const cv = IMG.get("cover|" + m.id);
+    return `<article class="mod" data-mod="${esc(m.id)}">
+      <div class="cover">${cv ? `<img class="on" alt="" src="${esc(cv)}">` : ""}<span class="cnt">${esc(t("tables_n", {n: m.tableCount}))} · ${esc(t("scn_n", {n: (m.scenarios || []).length}))}</span>
+        <span class="name">${esc(m.name || m.id)}</span></div>
+      <div class="tag" data-tag="${esc(m.id)}"></div>
+      <div class="rows">${tables.map(tb => rowHTML(m, tb)).join("")}</div>
+      <details class="newrun"><summary>${IC("plus", "sm")}${esc(t("new_table"))}</summary>
+        <div class="opts">${ME ? opts : `<button type="button" class="pri" data-login>${esc(t("need_login"))}</button>`}</div></details>
+    </article>`;
+  }).join("");
+}
+function renderAdmin(){
+  const rows = [];
+  MODS.forEach(m => (m.scenarios || []).forEach(s => (s.tables || []).forEach(tb => rows.push(
+    `<tr><td><code>${esc(tb.id)}</code></td><td><code>${esc(m.id)}/${esc(s.id)}</code></td><td>${esc(tb.events == null ? "—" : tb.events)}</td><td><code>${esc(tb.session || "—")}</code></td></tr>`))));
+  $("adminbody").innerHTML = `<table><tr><th>${esc(t("col_table"))}</th><th>${esc(t("col_scn"))}</th><th>${esc(t("col_events"))}</th><th>${esc(t("col_session"))}</th></tr>${rows.join("")}</table>` +
+    `<p><a href="/?legacy=1">${esc(t("legacy"))}</a> · <a href="/health">/health</a></p>`;
+}
+/* 模組給的東西（封面、名字譯名、一句話介紹、頭像）在畫好骨架之後補上——抓不到就留純色＋原文 */
+async function decorate(){
+  for(const m of MODS){
+    const loc = await moduleLocale(m), lobby = (loc && loc.lobby) || {};
+    const card = document.querySelector(`.mod[data-mod="${CSS.escape(m.id)}"]`);
+    if(!card) continue;
+    card.querySelector(".name").textContent = gl(loc, m.name || m.id);
+    card.querySelector(".tag").textContent = locText(lobby.tagline);
+    const firstScn = ((m.scenarios || [])[0] || {}).id;
+    const alias = lobby.cover || (firstScn && lobby.scenarios && lobby.scenarios[firstScn] && lobby.scenarios[firstScn].cover) || "";
+    const url = await assetAlias(m, alias);
+    if(url) IMG.set("cover|" + m.id, url);
+    if(url && !card.querySelector(".cover img")){
+      const img = new Image(); img.alt = ""; img.decoding = "async"; img.onload = () => img.classList.add("on"); img.src = url;
+      card.querySelector(".cover").prepend(img);
+    }
+  }
+  document.querySelectorAll("[data-scn]").forEach(el => {
+    const [mid, name] = el.dataset.scn.split("|");
+    const loc = MODLOC.get(mid);
+    if(loc) loc.then(d => { el.textContent = gl(d, name); });
+  });
+  for(const el of document.querySelectorAll(".ccard[data-av]")){
+    const [mid, cid] = el.dataset.av.split("|");
+    if(!cid) continue;
+    const url = await assetAlias(modOf(mid), "avatar:" + cid.toLowerCase());
+    if(url){ IMG.set("av|" + mid + "|" + cid.toLowerCase(), url); const av = el.querySelector(".av"); if(!av.querySelector("img")) av.innerHTML = `<img alt="" src="${esc(url)}">`; }
+  }
+}
+function render(){
+  applyTexts();
+  $("err").innerHTML = LOADERR ? `<div class="err">${esc(t("err_load", {e: LOADERR}))}</div>` : "";
+  renderAcct(); renderCont(); renderMods(); renderAdmin();
+  decorate();
+}
+
+/* ---------- 操作 ---------- */
+function applyTheme(th){
+  document.documentElement.dataset.theme = th;
+  store.set("trpg_theme", th);
+  const mt = document.querySelector('meta[name="theme-color"]');
+  const tc = getComputedStyle(document.documentElement).getPropertyValue("--theme-color").trim();
+  if(mt && tc) mt.setAttribute("content", tc);
+}
+function openLogin(){ $("login").classList.add("on"); $("lbad").textContent = ""; setTimeout(() => $("lu").focus(), 0); }
+function closeLogin(){ $("login").classList.remove("on"); }
+let NT = null;      /* 待建的桌／待换的局（配置弹窗里用） */
+function ntClose(){ $("newtable").classList.remove("on"); NT = null; }
+$("ntx").addEventListener("click", ntClose);
+$("newtable").addEventListener("click", e => { if(e.target === $("newtable")) ntClose(); });
+$("ntgo").addEventListener("click", async () => {
+  if(!NT) return;
+  const nm = $("ntname").value.trim(), w = !!$("ntwatch").checked, btn = $("ntgo");
+  btn.disabled = true; $("ntbad").textContent = "";
+  try{
+    let sess = "";
+    if(NT.run){
+      const d = await gq("mutation($t: ID!, $w: Boolean){ newRun(tableId: $t, watchable: $w) }",
+                         {t: NT.run, w});
+      sess = (d.newRun && (d.newRun.session || ((d.newRun.table || {}).session))) || "";
+    }else{
+      const d = await gq("mutation($m: ID!, $s: ID!, $n: String, $w: Boolean){ createTable(module: $m, scenario: $s, name: $n, watchable: $w) }",
+                         {m: NT.mid, s: NT.sid, n: nm || null, w});
+      const tb = d.createTable && d.createTable.table;
+      sess = (tb && (tb.session || "")) || "";
+      if(!sess && tb && tb.id) sess = "";
+      if(!sess && tb && tb.id){ location.href = "/" + encodeURIComponent(tb.id) + "/"; return; }
+    }
+    if(sess){ location.href = "/tables/" + encodeURIComponent(sess); return; }
+    ntClose(); load();
+  }catch(err){ $("ntbad").textContent = String(err.message || err).slice(0, 160); btn.disabled = false; }
+});
+
+document.addEventListener("click", async e => {
+  const b = e.target.closest("button,[data-login]");
+  if(!b) return;
+  if(b.dataset.lang){ LANG = b.dataset.lang; store.set("trpg_lang", LANG); render(); return; }
+  if(b.dataset.themeSet){ applyTheme(b.dataset.themeSet); applyTexts(); return; }
+  if(b.id === "loginopen" || b.hasAttribute("data-login")){ openLogin(); return; }
+  if(b.id === "loginx"){ closeLogin(); return; }
+  if(b.id === "logout"){ store.set("trpg_token", null); ME = null; load(); return; }
+  if(b.dataset.create){
+    /* 2026-10-19（設計者）：「點選完一個劇本之後直接就開桌了，看起來沒什麼能讓我配置的地方」
+       ⇒ 先開設定彈窗（桌名／允許觀戰），按「開桌」才真的建。 */
+    const [mid, sid] = b.dataset.create.split("|");
+    NT = {mid, sid, run: ""};
+    $("ntsub").textContent = (b.dataset.name || sid);
+    $("ntname").value = "";
+    $("ntwatch").checked = WATCHABLE;
+    $("ntbad").textContent = "";
+    $("ntgo").disabled = false;
+    $("newtable").classList.add("on");
+    setTimeout(() => $("ntname").focus(), 0);
+    return;
+  }
+  if(b.dataset.newrun){
+    NT = {mid: "", sid: "", run: b.dataset.newrun};
+    $("ntsub").textContent = t("confirm_newrun", {t: b.dataset.name || b.dataset.newrun});
+    $("ntname").value = "";
+    $("ntwatch").checked = WATCHABLE;
+    $("ntbad").textContent = "";
+    $("ntgo").disabled = false;
+    $("newtable").classList.add("on");
+    return;
+  }
+});
+$("login").addEventListener("click", e => { if(e.target === $("login")) closeLogin(); });
+document.addEventListener("keydown", e => { if(e.key === "Escape") closeLogin(); });
+$("loginf").addEventListener("submit", async e => {
+  e.preventDefault();
+  const u = $("lu").value.trim(), p = $("lp").value;
+  if(!u || !p){ $("lbad").textContent = t("login_bad"); return; }
+  try{
+    const d = await gq("mutation($u: String!, $p: String!){ login(username: $u, password: $p){ token account display kind } }", {u, p});
+    const tok = d.login && d.login.token;
+    if(!tok) throw new Error(t("login_bad"));
+    store.set("trpg_token", tok); $("lp").value = ""; closeLogin(); load();
+  }catch(err){ $("lbad").textContent = t("login_bad"); }
+});
+
+applyTheme(store.get("trpg_theme") || "light");
+(function initWatchable(){
+  const el = $("watchable");
+  if(!el) return;
+  el.checked = WATCHABLE;
+  el.addEventListener("change", () => { WATCHABLE = !!el.checked; store.set("trpg_watchable", WATCHABLE ? "1" : "0"); });
+})();
+render();
+load();
+setInterval(() => { if(!document.hidden) load(); }, 15000);   // 景數／輪到誰會變；頁面在背景時不打
+</script>
+</body>
+</html>

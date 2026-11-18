@@ -1,0 +1,103 @@
+{
+  "kind": "stars",
+  "doc": "★ 升星表（渠道制，2026-10-20 统一）：升星条件全部在 `channels`（shop／goal／side，各自封顶）；星等＝1＋Σ各渠道已涨，再封顶 max_star。`rows` 只定义「到这一星时的成长／解锁」，不再写 `when`。gains／unlocks／title 是占位，设计者定版就改这里。",
+  "rows": [
+    {
+      "star": 2,
+      "name_jp": "星の担い手",
+      "name_cn": "星之承担者",
+      "title": "星の担い手",
+      "gains": {
+        "max_hp": 4,
+        "attrs": {
+          "wil": 1
+        },
+        "resources": {
+          "mana": 1
+        }
+      },
+      "unlocks": [
+        "hyousou_no_sho",
+        "meisou_no_me"
+      ],
+      "note": "★2 的成长：max_hp+4、wil+1、mana+1；解锁 hyousou_no_sho／meisou_no_me（原本 Lv2 的两招）。哪条渠道给的星都套用这一列。"
+    },
+    {
+      "star": 3,
+      "name_jp": "塔の踏破者",
+      "name_cn": "踏破塔者",
+      "title": "塔の踏破者",
+      "gains": {
+        "max_hp": 4,
+        "attrs": {
+          "str": 1
+        },
+        "resources": {
+          "mana": 1
+        }
+      },
+      "unlocks": [
+        "kageotoshi"
+      ],
+      "note": "★3 的成长：max_hp+4、str+1、mana+1；解锁 kageotoshi（原本 Lv3）。"
+    },
+    {
+      "star": 4,
+      "name_jp": "星屑の蒐集家",
+      "name_cn": "星屑收藏家",
+      "title": "星屑の蒐集家",
+      "gains": {
+        "max_hp": 6,
+        "attrs": {
+          "agi": 1
+        },
+        "resources": {
+          "mana": 2
+        }
+      },
+      "unlocks": [],
+      "note": "★4 的成长：max_hp+6、agi+1、mana+2。"
+    },
+    {
+      "star": 5,
+      "name_jp": "星の王",
+      "name_cn": "星之王",
+      "title": "星の王",
+      "gains": {
+        "max_hp": 8,
+        "attrs": {
+          "str": 1,
+          "agi": 1,
+          "wil": 1
+        },
+        "resources": {
+          "mana": 3
+        }
+      },
+      "unlocks": [],
+      "note": "★5 的成长：max_hp+8、str+1、agi+1、wil+1、mana+3。"
+    }
+  ],
+  "max_star": 5,
+  "channels": {
+    "shop": {
+      "max": 2,
+      "doc": "塔内「星見の店」（3 階補給所）用貨幣買——一顆 15、兩顆 25（共 40）。"
+    },
+    "goal": {
+      "max": 2,
+      "when": {
+        "var": "me.goal_achieved"
+      },
+      "doc": "完成自己的私密願望（`goals.json` 判據成立）。"
+    },
+    "side": {
+      "max": 2,
+      "when": {
+        "exists": "facts.side_quest_done"
+      },
+      "doc": "全體副任務：任一達成（清光下層小怪／無事歸還／開大祈願箱）⇒ 全桌每人 +2。"
+    }
+  },
+  "rows_doc": "渠道制：`rows` 只写成长／解锁；升星条件与每条路的封顶全在 `channels`。"
+}

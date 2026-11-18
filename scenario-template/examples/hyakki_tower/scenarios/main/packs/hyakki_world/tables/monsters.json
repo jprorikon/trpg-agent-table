@@ -1,0 +1,26 @@
+{
+  "kind": "monsters",
+  "doc": "百鬼塔で出会う相手（★4）。選ばれ方＝「`nodes` 指定 ＞ `depth` 範圍 ＞ 通用」、沒命中的欄位**逐欄回退**舊預設（`tower.mob_damage_die`／`star_coin_per_kill`／`params.exp_per_star_kill`）。**遭遇の数**は board.json の mobs（節点ごと）。⚠ 經驗**只從這裡來**（本桌沒有任何 growth_gain 觸發）——數字就是升級速度的油門，設計者定版改這裡。",
+  "rows": [
+    {"id": "yabusame", "name_jp": "野伏せの鬼", "name_cn": "伏路鬼",
+     "dc": 12, "check": "agi", "coins": 2, "exp": 5, "damage_die": 4,
+     "note": "通用（哪一格都可能遇到）。**最弱的那一種**——負責讓「打一場」有基本回收。"},
+
+    {"id": "hone_musha", "name_jp": "骸骨武者", "name_cn": "骸骨武者",
+     "depth_min": 1, "depth_max": 2, "dc": 13, "check": "agi", "coins": 2, "exp": 9, "damage_die": 5,
+     "note": "1～2 階（下層）。動作很規矩——十年ぶんの癖が抜けていない。"},
+
+    {"id": "gaki", "name_jp": "餓鬼", "name_cn": "饿鬼",
+     "depth_min": 3, "depth_max": 4, "dc": 15, "check": "agi", "coins": 3, "exp": 14, "damage_die": 6,
+     "note": "3～4 階（中層）。數が多いので、**回復を切らすと死ぬ**（死ぬと街に送り返される）。"},
+
+    {"id": "oni_sho", "name_jp": "鬼将", "name_cn": "鬼将",
+     "depth_min": 5, "depth_max": 6, "dc": 17, "check": "agi", "coins": 4, "exp": 17, "damage_die": 8,
+     "note": "5～6 階（上層）。一撃が重い——部位受傷（wound）が付く場面はここ。"},
+
+    {"id": "hyakki_no_aruji", "name_jp": "百鬼夜行の主", "name_cn": "百鬼夜行之主",
+     "nodes": ["hyakki_f6"], "boss": true,
+     "dc": 19, "check": "agi", "coins": 10, "exp": 40, "damage_die": 10,
+     "note": "最上階の主。腹に十年前の折れ剣を呑んでいる。倒すと `boss_defeated`（＝勝利結局＋★3 の事實）。"}
+  ]
+}

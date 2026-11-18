@@ -1,0 +1,21 @@
+{
+  "kind": "stars",
+  "doc": "★ 升星表：升星基於劇情事件與 AST 判據（when），成立即升星。可在解鎖時賦予屬性成長或解鎖新技能。",
+  "rows": [
+    {
+      "star": 2,
+      "name_jp": "星の担い手",
+      "name_cn": "星之承擔者",
+      "title": "星之承擔者",
+      "when": {
+        "or": [
+          {"var": "me.goal_achieved"},
+          {"==": [{"var": "world.event_type"}, "boss_defeated"]}
+        ]
+      },
+      "gains": {"max_hp": 4, "attrs": {"wil": 1}, "resources": {"mana": 1}},
+      "unlocks": ["snipe"],
+      "note": "達成自己的願望或擊敗首領魔物時升至 ★2。"
+    }
+  ]
+}

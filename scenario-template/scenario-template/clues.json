@@ -1,0 +1,75 @@
+{
+  "notes": "碎片＝證據（玩家互相出示的東西），claims＝結論（願望判據比對的是結論）。碎片 text 是私密正文：只有持有人看得到，GM 想轉述會被洩漏閘擋 ⇒ 要寫成「只有拿到的人才看得懂」的物件描述。★ 三線索：每一條結論至少三枚碎片，而且盡量來自不同池（tower／outside）——玩家漏掉第一枚、誤讀第二枚，第三枚才是保險。只給一枚的結論＝chokepoint（`tools/design_lint.py` 會叫）。",
+  "claims": [
+    {
+      "id": "c_1",
+      "text": "（這條結論是什麼——一句話）"
+    },
+    {
+      "id": "c_2",
+      "text": "（第二條結論）"
+    }
+  ],
+  "fragments": [
+    {
+      "id": "f1",
+      "pool": "tower",
+      "supports": [
+        "c_1"
+      ],
+      "weight": 2,
+      "text": "（碎片的私密正文：一件東西、一段記錄、一句誰留下的話）"
+    },
+    {
+      "id": "f2",
+      "pool": "tower",
+      "supports": [
+        "c_1"
+      ],
+      "weight": 1,
+      "text": "（第二枚，支持同一條結論——同一個地方也可以有兩種完全不同的證據）"
+    },
+    {
+      "id": "f5",
+      "pool": "outside",
+      "supports": [
+        "c_1"
+      ],
+      "weight": 1,
+      "text": "（同樣支持 c_1，但從城外的池出土——換一個來源，才不會「只有進去過的人拿得到」）"
+    },
+    {
+      "id": "f3",
+      "pool": "outside",
+      "supports": [
+        "c_2"
+      ],
+      "weight": 2,
+      "text": "（城外的碎片：寫成可攜的物件——信、帳簿、收據、一張字條——否則它在城裡落地時，文案會跟地點矛盾）"
+    },
+    {
+      "id": "f4",
+      "pool": "tower",
+      "supports": [
+        "c_2"
+      ],
+      "weight": 1,
+      "text": "（塔內的第二枚）"
+    },
+    {
+      "id": "f6",
+      "pool": "tower",
+      "supports": [
+        "c_2"
+      ],
+      "weight": 1,
+      "text": "（塔內的第三枚——三枚到齊，這條結論才不算 chokepoint）"
+    }
+  ],
+  "drop_policy": {
+    "on_pray_to": "anyone_but_requester",
+    "prefer_unheld": true,
+    "count_per_pray": 1,
+    "note": "祈願一次落一枚，落在提出者以外的人手上（seed 決定、可重現）；GM 也可以用 fragment_drop 手投。★ 手投是你的責任：某一條結論的碎片一直不出土，就是你在讓那一條願望變成不可能的任務。"
+  }
+}

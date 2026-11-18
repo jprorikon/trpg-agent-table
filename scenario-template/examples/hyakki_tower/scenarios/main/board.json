@@ -1,0 +1,93 @@
+{
+  "work": "百鬼塔（原創）",
+  "board_name": "鉄環地方",
+  "notes": "三座城市＋荒野＋一座六層的塔。**兩個塔口**：正面在鉄環市那側（hyakki），裏口在港町那側（hyakki_back，從 4 階出去）。塔的機制（入口用過即失效／只能坐昇降機／本層小怪未清不能上行／塔內飲食扣記憶／出塔収奪）由引擎實作。**「最近的城市」是引擎算的**：死在 1～2 階 → 鉄環市（3 步）；死在 3 階以上 → 港町ミナト（4 步以内）——同一座塔、不同樓層死，送回不同城市。⚠ 機制旋鈕（`entrance_search_dc`／塔的記憶消耗…）不寫在這裡，寫在 config 的 `board`／`tower` 段或作品層包。",
+  "start_node": "teckan",
+  "nodes": [
+    {"id": "teckan", "jp": "鉄環市", "cn": "铁环市", "type": "city", "danger": 0,
+     "tags": ["city", "rest", "shop", "guild", "arena"], "shop": true, "game_room": true,
+     "flavor": "炉と槌の音が絶えない。街の真ん中に、十年前に折れた大剣が突き立ててある——抜いた者を百鬼塔へ送るためだという。",
+     "monolith": "hyakki",
+     "edges": [{"to": "w_teckan", "kind": "road"}]},
+
+    {"id": "w_teckan", "jp": "北の荒道", "cn": "北荒野道", "type": "wild", "danger": 1,
+     "tags": ["wild"],
+     "flavor": "荷車の轍だけが残る。夜は鬼火が列になって街道を舐める。",
+     "edges": [{"to": "teckan", "kind": "road"}, {"to": "hyakki", "kind": "wild"}]},
+
+    {"id": "hyakki", "jp": "百鬼塔・正面", "cn": "百鬼塔·正面", "type": "monolith_entry", "danger": 2,
+     "tags": ["monolith_entry", "wild_entry"],
+     "flavor": "門は歯のように開いている。昇降機の灯だけが、まだ生きている。",
+     "edges": [{"to": "w_teckan", "kind": "road"}, {"to": "hyakki_f1", "kind": "entrance"}]},
+
+    {"id": "hyakki_f1", "jp": "百鬼塔 1階", "cn": "百鬼塔 1F", "type": "tower_floor", "danger": 2,
+     "tags": ["tower", "battle_domain"], "depth": 1, "mobs": 3,
+     "flavor": "床下が骨でできている。踏むたびに、下から鳴く。",
+     "edges": [{"to": "hyakki", "kind": "exit"}, {"to": "hyakki_f2", "kind": "elevator"}]},
+
+    {"id": "hyakki_f2", "jp": "百鬼塔 2階", "cn": "百鬼塔 2F", "type": "tower_floor", "danger": 2,
+     "tags": ["tower", "battle_domain"], "depth": 2, "mobs": 3,
+     "flavor": "壁に十数本の刀が刺さっている。どれも鞘から抜かれた形のままだ。",
+     "edges": [{"to": "hyakki_f1", "kind": "elevator"}, {"to": "hyakki_f3", "kind": "elevator"}]},
+
+    {"id": "hyakki_f3", "jp": "百鬼塔 3階・補給所", "cn": "百鬼塔 3F·补给所", "type": "tower_floor",
+     "danger": 1, "tags": ["tower", "shop"], "depth": 3, "mobs": 0, "shop": true,
+     "flavor": "鉄環市の商人が、勝手に棚を置いている。ここだけは静かだ——静かなのが一番怖い。",
+     "edges": [{"to": "hyakki_f2", "kind": "elevator"}, {"to": "hyakki_f4", "kind": "elevator"}]},
+
+    {"id": "hyakki_f4", "jp": "百鬼塔 4階", "cn": "百鬼塔 4F", "type": "tower_floor", "danger": 3,
+     "tags": ["tower", "battle_domain"], "depth": 4, "mobs": 4,
+     "flavor": "北側の壁が崩れている。そこから海の匂い——裏口は港町へ抜けている。",
+     "edges": [{"to": "hyakki_f3", "kind": "elevator"}, {"to": "hyakki_f5", "kind": "elevator"},
+               {"to": "hyakki_back", "kind": "exit"}]},
+
+    {"id": "hyakki_f5", "jp": "百鬼塔 5階", "cn": "百鬼塔 5F", "type": "tower_floor", "danger": 3,
+     "tags": ["tower", "battle_domain", "wish_box"], "depth": 5, "mobs": 4,
+     "wish_box": {"tier": 2},
+     "flavor": "小さな祈願箱。誰かがすでに供え物を置いている——まだ開いてはいない。",
+     "edges": [{"to": "hyakki_f4", "kind": "elevator"}, {"to": "hyakki_f6", "kind": "elevator"}]},
+
+    {"id": "hyakki_f6", "jp": "百鬼塔・最上階", "cn": "百鬼塔·顶层", "type": "tower_floor",
+     "danger": 4, "tags": ["tower", "boss", "wish_box"], "depth": 6, "mobs": 1,
+     "wish_box": {"tier": 3},
+     "flavor": "屋根がない。空の代わりに、無数の鬼火がゆっくり回っている。真ん中に大祈願箱。",
+     "edges": [{"to": "hyakki_f5", "kind": "elevator"}]},
+
+    {"id": "hyakki_back", "jp": "百鬼塔・裏口", "cn": "百鬼塔·后门", "type": "monolith_entry",
+     "danger": 2, "tags": ["monolith_entry"],
+     "flavor": "崩れた石段。ここから出入りする者は、たいてい担がれて出てくる。",
+     "edges": [{"to": "hyakki_f4", "kind": "entrance"}, {"to": "w_minato", "kind": "road"}]},
+
+    {"id": "w_minato", "jp": "南の海道", "cn": "南海岸道", "type": "wild", "danger": 2,
+     "tags": ["wild"],
+     "flavor": "潮風が鬼の匂いを薄める。道端には運び屋の荷車が一台、いつも停めてある。",
+     "edges": [{"to": "hyakki_back", "kind": "road"}, {"to": "minato", "kind": "wild"},
+               {"to": "w_yamato", "kind": "wild"}]},
+
+    {"id": "minato", "jp": "港町ミナト", "cn": "港町米纳托", "type": "city", "danger": 0,
+     "tags": ["city", "rest", "shop", "port"], "shop": true,
+     "flavor": "船はもう来ないが、網はまだ干してある。運び屋の組合が町の入口に詰めている。",
+     "edges": [{"to": "w_minato", "kind": "road"}, {"to": "w_yamato", "kind": "wild"}]},
+
+    {"id": "w_yamato", "jp": "山あいの道", "cn": "山间道", "type": "wild", "danger": 2,
+     "tags": ["wild"],
+     "flavor": "獣の道と人の道が半分ずつ。ここで夜を越した者は、たいてい何かを諦める。",
+     "edges": [{"to": "minato", "kind": "wild"}, {"to": "yamato", "kind": "road"}]},
+
+    {"id": "yamato", "jp": "砦ヤマト", "cn": "山砦大和", "type": "city", "danger": 0,
+     "tags": ["city", "rest", "shop", "dojo"], "shop": true,
+     "flavor": "石垣の上で、年寄りが毎晩同じ話をする——十年前、火を落とさなかった鍛冶の話を。",
+     "edges": [{"to": "w_yamato", "kind": "road"}]}
+  ],
+  "roster": [
+    {"seat": "char_a", "name": "カガリ", "role": "鬼斬り（前衛）",
+     "attrs": {"str": 5, "agi": 3, "wil": 2, "luck": 1},
+     "note": "鉄環市の炉で打たれた剣を持つ。十年前に折れた大剣の、残りの半身を探している。"},
+    {"seat": "char_b", "name": "シズク", "role": "星読み（後衛・支援）",
+     "attrs": {"str": 2, "agi": 4, "wil": 4, "luck": 3},
+     "note": "運び屋の組合に雇われた記録係。塔の中で何が起きたかを、誰よりも正確に覚えている。"},
+    {"seat": "tsurugi", "name": "ツルギ", "role": "宿の主（元鍛冶）",
+     "attrs": {"str": 3, "agi": 1, "wil": 5, "luck": 2},
+     "note": "港町ミナトの宿『折れ杭』の主。右手の指が三本ない。塔の話になると黙る。"}
+  ]
+}

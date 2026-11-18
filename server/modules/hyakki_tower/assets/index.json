@@ -1,0 +1,45 @@
+{
+ "schema": 2,
+ "module": "hyakki_tower",
+ "generated_at": "2026-10-20T16:01:46+09:00",
+ "doc": "素材清單（schema 2）：本檔只放索引，**內容按類拆在 `index/<類>.json`**。前端照 `parts` 逐份抓再合併；`source`／`missing` 留在這裡。",
+ "parts": {
+  "portrait": "index/portrait.json",
+  "avatar": "index/avatar.json",
+  "enemy": "index/enemy.json",
+  "bg": "index/bg.json",
+  "icon": "index/icon.json"
+ },
+ "counts": {
+  "portrait": {
+   "files": 10,
+   "aliases": 15
+  },
+  "avatar": {
+   "files": 10,
+   "aliases": 10
+  },
+  "enemy": {
+   "files": 9,
+   "aliases": 9
+  },
+  "bg": {
+   "files": 14,
+   "aliases": 14
+  },
+  "icon": {
+   "files": 56,
+   "aliases": 62
+  }
+ },
+ "totals": {
+  "files": 99,
+  "aliases": 110
+ },
+ "source": {
+  "assets": "本地生成：Krea2 anime v1.5 t2i（R9700），白底摳圖（_hyakki_matte.py）",
+  "note": "自行生成，無第三方素材；可再散布。",
+  "origin": "原創（鉄環地方）／百鬼塔"
+ },
+ "missing": []
+}

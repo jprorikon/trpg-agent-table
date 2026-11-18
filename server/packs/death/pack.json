@@ -1,0 +1,41 @@
+{
+  "id": "death",
+  "name": "死亡與送還",
+  "version": 1,
+  "doc": "「角色死了會怎樣」的機制包（2026-10-07 設計者：「角色死亡会回到最近的城市并跳过2回合」）。機制在內核（`death.py`）：任何傷害把人打到 HP ≤ 0 ⇒ 發 `death`（公開）→ 人送回**最近的城市**、HP 復原（順帶解掉 `down`）、**缺席 N 個自己的回合**（回合機遇到他發 `turn_skipped` 後直接交下一席；場景制把他從「還沒出手」名單排掉，否則 GM 收不了景）。數值住在這包的 `provides.defaults.rules.death`（**config 一律贏**）；沒列這個包／`mode:\"off\"` ⇒ 舊行為一字不變（HP ≤ 0 只是 `down`，躺著等人 `rescue`／治療）。⚠ 需要棋盤才有「最近的城市」（無圖 ⇒ 只復原＋缺席、不動位置）；`lost_memory`／`drop_coins` 是死亡罰則（預設 0＝不罰）。",
+  "requires": [
+    "d20core"
+  ],
+  "optional": [
+    "board",
+    "wound"
+  ],
+  "conflicts": [],
+  "provides": {
+    "defaults": {
+      "rules": {
+        "death": {
+          "mode": "return_city",
+          "skip_turns": 2,
+          "hp_restore": 1,
+          "nearest": true,
+          "clear_conditions": false,
+          "drop_coins": 0,
+          "lost_memory": 0
+        }
+      }
+    },
+    "events": [
+      "death",
+      "turn_skipped"
+    ],
+    "state_keys": [
+      "skip"
+    ],
+    "actions": [],
+    "effects": [],
+    "signals": [],
+    "tables": []
+  },
+  "params": {}
+}

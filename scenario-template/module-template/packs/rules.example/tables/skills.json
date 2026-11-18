@@ -1,0 +1,32 @@
+{
+  "kind": "skills",
+  "doc": "技能表：純資料定義。指定檢定屬性（attr）、熟練加值（prof）、消耗（cost）、難度（dc）、等級要求（lvl）、目標類型（target）、效果（effects）。",
+  "rows": [
+    {
+      "id": "slash",
+      "name_jp": "斬撃",
+      "name_cn": "斬擊",
+      "attr": "str",
+      "prof": 2,
+      "dc": 12,
+      "lvl": 1,
+      "target": "foe",
+      "cost": {"resource": "mana", "value": 1},
+      "effects": [{"damage": {"seat": "target", "die": 8, "attr": "str", "bonus": 1}}],
+      "desc": "以堅實的力道斬向敵人的要害。"
+    },
+    {
+      "id": "snipe",
+      "name_jp": "狙撃",
+      "name_cn": "狙擊",
+      "attr": "agi",
+      "prof": 2,
+      "dc": 12,
+      "lvl": 1,
+      "target": "foe",
+      "cost": {"resource": "mana", "value": 1},
+      "effects": [{"damage": {"seat": "target", "die": 6, "attr": "agi", "bonus": 1}}],
+      "desc": "精準瞄準敵方弱點的遠距射擊。"
+    }
+  ]
+}

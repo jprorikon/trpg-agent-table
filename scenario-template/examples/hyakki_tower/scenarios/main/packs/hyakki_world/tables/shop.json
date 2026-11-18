@@ -1,0 +1,32 @@
+{
+  "kind": "shop",
+  "doc": "各店の品揃え。賣的是**道具表**的 id（`packs/rules.core/tables/items.json`：heal_pack／mana_drop／star_flare／rope）——買到＝真的進 `inventory`。`nodes` 省略＝通用；寫了＝只在那幾個節點賣。**同一間店同一個 id 只能一列**（不同店可以不同價——那是刻意的：塔裡的補給所最貴）。⚠ 價格是佔位，設計者定版改這裡。",
+  "rows": [
+    {"id": "rope", "price": 2,
+     "note": "鬼蜘蛛の糸。哪裡的店都有——用法是買的人的事（這件道具本身沒有 use.effects）。"},
+
+    {"id": "heal_pack", "price": 2, "nodes": ["teckan"],
+     "note": "鉄環市は鍛冶の街——傷薬は安い。"},
+    {"id": "mana_drop", "price": 3, "nodes": ["teckan"],
+     "note": "炉の余熱で作る小瓶。"},
+    {"id": "star_flare", "price": 5, "nodes": ["teckan"],
+     "note": "闘技場の使い残りを転売している。"},
+
+    {"id": "heal_pack", "price": 3, "nodes": ["minato"],
+     "note": "港の相場は少し高い（運び屋の組合が仕切っている）。"},
+    {"id": "star_flare", "price": 4, "nodes": ["minato"],
+     "note": "船積みの余り物（港だけ安い）。"},
+
+    {"id": "heal_pack", "price": 3, "nodes": ["yamato"],
+     "note": "砦の自衛団が卸している。"},
+    {"id": "mana_drop", "price": 4, "nodes": ["yamato"],
+     "note": "山の水で割ったもの（効きは薄いが安い）。"},
+
+    {"id": "heal_pack", "price": 4, "nodes": ["hyakki_f3"],
+     "note": "塔の中の補給所は高い——だが 3 階から街へ戻るのは遠い。"},
+    {"id": "mana_drop", "price": 5, "nodes": ["hyakki_f3"],
+     "note": "同上。"},
+    {"id": "star_flare", "price": 6, "nodes": ["hyakki_f3"],
+     "note": "同上（持ち出し不可・塔内の飲食は記憶を食う）。"}
+  ]
+}

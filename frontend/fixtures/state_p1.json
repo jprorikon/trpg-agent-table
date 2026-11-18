@@ -1,0 +1,1403 @@
+{
+ "table": {
+  "table_id": "hyakki_demo",
+  "scenario": "百鬼塔 ── 鉄環地方・三年目の鬼祓い（原創；戰鬥為主）",
+  "rules": "minimal-d20",
+  "now": 1794965707.138787
+ },
+ "paused": false,
+ "paused_seconds": 0,
+ "ended": null,
+ "ended_info": null,
+ "summary": null,
+ "turn": {
+  "seat": "p2",
+  "index": 3,
+  "seq": 65,
+  "is_yours": false,
+  "seconds_left": 599,
+  "waits": 0
+ },
+ "seats": [
+  {
+   "seat": "gm",
+   "name": "GM",
+   "kind": "gm",
+   "hp": 12,
+   "max_hp": 12,
+   "status": [],
+   "is_turn": false
+  },
+  {
+   "seat": "npc1",
+   "name": "ツルギ",
+   "kind": "npc",
+   "hp": 14,
+   "max_hp": 14,
+   "status": [],
+   "is_turn": false
+  },
+  {
+   "seat": "p1",
+   "name": "カガリ",
+   "kind": "player",
+   "hp": 18,
+   "max_hp": 18,
+   "status": [],
+   "is_turn": false,
+   "star": 1,
+   "resources": {
+    "mana": 3,
+    "ammo": 2
+   },
+   "level": 1
+  },
+  {
+   "seat": "p2",
+   "name": "シズク",
+   "kind": "player",
+   "hp": 5,
+   "max_hp": 12,
+   "status": [],
+   "is_turn": true,
+   "star": 1,
+   "resources": {
+    "mana": 3,
+    "ammo": 2
+   },
+   "level": 1,
+   "exp": 9
+  }
+ ],
+ "seat_plan": [
+  {
+   "seat": "p1",
+   "name": "カガリ",
+   "kind": "player",
+   "character": "char_a",
+   "present": true
+  },
+  {
+   "seat": "p2",
+   "name": "シズク",
+   "kind": "player",
+   "character": "char_b",
+   "present": true
+  },
+  {
+   "seat": "p3",
+   "name": "ホムラ",
+   "kind": "player",
+   "character": "homura",
+   "present": false
+  },
+  {
+   "seat": "p4",
+   "name": "イスカ",
+   "kind": "player",
+   "character": "isuka",
+   "present": false
+  },
+  {
+   "seat": "p5",
+   "name": "ナギ",
+   "kind": "player",
+   "character": "nagi",
+   "present": false
+  }
+ ],
+ "log": [
+  {
+   "seq": 1,
+   "ts": 1794965706.753397,
+   "type": "table_created",
+   "scenario": "百鬼塔 ── 鉄環地方・三年目の鬼祓い（原創；戰鬥為主）",
+   "seed": 20261101,
+   "rules": "minimal-d20",
+   "run_id": "acbcc256fa01436b950c8719c5aee608",
+   "packs": [
+    "d20core",
+    "board",
+    "semic",
+    "wound",
+    "death",
+    "rules.core",
+    "mode.turn",
+    "hyakki_world"
+   ],
+   "packs_hash": "746aae481c6911ab"
+  },
+  {
+   "seq": 2,
+   "ts": 1794965706.758983,
+   "type": "seat_joined",
+   "public": true,
+   "seat": "gm",
+   "name": "GM",
+   "kind": "gm",
+   "attrs": {
+    "str": 2,
+    "agi": 2,
+    "wil": 2,
+    "luck": 2
+   },
+   "attrs_rolled": false,
+   "hp": 12,
+   "order": null,
+   "node": null,
+   "memory": null,
+   "roster": null,
+   "wake_url": null
+  },
+  {
+   "seq": 4,
+   "ts": 1794965706.7591941,
+   "type": "seat_joined",
+   "public": true,
+   "seat": "npc1",
+   "name": "ツルギ",
+   "kind": "npc",
+   "attrs": {
+    "str": 3,
+    "agi": 1,
+    "wil": 5,
+    "luck": 2
+   },
+   "attrs_rolled": false,
+   "hp": 14,
+   "order": null,
+   "node": "minato",
+   "memory": 60,
+   "roster": "ツルギ",
+   "wake_url": null
+  },
+  {
+   "seq": 5,
+   "ts": 1794965706.8961549,
+   "type": "seat_joined",
+   "public": true,
+   "seat": "p1",
+   "name": "カガリ",
+   "kind": "human",
+   "attrs": {
+    "str": 5,
+    "agi": 3,
+    "wil": 2,
+    "luck": 1
+   },
+   "attrs_rolled": false,
+   "hp": 18,
+   "order": 3,
+   "node": "teckan",
+   "memory": 60,
+   "roster": "カガリ",
+   "wake_url": null
+  },
+  {
+   "seq": 6,
+   "ts": 1794965706.896502,
+   "type": "level_up",
+   "public": true,
+   "seat": "p1",
+   "level": 1,
+   "gains": {
+    "max_hp": 0,
+    "attrs": {},
+    "resources": {
+     "mana": 3,
+     "ammo": 2
+    }
+   },
+   "after": {
+    "max_hp": 18,
+    "hp": 18,
+    "attrs": {
+     "str": 5,
+     "agi": 3,
+     "wil": 2,
+     "luck": 1
+    },
+    "resources": {
+     "mana": 3,
+     "ammo": 2
+    }
+   },
+   "note": "見習い巡遊者（開局）",
+   "by": "join"
+  },
+  {
+   "seq": 7,
+   "ts": 1794965706.896734,
+   "type": "star_up",
+   "public": true,
+   "seat": "p1",
+   "star": 1,
+   "gains": {},
+   "unlocks": [],
+   "title": null,
+   "after": {
+    "star": 1,
+    "max_hp": 18,
+    "hp": 18,
+    "attrs": {
+     "str": 5,
+     "agi": 3,
+     "wil": 2,
+     "luck": 1
+    },
+    "resources": {
+     "mana": 3,
+     "ammo": 2
+    }
+   },
+   "by": "join",
+   "note": null,
+   "forced": false
+  },
+  {
+   "seq": 8,
+   "ts": 1794965706.898955,
+   "type": "seat_joined",
+   "public": true,
+   "seat": "p2",
+   "name": "シズク",
+   "kind": "agent",
+   "attrs": {
+    "str": 2,
+    "agi": 4,
+    "wil": 4,
+    "luck": 3
+   },
+   "attrs_rolled": false,
+   "hp": 12,
+   "order": 4,
+   "node": "teckan",
+   "memory": 60,
+   "roster": "シズク",
+   "wake_url": null
+  },
+  {
+   "seq": 9,
+   "ts": 1794965706.899261,
+   "type": "level_up",
+   "public": true,
+   "seat": "p2",
+   "level": 1,
+   "gains": {
+    "max_hp": 0,
+    "attrs": {},
+    "resources": {
+     "mana": 3,
+     "ammo": 2
+    }
+   },
+   "after": {
+    "max_hp": 12,
+    "hp": 12,
+    "attrs": {
+     "str": 2,
+     "agi": 4,
+     "wil": 4,
+     "luck": 3
+    },
+    "resources": {
+     "mana": 3,
+     "ammo": 2
+    }
+   },
+   "note": "見習い巡遊者（開局）",
+   "by": "join"
+  },
+  {
+   "seq": 10,
+   "ts": 1794965706.899482,
+   "type": "star_up",
+   "public": true,
+   "seat": "p2",
+   "star": 1,
+   "gains": {},
+   "unlocks": [],
+   "title": null,
+   "after": {
+    "star": 1,
+    "max_hp": 12,
+    "hp": 12,
+    "attrs": {
+     "str": 2,
+     "agi": 4,
+     "wil": 4,
+     "luck": 3
+    },
+    "resources": {
+     "mana": 3,
+     "ammo": 2
+    }
+   },
+   "by": "join",
+   "note": null,
+   "forced": false
+  },
+  {
+   "seq": 11,
+   "ts": 1794965706.902026,
+   "type": "round_started",
+   "public": true,
+   "no": 1
+  },
+  {
+   "seq": 12,
+   "ts": 1794965706.902256,
+   "type": "turn_started",
+   "public": true,
+   "seat": "p1",
+   "index": 0,
+   "deadline_at": 1794966306.902254,
+   "reason": "manual"
+  },
+  {
+   "seq": 13,
+   "ts": 1794965706.904233,
+   "type": "say",
+   "public": true,
+   "seat": "p1",
+   "text": "今日こそ塔に入る。シズク、記録は頼んだ。"
+  },
+  {
+   "seq": 17,
+   "ts": 1794965706.907321,
+   "type": "action_declared",
+   "public": true,
+   "seat": "p1",
+   "action": "move",
+   "target": "w_teckan",
+   "note": null
+  },
+  {
+   "seq": 18,
+   "ts": 1794965706.9075148,
+   "type": "move",
+   "public": true,
+   "seat": "p1",
+   "frm": "teckan",
+   "to": "w_teckan",
+   "kind": "road"
+  },
+  {
+   "seq": 20,
+   "ts": 1794965707.063798,
+   "type": "say",
+   "public": true,
+   "seat": "p2",
+   "text": "了解。塔の入口は毎回変わるから、まずは探そう。"
+  },
+  {
+   "seq": 23,
+   "ts": 1794965707.065363,
+   "type": "turn_ended",
+   "public": true,
+   "seat": "p1",
+   "turn_seq": 12,
+   "reason": "demo"
+  },
+  {
+   "seq": 24,
+   "ts": 1794965707.065537,
+   "type": "turn_started",
+   "public": true,
+   "seat": "p2",
+   "index": 1,
+   "deadline_at": 1794966307.065536,
+   "reason": "next"
+  },
+  {
+   "seq": 35,
+   "ts": 1794965707.074086,
+   "type": "action_declared",
+   "public": true,
+   "seat": "p2",
+   "action": "move",
+   "target": "hyakki_f1",
+   "note": null
+  },
+  {
+   "seq": 36,
+   "ts": 1794965707.074183,
+   "type": "entered_tower",
+   "public": true,
+   "seat": "p2",
+   "node": "hyakki",
+   "floor": "hyakki_f1",
+   "consumed": true
+  },
+  {
+   "seq": 38,
+   "ts": 1794965707.0791209,
+   "type": "say",
+   "public": true,
+   "seat": "p1",
+   "text": "骨の床だ……鳴いてる。"
+  },
+  {
+   "seq": 40,
+   "ts": 1794965707.080522,
+   "type": "action_declared",
+   "public": true,
+   "seat": "p2",
+   "action": "fight",
+   "target": null,
+   "note": null
+  },
+  {
+   "seq": 41,
+   "ts": 1794965707.080674,
+   "type": "roll",
+   "public": true,
+   "roll_seq": 1,
+   "seat": "p2",
+   "kind": "fight",
+   "die": 20,
+   "value": 6,
+   "mod": 8,
+   "total": 14,
+   "dc": 15,
+   "success": false,
+   "reason": "fight 骸骨武者",
+   "rng": "seed:20261101:1"
+  },
+  {
+   "seq": 42,
+   "ts": 1794965707.080788,
+   "type": "damage",
+   "public": true,
+   "target": "p2",
+   "amount": 7,
+   "hp_after": 5,
+   "src": "hone_musha"
+  },
+  {
+   "seq": 45,
+   "ts": 1794965707.086302,
+   "type": "action_declared",
+   "public": true,
+   "seat": "p2",
+   "action": "fight",
+   "target": null,
+   "note": null
+  },
+  {
+   "seq": 46,
+   "ts": 1794965707.086454,
+   "type": "roll",
+   "public": true,
+   "roll_seq": 2,
+   "seat": "p2",
+   "kind": "fight",
+   "die": 20,
+   "value": 18,
+   "mod": 8,
+   "total": 26,
+   "dc": 15,
+   "success": true,
+   "reason": "fight 骸骨武者",
+   "rng": "seed:20261101:2"
+  },
+  {
+   "seq": 47,
+   "ts": 1794965707.086569,
+   "type": "monster_damaged",
+   "public": true,
+   "seat": "p2",
+   "node": "hyakki_f1",
+   "uid": "hyakki_f1:hone_musha:0",
+   "monster": "hone_musha",
+   "damage": 5,
+   "hp_after": 0,
+   "die": 6,
+   "value": 3,
+   "mod": 2,
+   "name": "骸骨武者"
+  },
+  {
+   "seq": 48,
+   "ts": 1794965707.086669,
+   "type": "mob_killed",
+   "public": true,
+   "seat": "p2",
+   "node": "hyakki_f1",
+   "coins": 3,
+   "monster": "hone_musha",
+   "uid": "hyakki_f1:hone_musha:0",
+   "name": "骸骨武者"
+  },
+  {
+   "seq": 51,
+   "ts": 1794965707.086931,
+   "type": "exp_gained",
+   "public": true,
+   "seat": "p2",
+   "amount": 9,
+   "total": 9,
+   "reason": "mob_killed",
+   "by": "board"
+  },
+  {
+   "seq": 52,
+   "ts": 1794965707.087028,
+   "type": "turn_ended",
+   "public": true,
+   "seat": "p2",
+   "turn_seq": 24,
+   "reason": "action"
+  },
+  {
+   "seq": 54,
+   "ts": 1794965707.087258,
+   "type": "round_started",
+   "public": true,
+   "no": 2
+  },
+  {
+   "seq": 55,
+   "ts": 1794965707.087348,
+   "type": "turn_started",
+   "public": true,
+   "seat": "p1",
+   "index": 2,
+   "deadline_at": 1794966307.087347,
+   "reason": "next"
+  },
+  {
+   "seq": 63,
+   "ts": 1794965707.096221,
+   "type": "turn_ended",
+   "public": true,
+   "seat": "p1",
+   "turn_seq": 55,
+   "reason": "demo"
+  },
+  {
+   "seq": 65,
+   "ts": 1794965707.096461,
+   "type": "turn_started",
+   "public": true,
+   "seat": "p2",
+   "index": 3,
+   "deadline_at": 1794966307.09646,
+   "reason": "next"
+  }
+ ],
+ "your_secrets": [],
+ "typing": {
+  "gm": {
+   "ts": 1794965707.0903711,
+   "to": "p1"
+  }
+ },
+ "recent": [
+  "シズク 受伤 7（剩 HP 5）",
+  "シズク 祓掉一只鬼（百鬼塔 1F，+3 銭）",
+  "—— 第 2 轮开始"
+ ],
+ "allowed_actions": [
+  "move",
+  "search",
+  "fight",
+  "attack",
+  "rescue",
+  "defend",
+  "check",
+  "use",
+  "pray",
+  "buy",
+  "rest",
+  "game",
+  "declare",
+  "show",
+  "give",
+  "wish",
+  "other",
+  "end_turn"
+ ],
+ "actions": [
+  {
+   "id": "move",
+   "label": "",
+   "desc": ""
+  },
+  {
+   "id": "search",
+   "label": "",
+   "desc": ""
+  },
+  {
+   "id": "fight",
+   "label": "",
+   "desc": ""
+  },
+  {
+   "id": "attack",
+   "label": "",
+   "desc": ""
+  },
+  {
+   "id": "rescue",
+   "label": "",
+   "desc": ""
+  },
+  {
+   "id": "defend",
+   "label": "",
+   "desc": ""
+  },
+  {
+   "id": "check",
+   "label": "",
+   "desc": ""
+  },
+  {
+   "id": "use",
+   "label": "",
+   "desc": ""
+  },
+  {
+   "id": "pray",
+   "label": "",
+   "desc": ""
+  },
+  {
+   "id": "buy",
+   "label": "",
+   "desc": ""
+  },
+  {
+   "id": "rest",
+   "label": "",
+   "desc": ""
+  },
+  {
+   "id": "game",
+   "label": "",
+   "desc": ""
+  },
+  {
+   "id": "declare",
+   "label": "",
+   "desc": ""
+  },
+  {
+   "id": "show",
+   "label": "",
+   "desc": ""
+  },
+  {
+   "id": "give",
+   "label": "",
+   "desc": ""
+  },
+  {
+   "id": "wish",
+   "label": "",
+   "desc": ""
+  },
+  {
+   "id": "other",
+   "label": "",
+   "desc": ""
+  },
+  {
+   "id": "end_turn",
+   "label": "結束回合",
+   "desc": "（回合制）這一回合到此為止，交給下一席"
+  }
+ ],
+ "you": {
+  "seat": "p1",
+  "name": "カガリ",
+  "kind": "human",
+  "attrs": {
+   "str": 5,
+   "agi": 3,
+   "wil": 2,
+   "luck": 1
+  },
+  "hp": 18,
+  "max_hp": 18,
+  "status": [],
+  "node": "w_teckan",
+  "memory": 60,
+  "max_memory": 80,
+  "max_mana": 4,
+  "artifacts": [],
+  "coin": 0,
+  "star_coins": 0,
+  "roster": null,
+  "resources": {
+   "mana": 3,
+   "ammo": 2
+  },
+  "skills": [
+   {
+    "id": "aogiri_shot",
+    "name_jp": "青桐の射撃",
+    "name_cn": "青桐射擊",
+    "element": "Ventus",
+    "style": "Adventurous",
+    "attr": "agi",
+    "dc": 12,
+    "cost": {
+     "resource": "ammo",
+     "value": 1
+    },
+    "target": "foe",
+    "lvl": 1,
+    "known": true,
+    "desc": "風を読んで撃つ。塔の狭い通路でも、小怪の関節だけを狙える。"
+   },
+   {
+    "id": "gouka_no_jin",
+    "name_jp": "業火の陣",
+    "name_cn": "业火之阵",
+    "element": "Ignis",
+    "style": "Inquisitive",
+    "attr": "wil",
+    "dc": 15,
+    "cost": {
+     "resource": "mana",
+     "value": 4
+    },
+    "target": "foe",
+    "lvl": 5,
+    "known": false,
+    "desc": "足元に火の輪を描く。陣から出るまで、鬼は燃え続ける。"
+   },
+   {
+    "id": "harai_no_kotoba",
+    "name_jp": "祓いの詞",
+    "name_cn": "祓词",
+    "element": "Lux",
+    "style": "Inquisitive",
+    "attr": "wil",
+    "dc": 12,
+    "cost": {
+     "resource": "mana",
+     "value": 1
+    },
+    "target": "foe",
+    "lvl": 1,
+    "known": true,
+    "desc": "短い詞を唱える。声そのものは刃にならないが、鬼は立ち止まる。"
+   },
+   {
+    "id": "hibachi_uchi",
+    "name_jp": "火槌の一撃",
+    "name_cn": "火槌一击",
+    "element": "Ignis",
+    "style": "Creative",
+    "attr": "str",
+    "dc": 13,
+    "cost": {
+     "resource": "mana",
+     "value": 2
+    },
+    "target": "foe",
+    "lvl": 2,
+    "known": false,
+    "desc": "炉の火を槌に移して叩きつける。槌の跡が焦げて残る。"
+   },
+   {
+    "id": "hone_kudaki",
+    "name_jp": "骨砕き",
+    "name_cn": "骨碎",
+    "element": "Terra",
+    "style": "Adventurous",
+    "attr": "str",
+    "dc": 14,
+    "cost": {
+     "resource": "mana",
+     "value": 2
+    },
+    "target": "foe",
+    "lvl": 3,
+    "known": false,
+    "desc": "膝と脛を狙って横から打つ。立っていられなくなった鬼は、もう追ってこない。"
+   },
+   {
+    "id": "hoshikuzu_giri",
+    "name_jp": "星屑斬り",
+    "name_cn": "星屑斬",
+    "element": "Terra",
+    "style": "Steady",
+    "attr": "str",
+    "dc": 12,
+    "cost": {
+     "resource": "mana",
+     "value": 1
+    },
+    "target": "foe",
+    "lvl": 1,
+    "known": true,
+    "desc": "星屑の碎光を刀身に纏わせて振り下ろす。華はないが、塔の中で一番よく使われる一振り。"
+   },
+   {
+    "id": "hoshiyomi_no_uranai",
+    "name_jp": "星読みの占",
+    "name_cn": "星读之占",
+    "element": "Aqua",
+    "style": "Inquisitive",
+    "attr": "wil",
+    "dc": 12,
+    "cost": {
+     "resource": "mana",
+     "value": 2
+    },
+    "target": "self",
+    "lvl": 2,
+    "known": false,
+    "desc": "短い占い。今日の星の巡りは悪くない——祓った後の実りが少し増える。"
+   },
+   {
+    "id": "hyousou_no_sho",
+    "name_jp": "氷装の書",
+    "name_cn": "冰裝之書",
+    "element": "Aqua",
+    "style": "Inquisitive",
+    "attr": "wil",
+    "dc": 13,
+    "cost": {
+     "resource": "mana",
+     "value": 2
+    },
+    "target": "foe",
+    "lvl": 2,
+    "known": false,
+    "desc": "魔導書の頁が凍りつき、撃ち出される。当たった相手は動きが鈍る。"
+   },
+   {
+    "id": "inori_no_tomoshibi",
+    "name_jp": "祈りの灯",
+    "name_cn": "祈禱之燈",
+    "element": "Lux",
+    "style": "Steady",
+    "attr": "wil",
+    "dc": 11,
+    "cost": {
+     "resource": "mana",
+     "value": 2
+    },
+    "target": "self",
+    "lvl": 1,
+    "known": true,
+    "desc": "灯を掲げて息を整える。願いの形は人それぞれで、その灯も人それぞれの色をしている。"
+   },
+   {
+    "id": "kagaribi",
+    "name_jp": "篝火",
+    "name_cn": "篝火",
+    "element": "Ignis",
+    "style": "Creative",
+    "attr": "wil",
+    "dc": 12,
+    "cost": {
+     "resource": "mana",
+     "value": 1
+    },
+    "target": "foe",
+    "lvl": 1,
+    "known": true,
+    "desc": "小さな火を飛ばす。消えそうで消えない火は、戦いのあとも相手に纏わりつく。"
+   },
+   {
+    "id": "kagenui",
+    "name_jp": "影縫い",
+    "name_cn": "影缝",
+    "element": "Umbra",
+    "style": "Steady",
+    "attr": "agi",
+    "dc": 15,
+    "cost": {
+     "resource": "mana",
+     "value": 2
+    },
+    "target": "foe",
+    "lvl": 4,
+    "known": false,
+    "desc": "相手の影を踏み、灯を落とす。視界が戻るまで、しばらく自分の足元も分からない。"
+   },
+   {
+    "id": "kageotoshi",
+    "name_jp": "影落とし",
+    "name_cn": "影落",
+    "element": "Umbra",
+    "style": "Collector",
+    "attr": "agi",
+    "dc": 14,
+    "cost": {
+     "resource": "mana",
+     "value": 2
+    },
+    "target": "foe",
+    "lvl": 3,
+    "known": false,
+    "desc": "影を踏ませて足を止める。痛みより、次の一手が遅れるほうが効く。"
+   },
+   {
+    "id": "kekkai_no_fuda",
+    "name_jp": "結界の札",
+    "name_cn": "结界之札",
+    "element": "Lux",
+    "style": "Steady",
+    "attr": "wil",
+    "dc": 12,
+    "cost": {
+     "resource": "mana",
+     "value": 1
+    },
+    "target": "self",
+    "lvl": 1,
+    "known": true,
+    "desc": "札を一枚、胸に貼る。鬼の爪は紙一枚ぶん届かなくなる。"
+   },
+   {
+    "id": "kizuna_no_ichigeki",
+    "name_jp": "絆の一撃",
+    "name_cn": "绊之一击",
+    "element": "Terra",
+    "style": "Steady",
+    "attr": "str",
+    "dc": 12,
+    "cost": {
+     "resource": "mana",
+     "value": 1
+    },
+    "target": "foe",
+    "lvl": 1,
+    "known": true,
+    "desc": "同じ場所に立つ仲間の気配を刃に変える一撃。一緒に戦うほど重くなる（同じノードに味方が1人増えるごとに＋2）。"
+   },
+   {
+    "id": "meisou_no_me",
+    "name_jp": "迷走の眼",
+    "name_cn": "迷走之眼",
+    "element": "Umbra",
+    "style": "Inquisitive",
+    "attr": "wil",
+    "dc": 12,
+    "cost": {
+     "resource": "mana",
+     "value": 1
+    },
+    "target": "foe",
+    "lvl": 2,
+    "known": false,
+    "desc": "視界をゆがませる。小怪には効きにくいが、人にはよく効く。"
+   },
+   {
+    "id": "nagare_giri",
+    "name_jp": "流れ斬り",
+    "name_cn": "流斩",
+    "element": "Ventus",
+    "style": "Adventurous",
+    "attr": "agi",
+    "dc": 14,
+    "cost": {
+     "resource": "mana",
+     "value": 2
+    },
+    "target": "foe",
+    "lvl": 3,
+    "known": false,
+    "desc": "相手の動きに乗って斬る。力は要らない、速さだけが要る。"
+   },
+   {
+    "id": "okuribi",
+    "name_jp": "送り火",
+    "name_cn": "送火",
+    "element": "Lux",
+    "style": "Inquisitive",
+    "attr": "wil",
+    "dc": 13,
+    "cost": {
+     "resource": "mana",
+     "value": 2
+    },
+    "target": "foe",
+    "lvl": 3,
+    "known": false,
+    "desc": "鬼を送る火は、灯した者にも少しだけ暖かい。祈りは一方通行ではない。"
+   },
+   {
+    "id": "onibarai_no_tachi",
+    "name_jp": "鬼祓いの太刀",
+    "name_cn": "鬼祓之太刀",
+    "element": "Terra",
+    "style": "Steady",
+    "attr": "str",
+    "dc": 13,
+    "cost": {
+     "resource": "mana",
+     "value": 2
+    },
+    "target": "foe",
+    "lvl": 2,
+    "known": false,
+    "desc": "踏み込みと同時に振り抜く。十年前の鍛冶が最後に打った型だという。"
+   },
+   {
+    "id": "onibi",
+    "name_jp": "鬼火",
+    "name_cn": "鬼火",
+    "element": "Ignis",
+    "style": "Creative",
+    "attr": "agi",
+    "dc": 12,
+    "cost": {
+     "resource": "ammo",
+     "value": 1
+    },
+    "target": "foe",
+    "lvl": 1,
+    "known": true,
+    "desc": "指先に灯した火を飛ばす。塔の中では、なぜかよく燃える。"
+   },
+   {
+    "id": "onigoke",
+    "name_jp": "鬼哭",
+    "name_cn": "鬼哭",
+    "element": "Umbra",
+    "style": "Creative",
+    "attr": "wil",
+    "dc": 15,
+    "cost": {
+     "resource": "mana",
+     "value": 3
+    },
+    "target": "foe",
+    "lvl": 4,
+    "known": false,
+    "desc": "鬼の哭き声を真似る。同じ声を聞いた鬼は、少しだけ弱くなる。"
+   },
+   {
+    "id": "sabi_no_ha",
+    "name_jp": "錆の刃",
+    "name_cn": "锈之刃",
+    "element": "Umbra",
+    "style": "Collector",
+    "attr": "agi",
+    "dc": 13,
+    "cost": {
+     "resource": "mana",
+     "value": 1
+    },
+    "target": "foe",
+    "lvl": 2,
+    "known": false,
+    "desc": "錆を含んだ刃で急所を浅く裂く。斬るというより、腐らせる。"
+   },
+   {
+    "id": "shuuzen",
+    "name_jp": "修繕",
+    "name_cn": "修缮",
+    "element": "Terra",
+    "style": "Steady",
+    "attr": "wil",
+    "dc": 11,
+    "cost": {
+     "resource": "mana",
+     "value": 1
+    },
+    "target": "self",
+    "lvl": 1,
+    "known": true,
+    "desc": "鎚で道具を叩き、包帯を巻き直す。鍛冶の治し方は荒いが、よく効く。"
+   },
+   {
+    "id": "soukou_no_kamae",
+    "name_jp": "装甲の構え",
+    "name_cn": "裝甲架勢",
+    "element": "Terra",
+    "style": "Steady",
+    "attr": "str",
+    "dc": 10,
+    "cost": {},
+    "target": "self",
+    "lvl": 1,
+    "known": true,
+    "desc": "盾を構えて重心を落とす。地味だが、塔で一番長生きする構え。"
+   },
+   {
+    "id": "tate_nari",
+    "name_jp": "盾鳴らし",
+    "name_cn": "鸣盾",
+    "element": "Terra",
+    "style": "Steady",
+    "attr": "str",
+    "dc": 12,
+    "cost": {
+     "resource": "mana",
+     "value": 1
+    },
+    "target": "self",
+    "lvl": 1,
+    "known": true,
+    "desc": "盾の縁を打って音を立てる。仲間には合図、鬼には威嚇。"
+   },
+   {
+    "id": "tomoshibi_no_wa",
+    "name_jp": "灯火の輪",
+    "name_cn": "灯火之环",
+    "element": "Ignis",
+    "style": "Creative",
+    "attr": "wil",
+    "dc": 12,
+    "cost": {
+     "resource": "mana",
+     "value": 1
+    },
+    "target": "foe",
+    "lvl": 1,
+    "known": true,
+    "desc": "仲間の灯を束ねて放つ一矢。硬い相手に少ない手数で届かせるために。"
+   },
+   {
+    "id": "yomi_no_kaeshi",
+    "name_jp": "黄泉返し",
+    "name_cn": "黄泉返",
+    "element": "Lux",
+    "style": "Steady",
+    "attr": "wil",
+    "dc": 16,
+    "cost": {
+     "resource": "mana",
+     "value": 4
+    },
+    "target": "self",
+    "lvl": 5,
+    "known": false,
+    "desc": "息を止めて、名を一度だけ呼び直す。まだ生きている、と身体に言い聞かせる。"
+   }
+  ],
+  "level": 1,
+  "exp": 0,
+  "next_need": 40,
+  "star": {
+   "star": 1,
+   "max": 5,
+   "title": null,
+   "next_title": "星の担い手",
+   "next_unlocks": [
+    "hyousou_no_sho",
+    "meisou_no_me"
+   ],
+   "channels": {
+    "shop": {
+     "done": 0,
+     "max": 2,
+     "doc": "塔内「星見の店」（3 階補給所）用貨幣買——一顆 15、兩顆 25（共 40）。"
+    },
+    "goal": {
+     "done": 0,
+     "max": 2,
+     "doc": "完成自己的私密願望（`goals.json` 判據成立）。"
+    },
+    "side": {
+     "done": 0,
+     "max": 2,
+     "doc": "全體副任務：任一達成（清光下層小怪／無事歸還／開大祈願箱）⇒ 全桌每人 +2。"
+    }
+   }
+  }
+ },
+ "rules_attrs": [
+  "str",
+  "agi",
+  "wil",
+  "luck"
+ ],
+ "board": {
+  "name": "鉄環地方",
+  "work": "百鬼塔（原創）",
+  "node_count": 14,
+  "you_are": {
+   "id": "w_teckan",
+   "jp": "北の荒道",
+   "cn": "北荒野道",
+   "type": "wild",
+   "depth": null,
+   "flavor": "荷車の轍だけが残る。夜は鬼火が列になって街道を舐める。",
+   "mob_left": 0,
+   "mobs_left": 0,
+   "wish_box": null,
+   "shop": false,
+   "game_room": false,
+   "entrance_fresh": null
+  },
+  "can_go": [
+   {
+    "to": "hyakki",
+    "kind": "wild",
+    "jp": "百鬼塔・正面",
+    "cn": "百鬼塔·正面",
+    "type": "monolith_entry",
+    "danger": 2,
+    "hidden": false,
+    "mobs_left": 0
+   },
+   {
+    "to": "teckan",
+    "kind": "road",
+    "jp": "鉄環市",
+    "cn": "铁环市",
+    "type": "city",
+    "danger": 0,
+    "hidden": false,
+    "mobs_left": 0
+   }
+  ],
+  "entrance_used": {
+   "hyakki": true,
+   "hyakki_back": false
+  },
+  "mob": {
+   "teckan": 0,
+   "w_teckan": 0,
+   "hyakki": 0,
+   "hyakki_f1": 2,
+   "hyakki_f2": 3,
+   "hyakki_f3": 0,
+   "hyakki_f4": 4,
+   "hyakki_f5": 4,
+   "hyakki_f6": 1,
+   "hyakki_back": 0,
+   "w_minato": 0,
+   "minato": 0,
+   "w_yamato": 0,
+   "yamato": 0
+  },
+  "mobs": {
+   "teckan": 0,
+   "w_teckan": 0,
+   "hyakki": 0,
+   "hyakki_f1": 2,
+   "hyakki_f2": 3,
+   "hyakki_f3": 0,
+   "hyakki_f4": 4,
+   "hyakki_f5": 4,
+   "hyakki_f6": 1,
+   "hyakki_back": 0,
+   "w_minato": 0,
+   "minato": 0,
+   "w_yamato": 0,
+   "yamato": 0
+  },
+  "roster": [
+   {
+    "seat": "char_a",
+    "name": "カガリ",
+    "faction": null,
+    "role": "鬼斬り（前衛）"
+   },
+   {
+    "seat": "char_b",
+    "name": "シズク",
+    "faction": null,
+    "role": "星読み（後衛・支援）"
+   },
+   {
+    "seat": "tsurugi",
+    "name": "ツルギ",
+    "faction": null,
+    "role": "宿の主（元鍛冶）"
+   },
+   {
+    "seat": "homura",
+    "name": "ホムラ",
+    "faction": null,
+    "role": "火槌の巫女（前衛・火力）"
+   },
+   {
+    "seat": "isuka",
+    "name": "イスカ",
+    "faction": null,
+    "role": "運び屋の斥候（中距離・機動）"
+   },
+   {
+    "seat": "nagi",
+    "name": "ナギ",
+    "faction": null,
+    "role": "砦ヤマトの道場主（前衛・守り）"
+   }
+  ],
+  "party": [
+   {
+    "seat": "npc1",
+    "name": "ツルギ",
+    "kind": "npc",
+    "is_party": false,
+    "where": "港町ミナト",
+    "where_cn": "港町米纳托",
+    "node": "minato",
+    "inside_tower": false,
+    "hidden_floor": false,
+    "hp": 14,
+    "max_hp": 14,
+    "status": []
+   },
+   {
+    "seat": "p2",
+    "name": "シズク",
+    "kind": "agent",
+    "is_party": true,
+    "where": "塔内",
+    "where_cn": null,
+    "node": null,
+    "inside_tower": true,
+    "hidden_floor": true,
+    "hp": 5,
+    "max_hp": 12,
+    "status": []
+   }
+  ]
+ },
+ "settled": null,
+ "throttle": {
+  "used": {},
+  "limits": {
+   "act": 2,
+   "say": 2
+  }
+ },
+ "your_goal": {
+  "id": "g_blade",
+  "title": "（示例：此处是私密内容，已在对外仓库里替换）",
+  "text": "（示例：此处是私密内容，已在对外仓库里替换）",
+  "required": null,
+  "achieved": false,
+  "ready": false,
+  "progress": {
+   "need_claims": [
+    "c_blade"
+   ],
+   "you_have_claims": []
+  },
+  "note": "只有你知道。可以暗示、可以交易，别直接念出来。"
+ },
+ "your_fragments": [],
+ "seen_by_you": [],
+ "your_declarations": [],
+ "round_waiting": [
+  "p1"
+ ],
+ "you_acted": false,
+ "you_ended": false,
+ "round_no": 2,
+ "rounds_done": 1,
+ "terms": {
+  "fragment": "御札"
+ },
+ "difficulty": "normal",
+ "auth": {
+  "has_accounts": false,
+  "required": false,
+  "seat_link": false
+ }
+}

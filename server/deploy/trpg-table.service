@@ -1,0 +1,24 @@
+[Unit]
+# 模板——**我没装也没 enable**（部署机铁律：不新增开机自启）。要用就自己：
+#   sudo cp deploy/trpg-table.service /etc/systemd/system/
+#   sudo systemctl daemon-reload && sudo systemctl enable --now trpg-table
+# 停用：
+#   sudo systemctl disable --now trpg-table
+# 注意：用 systemd 时请改用 deploy/start.sh 之外的方式管理，别同时手动起（会抢 8971 端口）。
+Description=TRPG 桌（人机同席）
+After=network-online.target
+
+[Service]
+Type=simple
+User=trpg
+WorkingDirectory=/srv/trpg
+ExecStart=python3 server.py \
+          --config campaigns/hyakki_tower/config.json \
+          --home campaigns/hyakki_tower \
+          --pidfile /srv/trpg/logs/table.pid
+# 桌面掉线不重开；重启服务会从 data/events.jsonl 事件流原样恢复
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

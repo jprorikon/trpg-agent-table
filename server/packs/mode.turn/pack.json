@@ -1,0 +1,19 @@
+{
+  "id": "mode.turn",
+  "name": "節拍：回合制",
+  "version": 1,
+  "doc": "走完 order 一輪算一回合；一回合有行動格（config.turn.actions_per_turn）。「這一手我不出手」＝ end_turn（不是 pass）。",
+  "requires": [
+    "d20core"
+  ],
+  "optional": [
+    "board",
+    "semic"
+  ],
+  "provides": {
+    "mode": {
+      "name": "turn"
+    }
+  },
+  "params": {}
+}

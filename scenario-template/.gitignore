@@ -1,0 +1,11 @@
+# 桌自己的（引擎在跑的時候才會有）——不要進版控
+config.json
+accounts.json*
+runs/
+*/runs/
+data/
+data_*_archive/
+*.bak-*
+__pycache__/
+*.pyc
+.DS_Store

@@ -1,0 +1,28 @@
+{
+  "kind": "artifacts",
+  "doc": "祈願箱開出的神器表（**內容表**）：tier＝階（**從 0 起、連續**——引擎用 `artifacts_table[tier]` 取列；對上 board.json 的 wish_box.tier）／memory_cost＝開箱要付的記憶（沒寫＝0）／items＝這一階的選項。`name` 公開名、`desc` 公開說明、`hidden` 只有拿到的人會發現。想加東西就加 rows／items——**只改資料，不用工程**。（引擎只認 kind＝artifacts 與 rows 的形狀；形狀壞了起桌時就叫。）",
+  "rows": [
+    {
+      "tier": 0,
+      "memory_cost": 3,
+      "items": [
+        {
+          "name": "（道具名）",
+          "desc": "（公開說明）",
+          "hidden": "（只有拿到的人會發現的效果）"
+        }
+      ]
+    },
+    {
+      "tier": 1,
+      "memory_cost": 6,
+      "items": [
+        {
+          "name": "（頂層道具名）",
+          "desc": "（公開說明）",
+          "hidden": "（拿到才發現的效果）"
+        }
+      ]
+    }
+  ]
+}

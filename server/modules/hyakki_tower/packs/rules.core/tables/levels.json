@@ -1,0 +1,22 @@
+{
+  "kind": "levels",
+  "doc": "等級表（原創）。`need`＝**累計**經驗門檻；升到該級時把 `gains` 寫進 `level_up` 事件（帶 after 值）⇒ 回放不必重算。`gains.attrs` 是**基準屬性成長**（永久；與 dsl 的加值層分開）、`gains.max_hp` 加上限、`gains.resources` 給通用資源（mana 之類）。開局（有啟用本機制時）內核自動給第 1 級 ⇒ 起始資源從這裡出。 2026-10-20：`ammo` 加入升級資源（L1 ＋2／L2 ＋1／L4 ＋1，一局共 4 發）——原本 `ammo` 只被技能消費、**沒有任何供給**，`aogiri_shot`／`onibi` 等於死技。",
+  "base": 1,
+  "rows": [
+    {"level": 1, "need": 0,
+     "gains": {"max_hp": 0, "attrs": {}, "resources": {"mana": 3, "ammo": 2}},
+     "note": "見習い巡遊者（開局）"},
+    {"level": 2, "need": 30,
+     "gains": {"max_hp": 4, "attrs": {"agi": 1}, "resources": {"mana": 2, "ammo": 1}},
+     "note": "塔の勘がついてきた"},
+    {"level": 3, "need": 80,
+     "gains": {"max_hp": 4, "attrs": {"wil": 1}, "resources": {"mana": 2}},
+     "note": "記憶の扱いを覚えた"},
+    {"level": 4, "need": 150,
+     "gains": {"max_hp": 5, "attrs": {"str": 1, "luck": 1}, "resources": {"mana": 3, "ammo": 1}},
+     "note": "星の巡りを読めるようになった"},
+    {"level": 5, "need": 250,
+     "gains": {"max_hp": 6, "attrs": {"agi": 1, "wil": 1}, "resources": {"mana": 3}},
+     "note": "名の知れた巡遊者"}
+  ]
+}

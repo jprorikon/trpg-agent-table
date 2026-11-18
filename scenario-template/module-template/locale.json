@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "module": "example",
+  "doc": "畫面用語表（Schema 1）：本模組的固有名詞與世界觀用語。前端不內建任何作品的語彙，一律從這裡讀（對外靜態路徑 /assets/<模組>/locale.json，GraphQL AssetManifest.locale）。三格：glossary＝原文（與引擎資料逐字相同）→ 各語言譯名（kind: faction|role|artifact|board）；places＝節點 id → 地名譯名；text＝覆寫前端字典的中性字樣（例：前端中性字樣「敵人」在這一模組覆寫為「魔物」）。改字＝改這裡，前端不用動。",
+  "glossary": {
+    "初始城鎮": {
+      "zh-Hant": "初始城鎮",
+      "zh-Hans": "初始城镇",
+      "kind": "board"
+    },
+    "冒險者公會": {
+      "zh-Hant": "冒險者公會",
+      "zh-Hans": "冒险者公会",
+      "kind": "faction"
+    },
+    "古代護符": {
+      "zh-Hant": "古代護符",
+      "zh-Hans": "古代护符",
+      "kind": "artifact"
+    }
+  },
+  "places": {
+    "town_square": {
+      "zh-Hant": "城鎮廣場",
+      "zh-Hans": "城镇广场"
+    }
+  },
+  "text": {
+    "zh-Hant": {
+      "feat_enemy": "魔物 ×{n}"
+    },
+    "zh-Hans": {
+      "feat_enemy": "魔物 ×{n}"
+    },
+    "ja": {
+      "feat_enemy": "魔物 ×{n}"
+    }
+  }
+}

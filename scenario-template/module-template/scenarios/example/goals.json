@@ -1,0 +1,19 @@
+{
+  "notes": "私密願望：一席一條（沒有 owner_character 的願望不會綁到任何人）。判據寫在 module.json 的 requirements（AST），這裡只放「玩家看得到的文字」。每條願望盡量別要求同一件稀有資源，否則玩家會互相卡死。",
+  "goals": [
+    {
+      "id": "g_a",
+      "title": "（角色 A 想要的東西，一句話）",
+      "text": "（本人看得到的全文：他為什麼要、卡在哪裡、什麼算達成）",
+      "owner_character": "char_a",
+      "timing": "any"
+    },
+    {
+      "id": "g_b",
+      "title": "（角色 B 想要的東西，一句話）",
+      "text": "（本人看得到的全文）",
+      "owner_character": "char_b",
+      "timing": "during"
+    }
+  ]
+}

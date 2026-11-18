@@ -1,0 +1,43 @@
+{
+  "id": "rules.example",
+  "name": "範例規則擴充包（模組層）",
+  "version": 1,
+  "doc": "模組層機制包：本模組所有劇本共用（技能、道具、等級、星等）。引擎倉不帶任何作品內容。劇本層有同名包時劇本層優先。啟用後提供 cast／use_item 動作、技能表、等級成長與升星機制。",
+  "requires": ["d20core"],
+  "optional": ["wound", "board", "semic"],
+  "conflicts": [],
+  "provides": {
+    "actions": ["cast", "use_item"],
+    "effects": ["damage", "heal", "item_grant", "item_take", "star_set", "growth_gain"],
+    "events": ["skill_used", "exp_gained", "level_up", "item_changed", "star_up"],
+    "text_keys": [
+      "skill.cast",
+      "skill.hit",
+      "skill.miss",
+      "skill.no_resource",
+      "skill.unknown",
+      "exp.gained",
+      "level.up"
+    ],
+    "state_keys": ["exp", "level", "inventory", "star"],
+    "signals": [],
+    "tables": [
+      "tables/skills.json",
+      "tables/levels.json",
+      "tables/items.json",
+      "tables/stars.json"
+    ],
+    "defaults": {
+      "rules": {
+        "resources": {
+          "mana": {"base": 3, "per_level": 1, "per_star": 1}
+        },
+        "levels": {"exp_base": 30, "exp_step": 20}
+      }
+    }
+  },
+  "params": {
+    "exp_per_star_kill": 6,
+    "exp_per_boss_defeat": 20
+  }
+}

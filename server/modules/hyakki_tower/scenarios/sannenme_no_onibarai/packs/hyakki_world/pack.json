@@ -1,0 +1,78 @@
+{
+  "id": "hyakki_world",
+  "name": "百鬼塔 世界数值（作品层包）",
+  "version": 1,
+  "doc": "**作品層包**：只有《百鬼塔》這一桌才有的機制內容。① `provides.defaults`＝塔／記憶經濟的係數（config 沒寫時用它；**config 有寫的一律贏**）；② `provides.tables`＝三張**內容表**：敵人表（★4；`nodes` ＞ 深度 ＞ 通用）、商店表（按節點賣貨；賣的道具 id 來自 `rules.core` 的道具表 ⇒ 買到真的進 `inventory`）、神器表（祈願箱的階，索引＝tier）。⚠ 數值全是佔位——設計者定版改這裡，不改程式。",
+  "requires": [
+    "d20core",
+    "board",
+    "rules.core"
+  ],
+  "optional": [
+    "semic",
+    "mode.turn",
+    "wound",
+    "death"
+  ],
+  "conflicts": [],
+  "provides": {
+    "defaults": {
+      "tower": {
+        "memory_per_turn_inside": 1,
+    "entrance_open_rounds": 2,
+    "memory_drain_solo_multiplier": 2,
+    "wish_box_min_party": 1,
+    "memory_drain_every_rounds": 2,
+        "assimilation_food_memory_loss": 8,
+        "max_turns_inside": 14,
+        "confiscate_on_exit": true,
+        "star_coin_per_kill": 2,
+        "mob_damage_die": 5,
+        "rest_memory_gain": 6,
+        "rest_heal": 4,
+        "game_memory_gain": 4,
+        "search_memory_gain": 2,
+        "white_room_restore": 40,
+        "shop": {
+          "hot_soup": {
+            "cost": 1,
+            "memory": 5
+          },
+          "skewer": {
+            "cost": 2,
+            "heal": 5
+          },
+          "oni_sake": {
+            "cost": 2,
+            "heal": 3,
+            "memory": -3
+          }
+        }
+      },
+      "memory": {
+        "start": 60,
+        "low_threshold": 30
+      },
+      "board": {
+        "file": "board.json",
+        "travel_attr": "agi",
+        "travel_dc_by_danger": [
+          8,
+          11,
+          14,
+          17
+        ],
+        "entrance_search_dc": 12
+      }
+    },
+    "tables": [
+      "tables/monsters.json",
+      "tables/shop.json",
+      "tables/artifacts.json"
+    ],
+    "events": [
+      "monster_damaged"
+    ]
+  },
+  "params": {}
+}

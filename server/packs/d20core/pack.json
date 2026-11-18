@@ -1,0 +1,145 @@
+{
+ "id": "d20core",
+ "name": "d20 核心",
+ "version": 1,
+ "doc": "底層規則包：屬性檢定／傷害／行動順序。任何一張桌都該先開它——它宣告的是「內核本來就會做」的那些格子（動作／效果／事件／state 欄位／導演指標）。",
+ "requires": [],
+ "provides": {
+  "defaults": {
+   "rules": {
+    "name": "minimal-d20",
+    "attributes": [
+     "str",
+     "agi",
+     "wil"
+    ],
+    "attr_default": 2,
+    "attr_range": [
+     1,
+     5
+    ],
+    "hp": {
+     "base": 8,
+     "per_str": 2
+    },
+    "check": {
+     "die": 20,
+     "attr_multiplier": 2,
+     "dc_default": 12
+    },
+    "damage": {
+     "die": 6,
+     "attr": "str",
+     "attr_multiplier": 1
+    },
+    "defend_bonus": 3
+   }
+  },
+  "actions": [
+   {
+    "id": "attack",
+    "label": "攻擊",
+    "desc": "對一個席位發起攻擊；目標防禦中時 DC 加 defend_bonus"
+   },
+   {
+    "id": "check",
+    "label": "檢定",
+    "desc": "d20＋屬性×2 vs DC（DC 預設見 config.rules.check）"
+   },
+   {
+    "id": "defend",
+    "label": "防禦",
+    "desc": "舉盾：到你下一回合前被打時 DC 提高"
+   },
+   {
+    "id": "use",
+    "label": "使用",
+    "desc": "用掉一樣東西；note 說明用了什麼"
+   },
+   {
+    "id": "other",
+    "label": "其他",
+    "desc": "表上沒有的一手（由 GM 裁定）"
+   },
+   {
+    "id": "end_turn",
+    "label": "結束回合",
+    "desc": "（回合制）這一回合到此為止，交給下一席",
+    "modes": [
+     "turn"
+    ]
+   }
+  ],
+  "effects": [
+   "emit",
+   "fact_set",
+   "ending",
+   "difficulty_set",
+   "attr_mod",
+   "resource_add",
+   "resource_set",
+   "clock_tick",
+   "clock_set"
+  ],
+  "events": [
+   "attr_mod_set",
+   "resource_changed",
+   "table_created",
+   "seat_joined",
+   "say",
+   "action_declared",
+   "roll",
+   "damage",
+   "heal",
+   "status_set",
+   "turn_started",
+   "turn_ended",
+   "turn_extended",
+   "seat_timeout",
+   "kick",
+   "clock_changed",
+   "audio"
+  ],
+  "state_keys": [
+   "seats",
+   "order",
+   "turn",
+   "log",
+   "secrets",
+   "roll_seq",
+   "turn_seq",
+   "turn_index",
+   "last_seat",
+   "round_no",
+   "round_start_seq",
+   "paused",
+   "paused_at",
+   "facts",
+   "difficulty",
+   "ended",
+   "attr_mods",
+   "resources",
+   "run_id",
+   "clocks",
+   "audio"
+  ],
+  "signals": [
+   "hands",
+   "progress",
+   "stall_hands",
+   "idle_hands",
+   "idle_streak",
+   "recent_idle",
+   "progress_recent",
+   "window",
+   "move_lag",
+   "rounds",
+   "players",
+   "agents",
+   "down",
+   "difficulty"
+  ],
+  "tables": []
+ },
+ "params": {}
+}

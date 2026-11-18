@@ -1,0 +1,153 @@
+{
+ "schema": 1,
+ "kind": "bg",
+ "module": "hyakki_tower",
+ "count": {
+  "files": 14,
+  "aliases": 14
+ },
+ "files": {
+  "bg/hyakki": {
+   "alpha": false,
+   "bytes": 183218,
+   "h": 1024,
+   "kind": "bg",
+   "path": "bg/hyakki.webp",
+   "sha256": "165f9eb87f82d5ab",
+   "w": 1536
+  },
+  "bg/hyakki_back": {
+   "alpha": false,
+   "bytes": 174772,
+   "h": 1024,
+   "kind": "bg",
+   "path": "bg/hyakki_back.webp",
+   "sha256": "f06024da198274b5",
+   "w": 1536
+  },
+  "bg/hyakki_f1": {
+   "alpha": false,
+   "bytes": 180988,
+   "h": 1024,
+   "kind": "bg",
+   "path": "bg/hyakki_f1.webp",
+   "sha256": "5caa33d3f376e2b5",
+   "w": 1536
+  },
+  "bg/hyakki_f2": {
+   "alpha": false,
+   "bytes": 131820,
+   "h": 1024,
+   "kind": "bg",
+   "path": "bg/hyakki_f2.webp",
+   "sha256": "c1b0c3dea22406f1",
+   "w": 1536
+  },
+  "bg/hyakki_f3": {
+   "alpha": false,
+   "bytes": 161114,
+   "h": 1024,
+   "kind": "bg",
+   "path": "bg/hyakki_f3.webp",
+   "sha256": "7c45a15a577bf26c",
+   "w": 1536
+  },
+  "bg/hyakki_f4": {
+   "alpha": false,
+   "bytes": 164264,
+   "h": 1024,
+   "kind": "bg",
+   "path": "bg/hyakki_f4.webp",
+   "sha256": "1f3d33ac72c33b61",
+   "w": 1536
+  },
+  "bg/hyakki_f5": {
+   "alpha": false,
+   "bytes": 171642,
+   "h": 1024,
+   "kind": "bg",
+   "path": "bg/hyakki_f5.webp",
+   "sha256": "fe66f5cd9c82ca56",
+   "w": 1536
+  },
+  "bg/hyakki_f6": {
+   "alpha": false,
+   "bytes": 159164,
+   "h": 1024,
+   "kind": "bg",
+   "path": "bg/hyakki_f6.webp",
+   "sha256": "4afb9ea2fcd933f8",
+   "w": 1536
+  },
+  "bg/minato": {
+   "alpha": false,
+   "bytes": 148464,
+   "h": 1024,
+   "kind": "bg",
+   "path": "bg/minato.webp",
+   "sha256": "8b20022388b9c905",
+   "w": 1536
+  },
+  "bg/teckan": {
+   "alpha": false,
+   "bytes": 162674,
+   "h": 1024,
+   "kind": "bg",
+   "path": "bg/teckan.webp",
+   "sha256": "75c0beb44e476893",
+   "w": 1536
+  },
+  "bg/w_minato": {
+   "alpha": false,
+   "bytes": 164976,
+   "h": 1024,
+   "kind": "bg",
+   "path": "bg/w_minato.webp",
+   "sha256": "665f2b78dcde9543",
+   "w": 1536
+  },
+  "bg/w_teckan": {
+   "alpha": false,
+   "bytes": 174054,
+   "h": 1024,
+   "kind": "bg",
+   "path": "bg/w_teckan.webp",
+   "sha256": "e5a40698497a9030",
+   "w": 1536
+  },
+  "bg/w_yamato": {
+   "alpha": false,
+   "bytes": 162510,
+   "h": 1024,
+   "kind": "bg",
+   "path": "bg/w_yamato.webp",
+   "sha256": "5167672298fed5db",
+   "w": 1536
+  },
+  "bg/yamato": {
+   "alpha": false,
+   "bytes": 255930,
+   "h": 1024,
+   "kind": "bg",
+   "path": "bg/yamato.webp",
+   "sha256": "ea877a00a89eb09d",
+   "w": 1536
+  }
+ },
+ "aliases": {
+  "bg:hyakki": "bg/hyakki",
+  "bg:hyakki_back": "bg/hyakki_back",
+  "bg:hyakki_f1": "bg/hyakki_f1",
+  "bg:hyakki_f2": "bg/hyakki_f2",
+  "bg:hyakki_f3": "bg/hyakki_f3",
+  "bg:hyakki_f4": "bg/hyakki_f4",
+  "bg:hyakki_f5": "bg/hyakki_f5",
+  "bg:hyakki_f6": "bg/hyakki_f6",
+  "bg:minato": "bg/minato",
+  "bg:teckan": "bg/teckan",
+  "bg:w_minato": "bg/w_minato",
+  "bg:w_teckan": "bg/w_teckan",
+  "bg:w_yamato": "bg/w_yamato",
+  "bg:yamato": "bg/yamato"
+ }
+}

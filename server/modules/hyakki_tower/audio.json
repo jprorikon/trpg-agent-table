@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "module": "hyakki_tower",
+  "doc": "百鬼塔 的音訊表（**模組級**，作者手寫、進版控）。引擎只做播放控制（哪個聲道／哪一首／淡入幾秒）；有沒有聲音、放哪一首是這張表＋GM 的事。音檔住 assets/audio/…（同一條 /assets/<モジュール>/… 靜態路由，支援 Range ⇒ 手機 Safari 也能播）。曲目＝YuE2-3B（本地 4090）文生樂 + 單聲部譜重渲染（純音樂，無殘人聲處理），効果音＝ffmpeg 合成。",
+  "tracks": {
+    "bgm:town_night": {
+      "path": "audio/bgm/hyakki_night_town.mp3",
+      "loop": true,
+      "gain": 0.5,
+      "title": {"ja": "城下の夜", "zh_Hans": "城下之夜", "zh_Hant": "城下之夜"}
+    },
+    "bgm:tower_hall": {
+      "path": "audio/bgm/hyakki_tower_hall.mp3",
+      "loop": true,
+      "gain": 0.45,
+      "title": {"ja": "塔の中", "zh_Hans": "塔内", "zh_Hant": "塔內"}
+    },
+    "bgm:oni_lord": {
+      "path": "audio/bgm/hyakki_oni_lord.mp3",
+      "loop": true,
+      "gain": 0.5,
+      "title": {"ja": "鬼王", "zh_Hans": "鬼王", "zh_Hant": "鬼王"}
+    },
+    "sfx:taiko": {
+      "path": "audio/sfx/hyakki_taiko.mp3",
+      "gain": 0.85,
+      "title": {"ja": "太鼓一発", "zh_Hans": "太鼓一击", "zh_Hant": "太鼓一擊"}
+    },
+    "sfx:oni_roar": {
+      "path": "audio/sfx/hyakki_oni_roar.mp3",
+      "gain": 0.8,
+      "title": {"ja": "鬼の咆哮", "zh_Hans": "鬼的咆哮", "zh_Hant": "鬼的咆哮"}
+    },
+    "sfx:suzu": {
+      "path": "audio/sfx/hyakki_suzu.mp3",
+      "gain": 0.7,
+      "title": {"ja": "鈴の祓い", "zh_Hans": "铃之祓", "zh_Hant": "鈴之祓"}
+    }
+  },
+  "cues": {
+    "round_start": "bgm:town_night",
+    "entered_tower": "bgm:tower_hall",
+    "tower_exit": "bgm:town_night",
+    "boss_defeated": "sfx:taiko",
+    "white_room": "sfx:suzu"
+  }
+}

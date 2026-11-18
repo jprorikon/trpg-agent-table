@@ -1,0 +1,11 @@
+# モジュール repo の一覧（`deploy/modules_up.sh` が読む）
+# ------------------------------------------------------------------
+# 書式: <module id>  <Gitea repo>     （空白／タブ区切り、# はコメント）
+#
+# サーバー repo（trpg/server）は `modules/` を版管理しない。
+# モジュール＝ひとつの世界観＝独立 repo。デプロイ先でこの一覧のぶんだけ
+# `modules/<id>/` に clone される（既にあれば pull）。
+#
+# 新しいモジュールを足したら、ここに 1 行足す。
+# （展示用 monorepo では `hyakki_tower` は `server/modules/` に同梱済み ⇒ clone 不要。）
+hyakki_tower   trpg/module-hyakki-tower

@@ -1,0 +1,65 @@
+{
+  "module": "example",
+  "note": "模組角色表：**角色的類（class）由模組決定**（例如 アタッカー／バランサー／サポーター，或 warrior／mage／ranger）。劇本的 seats.json 只決定這一局誰參與、坐哪一席。服裝版本併進本體（outfits），舊 id 可留在 aliases 對映——選人時同一角色可挑不同立繪。",
+  "characters": [
+    {
+      "id": "npc_x",
+      "class": "npc",
+      "name": "導引者",
+      "element": "光",
+      "rarity": 4,
+      "range": "近接",
+      "affiliation": "導師同盟",
+      "style": "しっかり者",
+      "outfits": [
+        {
+          "id": "default",
+          "name": "通常"
+        }
+      ],
+      "note": "駐守起始城鎮的 NPC 引導角色。"
+    },
+    {
+      "id": "char_a",
+      "class": "player",
+      "name": "角色A",
+      "element": "水",
+      "rarity": 5,
+      "range": "近接",
+      "affiliation": "冒險者公會",
+      "style": "熱血",
+      "outfits": [
+        {
+          "id": "default",
+          "name": "通常"
+        },
+        {
+          "id": "awakened",
+          "name": "覺醒"
+        }
+      ],
+      "note": "前排近戰型主角。"
+    },
+    {
+      "id": "char_b",
+      "class": "player",
+      "name": "角色B",
+      "element": "風",
+      "rarity": 5,
+      "range": "遠隔",
+      "affiliation": "冒險者公會",
+      "style": "冷靜",
+      "outfits": [
+        {
+          "id": "default",
+          "name": "通常"
+        },
+        {
+          "id": "awakened",
+          "name": "覺醒"
+        }
+      ],
+      "note": "後排遠程支援型主角。"
+    }
+  ]
+}

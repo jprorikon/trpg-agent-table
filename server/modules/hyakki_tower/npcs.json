@@ -1,0 +1,55 @@
+{
+  "doc": "百鬼塔の NPC 名簿（原創）。`portrait_dir` 是**素材目錄名**（= id）；引擎不讀這一支，素材建置（`_hyakki_assets_build.py`）與 GM 演 NPC 時用它。`gm_only` 的 NPC 由 GM 代演、不配席位。",
+  "source": {
+    "origin": "原創（鉄環地方）",
+    "assets": "本地生成（Krea2 anime v1.5 t2i）"
+  },
+  "count": 5,
+  "rows": [
+    {
+      "id": "tsurugi",
+      "name": "ツルギ",
+      "name_jp": "ツルギ",
+      "kind": "npc",
+      "gm_only": false,
+      "portrait_dir": "tsurugi",
+      "note": "港町ミナトの宿『折れ杭』の主。元鍛冶。右手の指が三本ない。鬼の話になると声が落ちる。"
+    },
+    {
+      "id": "rize",
+      "name": "リーゼ",
+      "name_jp": "リーゼ",
+      "kind": "npc",
+      "gm_only": true,
+      "portrait_dir": "rize",
+      "note": "運び屋の組合の詰所長。塔の裏口の在処を知っているが、組合の方針で口に出さない。"
+    },
+    {
+      "id": "gai",
+      "name": "ガイ",
+      "name_jp": "ガイ",
+      "kind": "npc",
+      "gm_only": true,
+      "portrait_dir": "gai",
+      "note": "鉄環市の闘技場の主。左腕がない。十年前、塔の正面に最初に飛び込んだ。"
+    },
+    {
+      "id": "setsu",
+      "name": "セツ",
+      "name_jp": "セツ",
+      "kind": "npc",
+      "gm_only": true,
+      "portrait_dir": "setsu",
+      "note": "三階の補給所に勝手に棚を置いた老婆。塔の中で唯一、鬼に襲われない。"
+    },
+    {
+      "id": "sane",
+      "name": "サネ",
+      "name_jp": "サネ",
+      "kind": "npc",
+      "gm_only": true,
+      "portrait_dir": "sane",
+      "note": "ツルギの弟子。鉄環市の炉で鎚を振っている。折れた道具を直すのが仕事。"
+    }
+  ]
+}

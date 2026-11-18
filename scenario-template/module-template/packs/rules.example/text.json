@@ -1,0 +1,9 @@
+{
+  "skill.cast": "{who} 發動技能【{skill}】（目標：{target}，檢定 d20+{mod}={total} vs DC {dc}）",
+  "skill.hit": " 命中！造成效果。",
+  "skill.miss": " 未命中。",
+  "skill.no_resource": "【{skill}】資源不足（需要 {need} {res}，現有 {have}）",
+  "skill.unknown": "未知的技能：{skill}",
+  "exp.gained": "{who} 獲得 {n} 點經驗值（現有 {total}）",
+  "level.up": "★ {who} 升到了等級 {level}！"
+}

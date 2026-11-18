@@ -1,0 +1,43 @@
+{
+  "work": "（作品名／藍本）",
+  "board_name": "（棋盤名）",
+  "notes": "骨架棋盤：一個城鎮 ＋ 一片郊野 ＋ 一座三層的塔。要用棋盤就把這個檔複製成 board.json（引擎只看 board.json）。節點 id 隨你取，但 edges 一定要有向、且指向存在的節點。★ 這裡刻意留了一個環路（城鎮 ⇄ 郊野 ⇄ 塔口 ⇄ 城鎮）與兩個起點出口：玩家的「選擇」不能只有『要不要繼續往前走』——同一條路進塔、從另一條路繞回來，才叫地圖（`tools/design_lint.py` 的 board.* 在看這個）。塔的機制（入口用過即失效／只能坐昇降機／本層小怪未清不能上行／塔內飲食扣記憶／出塔収奪）由引擎實作，你不用寫。⚠ 機制旋鈕（如 entrance_search_dc）不寫在這裡——它在 config 的 board 段（預設由 packs/board 給）；神器表放 packs/my_world/tables/artifacts.json（寫在 board.json 裡也可以，劇本檔優先）。",
+  "start_node": "town",
+  "nodes": [
+    {"id": "town", "jp": "（城鎮名）", "cn": "（城鎮名）", "type": "city", "danger": 0,
+     "tags": ["city", "rest", "shop"], "flavor": "（一兩句風景／氣氛）",
+     "monolith": "tow",
+     "edges": [{"to": "tow", "kind": "road"}, {"to": "field", "kind": "wild"}]},
+
+    {"id": "field", "jp": "（郊野名）", "cn": "郊野", "type": "wild", "danger": 1,
+     "tags": ["wild"], "flavor": "（城外那條路／那片野地；玩家可以在這裡埋伏、繞路、埋伏別人的埋伏）",
+     "edges": [{"to": "town", "kind": "wild"}, {"to": "tow", "kind": "wild"}]},
+
+    {"id": "tow", "jp": "（塔名）", "cn": "（塔名）", "type": "monolith_entry", "danger": 1,
+     "tags": ["monolith_entry", "wild_entry"], "flavor": "（從外面看到的塔）",
+     "edges": [{"to": "town", "kind": "road"}, {"to": "field", "kind": "wild"}, {"to": "tow_f1", "kind": "entrance"}]},
+
+    {"id": "tow_f1", "jp": "（塔名）1階", "cn": "塔 1F（戰鬥領域）", "type": "tower_floor", "danger": 1,
+     "tags": ["tower", "battle_domain"], "depth": 1, "mobs": 2,
+     "flavor": "（這一層長什麼樣）",
+     "edges": [{"to": "tow", "kind": "exit"}, {"to": "tow_f2", "kind": "elevator"}]},
+
+    {"id": "tow_f2", "jp": "（塔名）2階", "cn": "塔 2F（商店）", "type": "tower_floor", "danger": 0,
+     "tags": ["tower", "shop"], "depth": 2, "mobs": 0, "shop": true,
+     "flavor": "（這一層長什麼樣）",
+     "edges": [{"to": "tow_f1", "kind": "elevator"}, {"to": "tow_f3", "kind": "elevator"}]},
+
+    {"id": "tow_f3", "jp": "（塔名）最上階", "cn": "塔 頂層（BOSS＋大祈願箱）", "type": "tower_floor",
+     "danger": 3, "tags": ["tower", "boss", "wish_box"], "depth": 3, "mobs": 1,
+     "wish_box": {"tier": 1}, "flavor": "（這一層長什麼樣）",
+     "edges": [{"to": "tow_f2", "kind": "elevator"}]}
+  ],
+  "roster": [
+    {"seat": "char_a", "name": "（角色 A 名字）", "role": "（定位）", "attrs": {"str": 1, "agi": 5, "wil": 3},
+     "note": "（這個角色是誰、擅長什麼）"},
+    {"seat": "char_b", "name": "（角色 B 名字）", "role": "（定位）", "attrs": {"str": 3, "agi": 3, "wil": 3},
+     "note": "（這個角色是誰）"},
+    {"seat": "npc_x", "name": "（NPC 名字）", "role": "店員", "attrs": {"str": 1, "agi": 1, "wil": 5},
+     "note": "（NPC 是誰）"}
+  ]
+}

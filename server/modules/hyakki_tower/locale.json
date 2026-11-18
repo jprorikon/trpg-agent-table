@@ -1,0 +1,27 @@
+{
+ "schema": 1,
+ "module": "hyakki_tower",
+ "doc": "畫面用語表（格式同 trpg/module-hyakki-tower 的 locale.json）：glossary＝原文→譯名；places＝節點 id→譯名；text＝覆寫前端字典鍵。**lobby.cover／lobby.scenarios.<劇本>.cover＝素材表（assets/index.json）的別名**（這份是手寫正本；index.json 是生成物，別往那裡加別名）。",
+ "glossary": {
+  "三年目の鬼祓い": {
+   "zh-Hant": "第三年的驅鬼",
+   "zh-Hans": "第三年的驱鬼",
+   "kind": "board"
+  }
+ },
+ "places": {},
+ "text": {},
+ "lobby": {
+  "cover": "bg:teckan",
+  "tagline": {
+   "ja": "鉄環地方で鬼を祓う、戦いの物語",
+   "zh-Hant": "在鐵環地方驅鬼的戰鬥故事",
+   "zh-Hans": "在铁环地方驱鬼的战斗故事"
+  },
+  "scenarios": {
+   "sannenme_no_onibarai": {
+    "cover": "bg:hyakki"
+   }
+  }
+ }
+}

@@ -1,0 +1,180 @@
+{
+  "module": "hyakki_tower",
+  "note": "模組角色表：**角色的類（`class`）由模組決定**（這一部＝戰鬥役割：鬼斬り／星読み／火槌／斥候／番兵／鍛冶／宿／組合／闘技場／補給所）。劇本用 `scenarios/<劇本>/seats.json` 決定這一局哪些角色參與、坐哪一席；帳號進場＝在模組底下建立／沿用一個角色實例。原創世界（鉄環地方），外觀與役割為本模組自定；素材由本地生成模型產生（`assets/`，見 `assets/README.md`）。",
+  "characters": [
+    {
+      "id": "char_a",
+      "class": "鬼斬り",
+      "name": "カガリ",
+      "element": "火",
+      "rarity": 4,
+      "range": "近接",
+      "affiliation": "鉄環市",
+      "style": "一直線",
+      "outfits": [
+        {
+          "id": "default",
+          "name": "通常"
+        }
+      ],
+      "note": "鉄環市の炉で打たれた剣を持つ。十年前に折れた大剣の、残りの半身を探している。"
+    },
+    {
+      "id": "char_b",
+      "class": "星読み",
+      "name": "シズク",
+      "element": "水",
+      "rarity": 4,
+      "range": "遠距離",
+      "affiliation": "運び屋の組合",
+      "style": "冷静",
+      "outfits": [
+        {
+          "id": "default",
+          "name": "通常"
+        }
+      ],
+      "note": "運び屋の組合に雇われた記録係。塔の中で何が起きたかを、誰よりも正確に覚えている。"
+    },
+    {
+      "id": "homura",
+      "class": "火槌",
+      "name": "ホムラ",
+      "element": "火",
+      "rarity": 5,
+      "range": "近接",
+      "affiliation": "鉄環市",
+      "style": "熱血",
+      "outfits": [
+        {
+          "id": "default",
+          "name": "通常"
+        }
+      ],
+      "note": "鉄環市の炉神社の巫女。大槌を担いで塔に乗り込む。十年前の夜、炉の火を落とさなかったのが誰かを知りたがっている。"
+    },
+    {
+      "id": "isuka",
+      "class": "斥候",
+      "name": "イスカ",
+      "element": "風",
+      "rarity": 4,
+      "range": "中距離",
+      "affiliation": "運び屋の組合",
+      "style": "皮肉屋",
+      "outfits": [
+        {
+          "id": "default",
+          "name": "通常"
+        }
+      ],
+      "note": "組合きっての地図読み。塔の裏口の在処を掴んでいるが、組合の掟で口に出せない。投げナイフ二丁。"
+    },
+    {
+      "id": "nagi",
+      "class": "番兵",
+      "name": "ナギ",
+      "element": "地",
+      "rarity": 4,
+      "range": "近接",
+      "affiliation": "砦ヤマト",
+      "style": "寡黙",
+      "outfits": [
+        {
+          "id": "default",
+          "name": "通常"
+        }
+      ],
+      "note": "砦ヤマトの道場主。長巻一本で、隊の誰よりも長く塔に立っている。死なせないことを役目だと思っている。"
+    },
+    {
+      "id": "sane",
+      "class": "鍛冶",
+      "name": "サネ",
+      "element": "光",
+      "rarity": 3,
+      "range": "近接",
+      "affiliation": "鉄環市",
+      "style": "世話焼き",
+      "outfits": [
+        {
+          "id": "default",
+          "name": "通常"
+        }
+      ],
+      "note": "ツルギの弟子。右手に鎚、左手に包帯。折れた道具を直しながら塔の下で待っている。"
+    },
+    {
+      "id": "tsurugi",
+      "class": "宿",
+      "name": "ツルギ",
+      "element": "地",
+      "rarity": 3,
+      "range": "近接",
+      "affiliation": "港町ミナト",
+      "style": "無口",
+      "start_node": "minato",
+      "outfits": [
+        {
+          "id": "default",
+          "name": "通常"
+        }
+      ],
+      "note": "港町の宿『折れ杭』の主。元鍛冶。右手の指が三本ない。鬼の話になると声が落ちる。"
+    },
+    {
+      "id": "rize",
+      "class": "組合",
+      "name": "リーゼ",
+      "element": "風",
+      "rarity": 3,
+      "range": "遠距離",
+      "affiliation": "運び屋の組合",
+      "style": "計算高い",
+      "start_node": "minato",
+      "outfits": [
+        {
+          "id": "default",
+          "name": "通常"
+        }
+      ],
+      "note": "港町の組合詰所長。担がれて戻ってくる者を一人でも減らすため、裏口のことを黙っている。"
+    },
+    {
+      "id": "gai",
+      "class": "闘技場",
+      "name": "ガイ",
+      "element": "火",
+      "rarity": 3,
+      "range": "近接",
+      "affiliation": "鉄環市",
+      "style": "豪快",
+      "start_node": "teckan",
+      "outfits": [
+        {
+          "id": "default",
+          "name": "通常"
+        }
+      ],
+      "note": "鉄環市の闘技場の主。十年前、塔の正面に最初に飛び込んで、片腕を失った。"
+    },
+    {
+      "id": "setsu",
+      "class": "補給所",
+      "name": "セツ",
+      "element": "水",
+      "rarity": 3,
+      "range": "中距離",
+      "affiliation": "百鬼塔",
+      "style": "飄々",
+      "start_node": "hyakki_f3",
+      "outfits": [
+        {
+          "id": "default",
+          "name": "通常"
+        }
+      ],
+      "note": "三階の補給所に勝手に棚を置いた老婆。誰が払っているのかは言わない。塔の中で唯一、鬼に襲われない。"
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "doc": "百鬼塔の敵名簿（原創）。`portrait_dir`＝素材目錄名（= id）。**数值与出没规则住 `scenarios/<劇本>/packs/hyakki_world/tables/monsters.json`**（那才是引擎吃的表）；這一支是素材／名簿，`in_encounter_table` 標它有沒有進遭遇表。2026-10-20：9 種**全部進表**（同格多種，沒有擠掉任何一種）。",
+  "source": {
+    "origin": "原創（鉄環地方）",
+    "assets": "本地生成（Krea2 anime v1.5 t2i）"
+  },
+  "count": 9,
+  "rows": [
+    {
+      "id": "yabusame",
+      "name": "野伏せの鬼",
+      "name_jp": "野伏せの鬼",
+      "kind": "oni",
+      "in_encounter_table": true,
+      "portrait_dir": "yabusame",
+      "note": "通用（哪一格都可能遇到）。最弱的那一種。"
+    },
+    {
+      "id": "hone_musha",
+      "name": "骸骨武者",
+      "name_jp": "骸骨武者",
+      "kind": "oni",
+      "in_encounter_table": true,
+      "portrait_dir": "hone_musha",
+      "note": "1～2 階（下層）。動作很規矩——十年ぶんの癖が抜けていない。"
+    },
+    {
+      "id": "gaki",
+      "name": "餓鬼",
+      "name_jp": "餓鬼",
+      "kind": "oni",
+      "in_encounter_table": true,
+      "portrait_dir": "gaki",
+      "note": "3～4 階（中層）。數が多い。"
+    },
+    {
+      "id": "oni_sho",
+      "name": "鬼将",
+      "name_jp": "鬼将",
+      "kind": "oni",
+      "in_encounter_table": true,
+      "portrait_dir": "oni_sho",
+      "note": "5～6 階（上層）。一撃が重い。"
+    },
+    {
+      "id": "hyakki_no_aruji",
+      "name": "百鬼夜行の主",
+      "name_jp": "百鬼夜行の主",
+      "kind": "boss",
+      "in_encounter_table": true,
+      "portrait_dir": "hyakki_no_aruji",
+      "note": "最上階の主。腹に十年前の折れ剣を呑んでいる。"
+    },
+    {
+      "id": "onibi",
+      "name": "鬼火",
+      "name_jp": "鬼火",
+      "kind": "oni",
+      "in_encounter_table": true,
+      "portrait_dir": "onibi",
+      "note": "（新）塔の踊り場を漂う火。hp 1 で一撃必殺だが数で来る。※2026-10-20 已進遭遇表（1・2 階，與骸骨武者／骨弓兵同格）。"
+    },
+    {
+      "id": "jorougumo",
+      "name": "女郎蜘蛛",
+      "name_jp": "女郎蜘蛛",
+      "kind": "oni",
+      "in_encounter_table": true,
+      "portrait_dir": "jorougumo",
+      "note": "（新）中層の天井から糸を垂らし、足を取る。※2026-10-20 已進遭遇表（4 階，與餓鬼同格）。"
+    },
+    {
+      "id": "hitotsume",
+      "name": "一つ目鬼",
+      "name_jp": "一つ目鬼",
+      "kind": "oni",
+      "in_encounter_table": true,
+      "portrait_dir": "hitotsume",
+      "note": "（新）見られている間だけ強い。目を潰すと崩れる。※2026-10-20 已進遭遇表（5 階，與鬼将同格）。"
+    },
+    {
+      "id": "hone_yumi",
+      "name": "骨弓兵",
+      "name_jp": "骨弓兵",
+      "kind": "oni",
+      "in_encounter_table": true,
+      "portrait_dir": "hone_yumi",
+      "note": "（新）下層の通路の奥から撃つ。接近されると弱い。※2026-10-19 已進遭遇表（2 階）。"
+    }
+  ]
+}

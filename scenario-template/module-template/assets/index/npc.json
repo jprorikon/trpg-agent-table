@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "kind": "npc",
+  "module": "example",
+  "count": {
+    "files": 0,
+    "aliases": 0
+  },
+  "files": {},
+  "aliases": {}
+}

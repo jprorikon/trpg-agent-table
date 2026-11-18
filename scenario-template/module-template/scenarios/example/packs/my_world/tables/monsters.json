@@ -1,0 +1,37 @@
+{
+  "kind": "monsters",
+  "doc": "遭遇敵人表：支援 2026-10-19 戰鬥擴充（hp 血量、count 同格隻數、active 主動怪收景咬人）。選取規則：nodes 指定 ＞ depth 範圍 ＞ 通用。未命中逐欄回退舊預設。",
+  "rows": [
+    {
+      "id": "wild_wolf",
+      "name_jp": "荒野の狼",
+      "name_cn": "荒野之狼",
+      "nodes": ["tow_f1"],
+      "dc": 12,
+      "check": "agi",
+      "coins": 2,
+      "exp": 6,
+      "damage_die": 4,
+      "hp": 3,
+      "count": 2,
+      "active": {"chance": 0.4, "max_targets": 1},
+      "note": "塔 1F 的敏捷主動怪：HP 3，收景時有 40% 機率攻擊 1 位冒險者。"
+    },
+    {
+      "id": "boss_golem",
+      "name_jp": "古代の巨像（BOSS）",
+      "name_cn": "古代巨像（BOSS）",
+      "nodes": ["tow_f3"],
+      "boss": true,
+      "dc": 15,
+      "check": "str",
+      "coins": 6,
+      "exp": 20,
+      "damage_die": 6,
+      "hp": 8,
+      "count": 1,
+      "active": {"chance": 0.6, "max_targets": 2},
+      "note": "頂層 BOSS：擊破後發出 boss_defeated 事件並解鎖祈願箱。"
+    }
+  ]
+}

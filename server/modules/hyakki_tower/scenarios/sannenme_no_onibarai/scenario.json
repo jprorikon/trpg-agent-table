@@ -1,0 +1,700 @@
+{
+  "meta": {
+    "id": "sannenme_no_onibarai",
+    "rules_version": "1.0",
+    "note": "L1 規則資料：願望判據（requirements）／表層判據（surface）／NPC 專屬知識（entities）／難度（difficulty_presets）／導演（director）／結局（endings）／觸發（triggers）。語法與詞彙表見 SCENARIO_FORMAT.md §3。⚠ 這一桌**沒有任何 growth_gain 觸發**——經驗只能從戰鬥（擊破）產生。 2026-10-19：新增三名可選角色（ホムラ／イスカ／ナギ）與對應願望判據；新增四個 gm_only NPC 實體。",
+    "name": "三年目の鬼祓い",
+    "label": "百鬼塔 ── 鉄環地方・三年目の鬼祓い（原創；戰鬥為主）"
+  },
+  "entities": {
+    "tsurugi": {
+      "kind": "npc",
+      "display": "ツルギ（宿『折れ杭』の主・元鍛冶）",
+      "knowledge": [
+        "港町ミナトの宿『折れ杭』を一人で切り盛りしている。右手の指が三本ない。",
+        "十年前、鉄環市の炉で大剣を打った。打ち手は自分と、もう一人しかいなかった。",
+        "塔が急に高くなったのは、あの夜からだ。あの夜、炉の火を落とさなかった者がいる。",
+        "運び屋の組合が、塔の裏口（4 階の崩れた壁）の存在を隠している——担がれて出てくる者を減らしたいからだ。",
+        "「鬼を斬る」と言う若者には、できるだけ何も教えない。教えても、あの塔は返してくれない。"
+      ],
+      "note": "只講上面範圍內的事；被追問十年前的細節、或問到另一個人是誰，就用他的口吻含糊過去／岔開（他會去擦柜台）。"
+    },
+    "rize": {
+      "kind": "npc",
+      "gm_only": true,
+      "display": "リーゼ（港町ミナト・運び屋の組合詰所長）",
+      "knowledge": [
+        "港町ミナトの組合詰所を仕切っている。帳簿と荷札の匂いがする女。",
+        "**塔の裏口（4 階の崩れた壁から港側へ抜ける）の在処を知っている**が、組合の方針で口に出さない。",
+        "担がれて戻ってくる者を一人でも減らすために、正面から入る者を止めている。",
+        "裏口を探している者がいると、値段を付けてくる（情報は売り物だと思っている）。"
+      ],
+      "note": "只講上面範圍內的事；被追問裏口就轉移話題到『いくら出す』。不主動給地圖。"
+    },
+    "gai": {
+      "kind": "npc",
+      "gm_only": true,
+      "display": "ガイ（鉄環市・闘技場の主）",
+      "knowledge": [
+        "鉄環市の闘技場を仕切っている。左腕がない。十年前、塔の正面に最初に飛び込んだ。",
+        "塔の正面の入口は毎回場所が変わる——「探しに行った者が半分、帰ってこない」。",
+        "折れた大剣の片割れが街の広場に刺さっている。もう片方は塔の主が呑んだ、と信じている。",
+        "強い相手と戦うことには金を払うが、弱い者を塔へ送ることはしない。"
+      ],
+      "note": "豪快だが金勘定は細かい。武勇の話になると止まらない。"
+    },
+    "setsu": {
+      "kind": "npc",
+      "gm_only": true,
+      "display": "セツ（百鬼塔 3 階・補給所の老婆）",
+      "knowledge": [
+        "三階の補給所に勝手に棚を置いて、塔の中で唯一鬼に襲われない。",
+        "誰が品物を補充しているのかは言わない（『あんたが知る必要はない』）。",
+        "塔の中で飲み食いすると記憶が削られる——だから彼女は『ここで食うな』とだけ言う。",
+        "上に行く者には必ず何か一つ売る。値段は気分で決まる。"
+      ],
+      "note": "口数が少なく、質問には質問で返す。値段は GM が場当たりで決めてよい。"
+    },
+    "sane": {
+      "kind": "npc",
+      "gm_only": true,
+      "display": "サネ（鉄環市・ツルギの弟子）",
+      "knowledge": [
+        "ツルギの弟子で、鉄環市の炉で鎚を振っている。右手に鎚、左手に包帯。",
+        "師匠（ツルギ）が十年前の夜のことを話さないのを、ずっと気にしている。",
+        "折れた道具を直すのが仕事。塔から持ち帰った折れ刃を見ると、手が止まる。",
+        "『師匠に聞いても無駄です。あの人は、話さないって決めてる』——本人はそう言う。"
+      ],
+      "note": "明るく世話焼き。師匠の過去だけは、自分からは触らない。"
+    }
+  },
+  "requirements": {
+    "g_blade": {
+      "doc": "カガリ的願望：拿到結論 c_blade ＋ 人站在最上階（把折斷的另外半截從鬼的腹中帶出來，得在最上階）",
+      "expr": {
+        "and": [
+          {
+            "in": [
+              "c_blade",
+              {
+                "var": "me.claims"
+              }
+            ],
+            "why": {
+              "need_claims": [
+                "c_blade"
+              ],
+              "you_have_claims": {
+                "var": "me.claims"
+              }
+            }
+          },
+          {
+            "in": [
+              {
+                "var": "me.node"
+              },
+              [
+                "hyakki_f6"
+              ]
+            ],
+            "why": {
+              "need_node": [
+                "hyakki_f6"
+              ],
+              "you_are": {
+                "var": "me.node"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "g_record": {
+      "doc": "シズク的願望：拿到結論 c_night ＋ 至少一個『別人』向我出示過碎片（見せられない証言は記録にならない）",
+      "expr": {
+        "and": [
+          {
+            "in": [
+              "c_night",
+              {
+                "var": "me.claims"
+              }
+            ],
+            "why": {
+              "need_claims": [
+                "c_night"
+              ],
+              "you_have_claims": {
+                "var": "me.claims"
+              }
+            }
+          },
+          {
+            ">=": [
+              {
+                "len": {
+                  "var": "me.fragment_sources"
+                }
+              },
+              1
+            ],
+            "why": {
+              "need_sources": 1,
+              "have": {
+                "var": "me.fragment_sources"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "g_ember": {
+      "doc": "ホムラ的願望：拿到「炉の火は十年前から落ちていない」の結論 ＋ 人站在 5 階（宝櫃の前で火を灯す）。原本吃 c_night，改成自己的結論。",
+      "expr": {
+        "and": [
+          {
+            "in": [
+              "c_fire",
+              {
+                "var": "me.claims"
+              }
+            ],
+            "why": {
+              "need_claims": [
+                "c_fire"
+              ],
+              "you_have_claims": {
+                "var": "me.claims"
+              }
+            }
+          },
+          {
+            "in": [
+              {
+                "var": "me.node"
+              },
+              [
+                "hyakki_f5"
+              ]
+            ],
+            "why": {
+              "need_node": [
+                "hyakki_f5"
+              ],
+              "you_are": {
+                "var": "me.node"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "g_route": {
+      "doc": "イスカ的願望：拿到「裏口がある」の結論 ＋ 人走到塔的裏口（hyakki_back）——把地圖帶回組合。原本吃 c_night，改成自己的結論。",
+      "expr": {
+        "and": [
+          {
+            "in": [
+              "c_backdoor",
+              {
+                "var": "me.claims"
+              }
+            ],
+            "why": {
+              "need_claims": [
+                "c_backdoor"
+              ],
+              "you_have_claims": {
+                "var": "me.claims"
+              }
+            }
+          },
+          {
+            "in": [
+              {
+                "var": "me.node"
+              },
+              [
+                "hyakki_back"
+              ]
+            ],
+            "why": {
+              "need_node": [
+                "hyakki_back"
+              ],
+              "you_are": {
+                "var": "me.node"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "g_stand": {
+      "doc": "ナギ的願望：全隊沒有人死（facts.death_seen 未成立）＋ 自己站在最上階",
+      "expr": {
+        "and": [
+          {
+            "not": {
+              "exists": "facts.death_seen"
+            }
+          },
+          {
+            "in": [
+              {
+                "var": "me.node"
+              },
+              [
+                "hyakki_f6"
+              ]
+            ],
+            "why": {
+              "need_node": [
+                "hyakki_f6"
+              ],
+              "you_are": {
+                "var": "me.node"
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "surface": {
+    "reached_top": {
+      "doc": "有人站上百鬼塔的最上階（hyakki_f6）",
+      "expr": {
+        "in": [
+          "hyakki_f6",
+          {
+            "pluck": [
+              {
+                "values": {
+                  "var": "seats"
+                }
+              },
+              "node"
+            ]
+          }
+        ]
+      }
+    },
+    "grand_box_touched": {
+      "doc": "最上階的大祈願箱被動過（有先手紀錄）＝表層共同目標的門檻",
+      "expr": {
+        "exists": "world.pray_first.hyakki_f6"
+      }
+    },
+    "tower_cleared": {
+      "doc": "最上階的大祈願箱被動過（有先手紀錄）＝表層共同目標的門檻",
+      "expr": {
+        "exists": "world.pray_first.hyakki_f6"
+      }
+    }
+  },
+  "difficulty_presets": {
+    "relaxed": {
+      "doc": "鬆（賞）：檢定 DC −1、每回合行動格 +1",
+      "dc_mod": -1,
+      "act_mod": 1
+    },
+    "normal": {
+      "doc": "標準（預設）：不動",
+      "dc_mod": 0,
+      "act_mod": 0
+    },
+    "tight": {
+      "doc": "緊（罰）：檢定 DC +1、每回合行動格 −1",
+      "dc_mod": 1,
+      "act_mod": -1
+    }
+  },
+  "starting_difficulty": {
+    "default": "normal",
+    "levels": {
+      "easy": {
+        "doc": "鬆（容錯優先）：死一次只賠一輪、復活乾淨、檢定寬、經驗多、物價低。",
+        "rules": {
+          "death": {
+            "mode": "return_city",
+            "skip_turns": 1,
+            "hp_restore": 2,
+            "nearest": true,
+            "clear_conditions": true,
+            "drop_coins": 0,
+            "lost_memory": 0
+          },
+          "levels": {
+            "exp_base": 30,
+            "exp_step": 25
+          },
+          "tower": {
+            "entrance_open_rounds": 3
+          }
+        },
+        "mods": {
+          "monster_dc": -1,
+          "exp_mult": 1.2,
+          "coins_mult": 1.2,
+          "price_mult": 0.8,
+          "monster_hp_mult": 0.7
+        },
+        "label": "轻松",
+        "label_jp": "ゆるめ"
+      },
+      "normal": {
+        "doc": "標準（預設＝2026-10-20 前的現值）：死一次缺席 2 回合、復活只剩一口氣、傷照留、不掉東西。",
+        "rules": {
+          "death": {
+            "mode": "return_city",
+            "skip_turns": 2,
+            "hp_restore": 1,
+            "nearest": true,
+            "clear_conditions": false,
+            "drop_coins": 0,
+            "lost_memory": 0
+          },
+          "levels": {
+            "exp_base": 40,
+            "exp_step": 30
+          },
+          "tower": {
+            "entrance_open_rounds": 2
+          }
+        },
+        "mods": {
+          "monster_dc": 0,
+          "exp_mult": 1.0,
+          "coins_mult": 1.0,
+          "price_mult": 1.0,
+          "monster_hp_mult": 1.0
+        },
+        "label": "标准",
+        "label_jp": "標準"
+      },
+      "hard": {
+        "doc": "緊（死亡真的痛）：缺席 3 回合、掉一半貨幣、掉 8 點記憶、傷照留；檢定嚴、經驗少、物價貴。",
+        "rules": {
+          "death": {
+            "mode": "return_city",
+            "skip_turns": 3,
+            "hp_restore": 1,
+            "nearest": true,
+            "clear_conditions": false,
+            "drop_coins": 0.5,
+            "lost_memory": 8
+          },
+          "levels": {
+            "exp_base": 50,
+            "exp_step": 40
+          },
+          "tower": {
+            "entrance_open_rounds": 2
+          }
+        },
+        "mods": {
+          "monster_dc": 1,
+          "exp_mult": 0.85,
+          "coins_mult": 0.85,
+          "price_mult": 1.3,
+          "monster_hp_mult": 1.6
+        },
+        "label": "严酷",
+        "label_jp": "きびしめ"
+      }
+    },
+    "doc": "**開局難度**（建桌時選，寫進桌 config 的 `difficulty`）。與 `difficulty_presets` 是兩件事：那個是 L3 導演的**運行時糾偏**（只動 DC 與行動格）；這個是**這一局的基線**——補 `config.rules` 沒寫的旋鈕（`death`／`levels`）＋給引擎四顆倍率（`difficulty_mods`：`monster_dc`／`exp_mult`／`coins_mult`／`price_mult`）。⚠ **config 自己寫的 `rules.*` 一律贏**；不寫這段／不指定難度 ⇒ 用 `default`（沒有這段＝legacy，行為不變）。"
+  },
+  "director": {
+    "doc": "L3 導演＝超出劇本預期時的糾正力量：主線卡住＝收緊（罰）、跑得順＝放鬆（賞）。指標只吃『距離／窗口』（stall_hands／recent_idle／progress_recent）。門檻是難度設計 ⇒ 要開由作者決定（預設 false＝不擅自改進行中那局的難度）。",
+    "track": true,
+    "window": 8,
+    "progress_on": [
+      "mob_killed",
+      "entered_tower",
+      "elevator",
+      "boss_defeated",
+      "wish_done",
+      "fragment_granted",
+      "entrance_found"
+    ],
+    "policy": [
+      {
+        "when": {
+          ">=": [
+            {
+              "var": "signals.stall_hands"
+            },
+            20
+          ]
+        },
+        "preset": "tight",
+        "why": "卡了 {stall_hands} 手沒有主線推進——收緊（DC +1／行動格 −1）"
+      },
+      {
+        "when": {
+          ">=": [
+            {
+              "var": "signals.progress_recent"
+            },
+            2
+          ]
+        },
+        "preset": "relaxed",
+        "why": "最近 {window} 手推進了 {progress_recent} 次——放鬆（DC −1／行動格 +1）"
+      },
+      {
+        "when": true,
+        "preset": "normal",
+        "why": "回到標準難度"
+      }
+    ]
+  },
+  "endings": [
+    {
+      "id": "e_win",
+      "kind": "win",
+      "doc": "百鬼夜行の主を討った（最上階の小怪＝BOSS 被清掉）",
+      "when": {
+        "==": [
+          {
+            "var": "world.event.type"
+          },
+          "boss_defeated"
+        ]
+      }
+    },
+    {
+      "id": "e_wipe",
+      "kind": "lose",
+      "doc": "全員躺平（安全網：本桌開了 death 之後很難成立——死了會被送還到城市）",
+      "when": {
+        "and": [
+          {
+            ">=": [
+              {
+                "len": {
+                  "var": "seats"
+                }
+              },
+              2
+            ]
+          },
+          {
+            "==": [
+              {
+                "len": {
+                  "var": "world.up"
+                }
+              },
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "e_retreat",
+      "kind": "neutral",
+      "name_jp": "今日は帰る",
+      "name_cn": "今天先回去",
+      "doc": "★ 中性結局（2026-10-20 補）：第 3 景之後全員回到鉄環市（teckan）⇒ 以撤退收尾。不是輸——把扛回來的人放下、把地圖釘在詰所的桌上，也是這一年的工作。",
+      "when": {
+        "and": [
+          {
+            ">=": [
+              {
+                "var": "round_no"
+              },
+              10
+            ]
+          },
+          {
+            "in": [
+              "teckan",
+              {
+                "pluck": [
+                  {
+                    "values": {
+                      "var": "seats"
+                    }
+                  },
+                  "node"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "e_timeout",
+      "kind": "neutral",
+      "name_jp": "今日はここまで",
+      "name_cn": "今天到此为止",
+      "doc": "★ 輪次上限（2026-10-21，寫在劇本、不是框架）：打到第 20 輪就收場——把這一輪的收穫記下來，下次再登。",
+      "when": {
+        ">=": [
+          {
+            "var": "round_no"
+          },
+          40
+        ]
+      }
+    }
+  ],
+  "triggers": [
+    {
+      "id": "t_first_blood",
+      "doc": "第一次討鬼 ⇒ 寫一條事實（facts.oni_culled）。之後的 AST／GM 都可以查它——這是『劇情進度記在事件流裡』的最小示範。",
+      "on": [
+        "mob_killed"
+      ],
+      "once": true,
+      "when": {
+        "==": [
+          {
+            "var": "world.event.type"
+          },
+          "mob_killed"
+        ]
+      },
+      "then": [
+        {
+          "fact_set": {
+            "key": "oni_culled",
+            "value": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "t_first_death",
+      "doc": "第一次有人死（`death` 事件＝death 機制發的）⇒ 記一條事實。GM 據此把運び屋帶進敘述（擔架、荷車、『又是這樣回來的』）。",
+      "on": [
+        "death"
+      ],
+      "once": true,
+      "when": {
+        "==": [
+          {
+            "var": "world.event.type"
+          },
+          "death"
+        ]
+      },
+      "then": [
+        {
+          "fact_set": {
+            "key": "death_seen",
+            "value": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "t_tower_cleared",
+      "doc": "討伐 BOSS ⇒ 記 facts.tower_cleared（**星等表的 ★3 會吃這條事實**：塔已通）。",
+      "on": [
+        "boss_defeated"
+      ],
+      "once": true,
+      "when": {
+        "==": [
+          {
+            "var": "world.event.type"
+          },
+          "boss_defeated"
+        ]
+      },
+      "then": [
+        {
+          "fact_set": {
+            "key": "tower_cleared",
+            "value": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "t_night_deep",
+      "doc": "★ 世界自己的時鐘：第 3 景之後夜が更ける（facts.night_deep）。GM 據此把天色、人潮、NPC 的耐心往前推一格——玩家不動，世界也動。",
+      "on": [
+        "turn_ended"
+      ],
+      "once": true,
+      "when": {
+        ">=": [
+          {
+            "var": "round_no"
+          },
+          10
+        ]
+      },
+      "then": [
+        {
+          "fact_set": {
+            "key": "night_deep",
+            "value": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "t_third_night",
+      "doc": "★ 時鐘第二階段：第 6 景之後＝三度目の夜（facts.third_night）。擔架又出現在廣場——這是壓力，不是罰。",
+      "on": [
+        "turn_ended"
+      ],
+      "once": true,
+      "when": {
+        ">=": [
+          {
+            "var": "round_no"
+          },
+          20
+        ]
+      },
+      "then": [
+        {
+          "fact_set": {
+            "key": "third_night",
+            "value": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "t_side_all_endure",
+      "doc": "**全體副任務（示範）**：稱過第 8 景 ⇒ 寫 facts.side_quest_done。星等表的 `side` 渠道判這條事實，成立就把那條路對**全桌每人**補滿 2 星。要換成別的条件（清光下層小怪／無事歸還／開大祈願箱…）就改這裡的 when——**引擎只認事實，不認這是哪一種副任務**。",
+      "on": [
+        "turn_ended"
+      ],
+      "once": true,
+      "when": {
+        ">=": [
+          {
+            "var": "round_no"
+          },
+          30
+        ]
+      },
+      "then": [
+        {
+          "fact_set": {
+            "key": "side_quest_done",
+            "value": true
+          }
+        }
+      ]
+    }
+  ],
+  "terms": {
+    "fragment": {
+      "jp": "御札",
+      "cn": "御札"
+    }
+  }
+}

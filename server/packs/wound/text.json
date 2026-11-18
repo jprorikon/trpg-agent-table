@@ -1,0 +1,21 @@
+{
+  "condition.wound_head_onset": "{name} は頭を打ち抜かれた——視界が滲む。",
+  "condition.wound_head_end": "{name} の頭の傷は癒えた。",
+  "condition.wound_chest_onset": "{name} は胸を深く裂かれた。息が浅い。",
+  "condition.wound_chest_end": "{name} の胸の傷は塞がった。",
+  "condition.wound_arm_onset": "{name} は腕を斬られた。握力が抜ける。",
+  "condition.wound_arm_end": "{name} の腕は動くようになった。",
+  "condition.wound_leg_onset": "{name} は脚を引きずり始めた。",
+  "condition.wound_leg_end": "{name} の脚は元に戻った。",
+  "condition.poison_onset": "{name} は毒に冒された。",
+  "condition.poison_tick": "{name} は毒に蝕まれる。",
+  "condition.poison_end": "{name} の毒は抜けた。",
+  "condition.burn_onset": "{name} は炎を浴びた。",
+  "condition.burn_tick": "{name} の火傷が疼く。",
+  "condition.burn_end": "{name} の火傷は引いた。",
+  "condition.chill_onset": "{name} は凍気に囚われた。",
+  "condition.chill_tick": "{name} の指先から感覚が消える。",
+  "condition.chill_end": "{name} の身体が温もりを取り戻した。",
+  "condition.confuse_onset": "{name} は眩暈に襲われた。",
+  "condition.confuse_end": "{name} は意識を取り戻した。"
+}

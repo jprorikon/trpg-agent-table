@@ -1,0 +1,21 @@
+{
+  "doc": "模組的 **敵表**（設計者 2026-10-19 拍板：「NPC 和敵人都各自單獨建表」）。列出本世界觀的所有魔物／野獸／衛兵／召喚物／場景物件。`kind` 是按名字粗分的提示（mob／beast／humanoid／prop／unknown）。引擎不直接讀本表（引擎遭遇表是劇本層的 tables/monsters.json，在那裡設定節點、數值與掉落），立繪索引對應 `enemy:<id>`。",
+  "source": "world-setting:enemies",
+  "count": 2,
+  "rows": [
+    {
+      "id": "wild_wolf",
+      "name": "荒野之狼",
+      "kind": "beast",
+      "portrait_dir": "Wild Wolf",
+      "frames": 1
+    },
+    {
+      "id": "boss_golem",
+      "name": "古代巨像（BOSS）",
+      "kind": "prop",
+      "portrait_dir": "Ancient Golem",
+      "frames": 1
+    }
+  ]
+}

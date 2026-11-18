@@ -1,0 +1,25 @@
+{
+  "table": "my_scenario",
+  "work": "（作品名／藍本）",
+  "composition": {"gm": 1, "npc": 1, "players": 2, "humans": 1, "agents": 1},
+  "notes": "骨架說明：gm＝GM（GM agent 演的，不入行動順序、不被踢）；npc1＝NPC（由 GM 代演，只讀它自己的 knowledge，不給桌子工具）；p1/p2＝玩家席位（human／agent 各一）。玩家要加就照 p2 的形狀再補一列，並在 board.roster 補對應角色。",
+  "seats": [
+    {"seat": "gm", "kind": "gm", "name": "GM", "who": "gm-agent", "session": "trpg-my_scenario-gm",
+     "character": null, "goal": null, "start_node": null,
+     "duty": "只念引擎給的結論；開景收景；投放碎片與道具；演世界不演 NPC；代投暗骰"},
+
+    {"seat": "npc1", "kind": "npc", "name": "（NPC 的名字）", "character": "npc_x",
+     "start_node": "town", "goal": null,
+     "character_note": "（這個 NPC 是誰、講話什麼調性、想要什麼）",
+     "knowledge_policy": "minimal",
+     "duty": "只演這個 NPC；只講 module.json entities.npc_x.knowledge 範圍內的事，範圍外含糊過去"},
+
+    {"seat": "p1", "kind": "human", "name": "（角色 A 的名字）", "who": "user",
+     "character": "char_a", "goal": "g_a"},
+    {"seat": "p2", "kind": "agent", "name": "（角色 B 的名字）", "who": "agent-p2",
+     "session": "trpg-my_scenario-p2", "character": "char_b", "goal": "g_b"}
+  ],
+  "wake": {
+    "note": "只有 agent 席位（kind=agent）需要 wake.url；human 席位看網頁、GM 自己驅動、NPC 由 GM 代演 ⇒ 都不用踢。要接線（agent 的 webhook URL／token、GM 喚醒的接收器）由我方工程做，不是劇本作者的事。"
+  }
+}

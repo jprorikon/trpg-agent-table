@@ -1,0 +1,62 @@
+# ── 執行時の状態・生成物（倉庫に入れない）───────────────────────────────
+__pycache__/
+*.pyc
+logs/
+data/
+campaigns/*/data*/
+modules/*/scenarios/*/data/           # WS-B：桌住三層（新制）——data/ 一樣不進版控
+# 一局一檔（WS-B 階段 1c）：**事件流＝桌的狀態本身**（含 GM 私密事件）⇒ 一律不進版控。
+# 用不分層的 pattern：新制 `modules/<模組>/scenarios/<劇本>/runs/` 與舊制 `campaigns/<桌>/runs/` 都蓋到。
+runs/
+*/runs/
+
+# ── 畫面の設計メモ（大きいだけ・再生成できる）───────────────────────────
+*.png
+
+# ── 改劇本檔前的備份（本機留著、不進版控）─────────────────────────────
+# ⚠ 一律用「不分層」的 pattern：桌可能在 campaigns/<桌>（舊制）或
+#   modules/<模組>/scenarios/<劇本>（WS-B 新制）——從前只寫 campaigns/*/ ⇒
+#   換到新制之後備份檔**會整批溜進版控**（2026-10-07 實際踩到：config.json.bak-* 帶真 gm_token）。
+*.bak-*
+*.bak
+
+# ── account 憑證（token 明文與 registry：本機留著、不進版控）─────────────
+*.accounts.json
+accounts.json
+campaigns/*/accounts.json
+.secrets/
+
+# ── 本番の鍵（GM token・kick token）───────────────────────────────────
+# 雛形は `config.example.json` / `modules/<模組>/scenarios/<劇本>/config.example.json`。
+# 実物は各環境でコピーして token を埋める（サーバは起動時に読むだけ）。
+config.json
+campaigns/*/config.json
+
+# ── 前端は `trpg/frontend` が正本（`deploy/deploy_frontend.sh` がそこから拉ぐ）
+# ⚠ 錨定在 repo 根：不寫 `/` 的話 `trpg/api/web/`（後端套件）也會被忽略 ⇒
+#   2026-10-20 重構時 `trpg/api/web/{base,get,post,post_auth}.py` 被這個規則吃掉、沒進 commit，
+#   結果 `import server` 直接失敗（線上因為舊行程還在記憶體裡才沒炸）。
+/web/
+# 上線前のローカル退避（旧版の写し・前端 index.html の世代コピー）＝倉庫には入れない
+deploy/backup/
+
+# ── config のローカル退避（設定を変える前に自分で留めた写し）＝倉庫に入れない ──
+campaigns/*/config.json.bak*
+# ── 開景用の一時テキスト（ローカル素材）───────────────────────────────
+campaigns/*/scene*.txt
+# ── 模組內容（2026-10-19）：**每個模組＝自己的 repo**（Gitea `trpg/module-*`）
+#    ⇒ 這一支只放引擎；`modules/<模組>/` 是**部署掛載點**（各自 clone 進來，見 `deploy/modules.list`）。
+#    模組 repo 自己管 `.gitignore`（素材圖檔＝生成物，都不進版控）。
+/modules/*
+!/modules/hyakki_tower/
+# 展示用 monorepo：示範模組 `hyakki_tower` 同梱（其他模組照舊各自 clone，不進版控）
+# ── 桌的實體（2026-10-19）：config／runs／accounts／備份＝這一台機器的執行狀態
+#    `state/tables/<模組>/<劇本>/<桌ID>/`——不屬於任何模組 repo，也不進版控（前導 `/` 只咬 repo 根那一層，
+#    別吃到 `packs/*/tables/` 這種內容表）。
+/state/
+_trial_hyakki/
+_trial_*/
+.commit-msg-*.txt
+
+# 2026-10-22：測試用 agent harness 獨立成一個 repo（trpg/agent-harness）
+agent_harness/

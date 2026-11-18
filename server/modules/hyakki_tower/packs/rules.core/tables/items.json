@@ -1,0 +1,142 @@
+{
+  "kind": "items",
+  "doc": "示範模組 規則書包的道具表（原創）：四個巡遊者最常帶的東西。`use`＝用掉時發生什麼（走同一套 effect；target=self/foe）——數值改這裡不改程式。",
+  "rows": [
+    {
+      "id": "heal_pack",
+      "name_jp": "回復の包",
+      "name_cn": "回复包",
+      "stackable": true,
+      "price": 3,
+      "use": {
+        "target": "self",
+        "effects": [
+          {
+            "heal": {
+              "seat": "me",
+              "die": 6,
+              "bonus": 2
+            }
+          }
+        ]
+      },
+      "note": "使い切りの回復薬。星屑を濾した粉が入っていて、飲むと傷が塞がる。"
+    },
+    {
+      "id": "mana_drop",
+      "name_jp": "魔力の雫",
+      "name_cn": "魔力之滴",
+      "stackable": true,
+      "price": 4,
+      "use": {
+        "target": "self",
+        "effects": [
+          {
+            "resource_add": {
+              "seat": "me",
+              "name": "mana",
+              "value": 2
+            }
+          }
+        ]
+      },
+      "note": "硝子の小瓶に一滴。願いを灯す力が戻る（魔力 ＋2）。"
+    },
+    {
+      "id": "star_flare",
+      "name_jp": "星屑の閃光",
+      "name_cn": "星屑闪光",
+      "stackable": true,
+      "price": 5,
+      "use": {
+        "target": "foe",
+        "effects": [
+          {
+            "damage": {
+              "seat": "target",
+              "die": 6,
+              "bonus": 3
+            }
+          },
+          {
+            "condition_set": {
+              "id": "confuse",
+              "seat": "target",
+              "turns": 1
+            }
+          }
+        ]
+      },
+      "note": "投げつけると目を焼く。小怪には効きにくいが、人にはよく効く（＝要 wound 這類帶條件表的包）。"
+    },
+    {
+      "id": "rope",
+      "name_jp": "星蜘蛛の糸",
+      "name_cn": "星蜘蛛之丝",
+      "stackable": true,
+      "price": 2,
+      "use": null,
+      "note": "道具本身沒有 use.effects：它的用處交給劇本的觸發（例：`{\"in\": [\"rope\", {\"var\": \"me.items\"}]}` 之類的判據）。"
+    },
+    {
+      "id": "arrow",
+      "name_jp": "東雲の矢",
+      "name_cn": "东云之矢",
+      "stackable": true,
+      "price": 2,
+      "use": {
+        "target": "self",
+        "effects": [
+          {
+            "resource_add": {
+              "seat": "me",
+              "name": "ammo",
+              "value": 2
+            }
+          }
+        ]
+      },
+      "note": "東雲（しののめ）の羽根を編んだ予備の矢束（弾薬 ＋2）。射撃系（青桐の射撃／鬼火）は弾を食う——塔の中で弾切れになると、剣しか残らない。"
+    },
+    {
+      "id": "hoshikuzu_bakudan",
+      "name_jp": "星屑の爆弾",
+      "name_cn": "星屑炸弹",
+      "stackable": true,
+      "price": 4,
+      "use": {
+        "target": "foe",
+        "effects": [
+          {
+            "damage": {
+              "seat": "target",
+              "die": 6,
+              "bonus": 6
+            }
+          }
+        ]
+      },
+      "note": "投げて割ると星屑が弾ける。固定で重い（6＋6）——王の硬さを割るための道具。"
+    },
+    {
+      "id": "kyuukyuu_pack",
+      "name_jp": "急救の包",
+      "name_cn": "急救包",
+      "stackable": true,
+      "price": 4,
+      "use": {
+        "target": "self",
+        "effects": [
+          {
+            "heal": {
+              "seat": "me",
+              "die": 8,
+              "bonus": 2
+            }
+          }
+        ]
+      },
+      "note": "塔の中で傷を塞ぐ大きい包。回復の包より効く（8＋2）。"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "id": "wound",
+  "name": "部位受傷／異常狀態",
+  "version": 1,
+  "doc": "第一個「真包」：內核有**通用條件機制**（`conditions.py`），這一包只帶**內容**——條件表（4 種部位受傷＋4 種異常狀態）與文案。啟用後：GM 可用 `table_gm op=condition` 當場投／治、劇本可用 effect `condition_set`、每回合在 `turn_started` 結算（扣血／倒數／到期），判定加減值自動進 d20 的 mod。**影響維度**（每一維都有消費處）：`check`／`attack`（d20 的 mod）、`move_dc`（荒野道移動 DC）、`memory_drain`（塔內每回合記憶消耗）、`act_slots`／`say_slots`（這一回合／這一景的額度）；`tick.resource` 每回合扣／給通用資源。數值調整改 `tables/conditions.json`（不改程式）。**救起**（★1）：`tables/rescue.json`——把倒地的人拉回來的一個檢定（與 `check`／`cast` 同一條算式、消耗先扣、成功走引擎 `roll_heal`）；多條規則由 `config.rules.rescue` 選，省略＝表的第一列。",
+  "requires": [
+    "d20core"
+  ],
+  "optional": [
+    "board",
+    "semic"
+  ],
+  "conflicts": [],
+  "provides": {
+    "actions": ["rescue"],
+    "effects": [
+      "condition_set"
+    ],
+    "events": [
+      "condition_set",
+      "condition_tick",
+      "rescue_attempt"
+    ],
+    "text_keys": [
+      "condition.burn_end",
+      "condition.burn_onset",
+      "condition.burn_tick",
+      "condition.chill_end",
+      "condition.chill_onset",
+      "condition.chill_tick",
+      "condition.confuse_end",
+      "condition.confuse_onset",
+      "condition.poison_end",
+      "condition.poison_onset",
+      "condition.poison_tick",
+      "condition.wound_arm_end",
+      "condition.wound_arm_onset",
+      "condition.wound_chest_end",
+      "condition.wound_chest_onset",
+      "condition.wound_head_end",
+      "condition.wound_head_onset",
+      "condition.wound_leg_end",
+      "condition.wound_leg_onset"
+    ],
+    "state_keys": [
+      "conditions"
+    ],
+    "signals": [],
+    "tables": [
+      "tables/conditions.json",
+      "tables/rescue.json"
+    ]
+  },
+  "params": {}
+}

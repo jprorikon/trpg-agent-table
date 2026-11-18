@@ -1,0 +1,104 @@
+{
+  "table_id": "demo",
+  "scenario": "幽霊船の眠る入り江（演示局）",
+  "seed": 20261005,
+  "bind": "0.0.0.0",
+  "port": 8971,
+  "auth": {
+    "gm_token": "REPLACE_ME"
+  },
+  "kick": {
+    "receiver_url": "http://127.0.0.1:8972/trpg/kick",
+    "receiver_token_file": "/path/to/kick_receiver.token",
+    "gm_cli": "python3 {here}/tools/gm.py {table}",
+    "coalesce_scope": "table",
+    "note": "引擎 → GM 喚醒連結（**送出端** `kick_sender.send_kick_to_gm` → **接收器** `kick_receiver.py`，本機 :8972）。`receiver_url` 指接收器；`receiver_token_file` 放共用 token（不進 repo）。協作端 作為 p3 參加者的通道在 `wake.seats.p3`，兩條分開、別互指。gm_tools=mcp＝GM 用桌的 MCP 工具（瘦 profile trpg-gm 沒有 terminal）；gm_api_profile=trpg-gm＝接收器走 /p/trpg-gm/v1/runs 並用該 profile 自己的 API_SERVER_KEY。舊名 `url`／`token_file` 仍相容（新名優先）。公開發言喚醒冪等鍵＝坐席＋景（同席同景只喚一次），私訊維持每封一喚。coalesce_scope：'table'（預設）＝同一景「GM 還沒回」這段時間全桌只喚一次；'seat'＝每席各喚一次。"
+  },
+  "turn": {
+    "seconds": 150,
+    "policy_on_timeout": "wait",
+    "wait_extra_seconds": 90,
+    "max_waits": 2,
+    "end_turn_on_action": true,
+    "auto_start_first_turn": true,
+    "min_seats_to_start": 2
+  },
+  "view": {
+    "log_window": 40,
+    "secret_window": 8,
+    "doc": "投影窗口。secret_window＝**私訊在喚醒訊息／compact 視圖裡列幾則**（預設 8，`<=0`＝全部＝舊行為）。投影本身不裁：網頁 messenger 與 table_view detail=full 永遠看得到完整收件匣。"
+  },
+  "packs": {
+    "enabled": ["d20core", "mode.turn"],
+    "doc": "機制包（見 packs/README.md）。d20core＝底層 d20 規則（必開）；board／semic＝棋盤／半合作；mode.turn＝節拍（**2026-10-21 拆景之後只剩回合制**，`mode.scene` 已不存在——範本從前寫它，照抄會 PackError）。不寫＝legacy（各層照舊讀 config，行為不變）。"
+  },
+  "rules": {
+    "name": "minimal-d20",
+    "attributes": [
+      "str",
+      "agi",
+      "wil"
+    ],
+    "attr_default": 2,
+    "attr_range": [
+      1,
+      5
+    ],
+    "attr_roll": false,
+    "hp": {
+      "base": 8,
+      "per_str": 2
+    },
+    "check": {
+      "die": 20,
+      "attr_multiplier": 2,
+      "dc_default": 12
+    },
+    "damage": {
+      "die": 6,
+      "attr": "str",
+      "attr_multiplier": 1
+    },
+    "actions": [
+      "move",
+      "attack",
+      "check",
+      "defend",
+      "use",
+      "other",
+      {
+        "id": "pass",
+        "label": "不動",
+        "desc": "（場景制）這一景什麼都不做，交給 GM 收景",
+        "modes": [
+          "scene"
+        ]
+      },
+      {
+        "id": "end_turn",
+        "label": "結束回合",
+        "desc": "（回合制）這一回合到此為止，交給下一席",
+        "modes": [
+          "turn"
+        ]
+      }
+    ],
+    "defend_bonus": 3
+  },
+  "pacing": {
+    "mode": "turn",
+    "scene_seconds": 300,
+    "actions_per_scene": 2,
+    "says_per_scene": 3,
+    "scene_hint_rounds": 6,
+    "doc": "節拍旋鈕。mode=turn＝回合制（預設）／scene＝場景制；`actions_per_scene`／`says_per_scene`＝額度（回合制下 act 的額度單位是**回合**、say 仍照景）。★`scene_hint_rounds`（預設 6）：**回合制**下每一輪的輪末摘要都會附一句「現在第幾景／這一景幾輪」，每滿 N 輪升級成一次【收景提醒】——為什麼要它：`maybe_kick_scene_close()` 在回合制直接 return（喚醒點是「輪」），從前**沒有任何一句話**提醒 GM 收景／開景，實測有一局同一景打了 44 輪、一路到 BOSS 都沒換景（owner 2026-10-08）。寫 0＝關掉這個提醒。"
+  },
+  "wake": {
+    "enabled": true,
+    "default_kind": "log",
+    "timeout_seconds": 10,
+    "tool_prefix": "mcp_table_",
+    "seats": {},
+    "gm_on_turn_end": false
+  }
+}

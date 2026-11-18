@@ -1,0 +1,26 @@
+{
+  "table": "hyakki_tower",
+  "work": "百鬼塔（原創）",
+  "composition": {"gm": 1, "npc": 1, "players": 2, "humans": 1, "agents": 1},
+  "notes": "gm＝GM（GM agent 演的，不入行動順序、不被踢）；npc1＝ツルギ（由 GM 代演，只讀它的 knowledge）；p1／p2＝玩家席位（human／agent 各一）。玩家要加就照 p2 的形狀再補一列，並在 board.json 的 roster 補對應角色（attrs 一定要有 luck——擊破時多掉貨幣）。",
+  "seats": [
+    {"seat": "gm", "kind": "gm", "name": "GM", "who": "gm-agent", "session": "trpg-hyakki_tower-gm",
+     "character": null, "goal": null, "start_node": null,
+     "duty": "只念引擎給的結論；開景收景；投放碎片與道具；演世界不演 NPC；代投暗骰"},
+
+    {"seat": "npc1", "kind": "npc", "name": "ツルギ", "character": "tsurugi",
+     "start_node": "minato", "goal": null,
+     "character_note": "港町の宿『折れ杭』の主。元鍛冶。右手の指が三本ない。鬼の話になると声が落ちる。",
+     "knowledge_policy": "minimal",
+     "duty": "只演ツルギ；只講 module.json entities.tsurugi.knowledge 範圍內的事，範圍外含糊過去（他不想談十年前）。"},
+
+    {"seat": "p1", "kind": "human", "name": "カガリ", "who": "user",
+     "character": "char_a", "goal": "g_blade"},
+
+    {"seat": "p2", "kind": "agent", "name": "シズク", "who": "agent-p2",
+     "session": "trpg-hyakki_tower-p2", "character": "char_b", "goal": "g_record"}
+  ],
+  "wake": {
+    "note": "只有 agent 席位（kind=agent）需要 wake.url；human 席位看網頁、GM 自己驅動、NPC 由 GM 代演 ⇒ 都不用踢。接線（agent 的 webhook URL／token、GM 喚醒的接收器）由我方工程做，不是劇本作者的事。"
+  }
+}

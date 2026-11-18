@@ -1,0 +1,84 @@
+{
+ "_doc": "帳號層（auth.db_env）與 GM 憑證（auth.gm_token）由部署端／hub 在建桌時供給——不屬於模組定義，這裡刻意不寫 auth。",
+ "table_id": "hyakki_tower",
+ "scenario": "百鬼塔 ── 鉄環地方・三年目の鬼祓い（原創；戰鬥為主）",
+ "seed": 20261101,
+ "bind": "0.0.0.0",
+ "port": 8986,
+ "session": {
+  "require": true,
+  "doc": "**副本閘**（這裡的 `session` 是引擎的 run id，不是對話 session）：開著的桌，MCP 寫入類工具（act／say／tell／secret／gm）與 kick 都必須帶、而且要對得上**當前這一局**——換局之後拿舊 session 的請求一律拒絕。**新桌預設開**；整段不寫＝legacy（`require` 預設 false，行為一字不變）。⚠ REST `/api/*` 目前不受它管。"
+ },
+ "turn": {
+  "seconds": 180,
+  "policy_on_timeout": "pass",
+  "wait_extra_seconds": 90,
+  "max_waits": 2,
+  "end_turn_on_action": false,
+  "auto_start_first_turn": true,
+  "min_seats_to_start": 2,
+  "actions_per_turn": 2
+ },
+ "view": {
+  "log_window": 60,
+  "log_window_compact": 12
+ },
+ "packs": {
+  "enabled": [
+   "d20core",
+   "board",
+   "semic",
+   "mode.turn",
+   "wound",
+   "death",
+   "rules.core",
+   "hyakki_world"
+  ],
+  "doc": "這一桌開了哪些機制包。d20core＝d20 底層；board＝棋盤／塔；semic＝半合作（私密願望／碎片）；mode.turn＝回合制節拍；**wound**＝部位受傷／異常狀態 ＋ 救起（倒地的人靠 rescue 拉回來）；**death**＝死亡與送還（HP ≤ 0 ⇒ 送回最近的城市 ＋ 缺席 N 回合）；**rules.core**＝技能／經驗／等級／道具／星等（技能表用到條件表 ⇒ 一定要一起列 wound）；**hyakki_world**＝這一劇本的作品層包（敵人表／商店表／神器表＋塔的數值）。⚠ 拿掉 death ⇒ 回到舊行為（HP ≤ 0 只是『倒地』，躺著等人救）。"
+ },
+ "rules": {
+  "note": "機制常數的預設住在包裡（d20core／rules.core／hyakki_world），這裡只寫這一桌要改的。attributes＝屬性表的權威（luck 讓擊破時多掉貨幣）；levels＝升級曲線（這桌調成『只有戰鬥餵得起』）。死亡送還的旋鈕（`rules.death`：送還＋缺席 2 回合）走**包的預設**（`packs/death`），要改這一桌的寫法就在這裡補一顆 `rules.death`——config 一律贏。",
+  "attributes": [
+   "str",
+   "agi",
+   "wil",
+   "luck"
+  ],
+  "levels": {
+   "exp_base": 40,
+   "exp_step": 30
+  },
+  "actions": [
+   "move",
+   "search",
+   "fight",
+   "attack",
+   "rescue",
+   "defend",
+   "check",
+   "use",
+   "pray",
+   "buy",
+   "rest",
+   "game",
+   "declare",
+   "show",
+   "give",
+   "wish",
+   "other",
+   {
+    "id": "end_turn",
+    "label": "結束回合",
+    "desc": "（回合制）這一回合到此為止，交給下一席",
+    "modes": [
+     "turn"
+    ]
+   }
+  ]
+ },
+ "kick": {
+  "receiver_url": "http://127.0.0.1:9/trpg/kick",
+  "receiver_token_file": "",
+  "note": "⚠ **GM 喚醒未接線**：先指到黑洞埠（discard）——引擎預設值指遠端那台 :8893，不蓋掉會亂叫。要接＝指到本機 kick_receiver（`http://127.0.0.1:8972/trpg/kick` ＋ `workspace/.secrets/trpg_kick_receiver.token`），但**那支目前是 hyakki_tower 在用**，接了要一起想 session 名（`trpg-hyakki_tower-gm`）。"
+ }
+}

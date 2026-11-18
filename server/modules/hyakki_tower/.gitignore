@@ -1,0 +1,26 @@
+# ── 実行時の状態（モジュール内容の倉庫には入れない）────────────────────
+# 卓の実体は `scenarios/<劇本>/tables/<卓ID>/`（config.json・runs/・archive）。
+# サーバー repo から分離した時に、履歴からも purge 済み。
+scenarios/*/tables/
+scenarios/*/config.json
+**/runs/
+**/data*_archive/
+accounts.json
+*.accounts.json
+*.bak
+*.bak-*
+
+# ── 素材（生成物）: 一覧 index.json と README だけを版管理 ─────────────
+assets/*
+!assets/index.json
+!assets/README.md
+# 清單按類拆開（schema 2）：manifest 指到的每一份 part 也要進版控，圖仍然不進
+!assets/index/
+!assets/index/*.json
+
+
+__pycache__/
+*.pyc
+
+# 模組編輯器的工作／備份目錄（2026-10-20）：產物不進版控
+.studio/

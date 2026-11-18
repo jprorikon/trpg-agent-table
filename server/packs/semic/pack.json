@@ -1,0 +1,65 @@
+{
+ "id": "semic",
+ "name": "半合作",
+ "version": 1,
+ "doc": "場景制＋私密願望＋碎片＋爭搶（goals/clues/seats 住劇本檔；規則住 semic.py）。",
+ "requires": [
+  "d20core"
+ ],
+ "optional": [
+  "board"
+ ],
+ "provides": {
+  "defaults": {
+   "semi": {
+    "goals_file": "goals.json",
+    "clues_file": "clues.json",
+    "claims_file": "clues.json",
+    "seats_file": "seats.json"
+   }
+  },
+  "actions": [
+   {
+    "id": "declare",
+    "label": "宣言",
+    "desc": "（場景制）同時宣言爭搶，收景時揭曉"
+   },
+   {
+    "id": "show",
+    "label": "出示",
+    "desc": "把碎片給某人看"
+   },
+   {
+    "id": "give",
+    "label": "贈與",
+    "desc": "把碎片給某人（target=碎片 id、note=收件席位）"
+   },
+   {
+    "id": "wish",
+    "label": "許願",
+    "desc": "兌現自己的私密願望（要籌碼）"
+   }
+  ],
+  "events": [
+   "declare",
+   "declare_resolved",
+   "declare_won",
+   "declare_failed",
+   "fragment_granted",
+   "fragment_seen",
+   "fragment_given",
+   "wish_done",
+   "settle",
+   "gm_say",
+   "gm_leak_blocked",
+   "gm_roll_marker",
+   "round_started",
+   "round_ended"
+  ],
+  "state_keys": [
+   "semi"
+  ],
+  "signals": []
+ },
+ "params": {}
+}

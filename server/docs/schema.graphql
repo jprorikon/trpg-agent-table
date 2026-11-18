@@ -1,0 +1,381 @@
+# TRPG 桌 · GraphQL 客戶端面（**草案**，2026-10-07 設計者拍「① 全替換，走 GraphQL」）
+#
+# 這一份是**契約正本**：網頁前端、app／橋、MCP 適配器、以及任何第三方都照它寫。
+# 舊的 REST `/api/*` 在客戶端都切過來之後**退役**（不並存——設計者「同件事不加第二條連線」）。
+#
+# **一個端點**：`POST /graphql`。**桌是 GraphQL 的一個欄位**（`Query.table(id:)`），
+# 不再有 `/<桌>/graphql` 這種子路徑 API（設計者 2026-10-07 拍）。
+# 頁面本身（大廳 `/`、桌頁 `/<桌>/`、觀戰頁 `/<桌>/watch/`）仍走原路由——那是 HTML，不是 API。
+#
+# 三條不變的邊界（GraphQL 碰不到的地方）：
+#   * **MCP**（agent 工具面）＝JSON-RPC 規範，不能改；且它是**獨立適配器**（§計畫 5.5），不是 App 的一部分。
+#   * **kick**（輪到你了）＝出向 webhook，不能改。
+#   * **`GET /health`、`/__hub/*`**＝運維與基礎設施面（docker／大廳探活／hub 管理），不是客戶端面。
+#
+# 認證：一律走 HTTP 標頭（**不進 schema 參數** ⇒ 憑證不會落進 query／log／prompt／會話歷史）
+#   * 玩家（人／agent）：`Authorization: Bearer <account token>`
+#   * GM 控制鍵：`X-Table-GM-Token: <config.auth.gm_token>`
+#   * 唯讀前門（觀戰）：`X-Table-Watch: <config.watch.read_token>` ⇒ 該請求只放行 Query
+#
+# session：**一個 session 對應一個副本實例**（設計者 2026-10-07）。
+#   * `session`＝副本 id（**UUID**；一局一顆）
+#   * **要帶**（設計者：「帶」）：`view`／`log`／`map`／以及**所有 mutation**
+#   * **不必帶**（發現層）：`tables`／`health`／`table(id:)` 本體／`session`／`capabilities`／`login`
+#   * 帶錯（舊副本的 session）⇒ 錯誤，不靜默做在錯的局上（「不然不知道她參與的哪一桌」）
+
+scalar JSON          # 只用在大而罕見的深層資料；在檔尾明確列出是哪幾格
+
+# ─────────────────────────────── 列舉 ───────────────────────────────
+
+enum SeatKind { human agent gm npc }
+enum JoinKind { human agent }
+enum Detail { full compact }
+enum LogFilter { all talk event }
+
+# ─────────────────────────────── 查詢 ───────────────────────────────
+
+type Query {
+  # 大廳：有哪些桌（app／橋的「選桌」入口）。**平表**——每張桌自己帶 `module`／`scenario`
+  tables: [TableInfo!]!
+  # **按模組分組**（設計者 2026-10-07：「ui中大厅的桌子一览可能需要按模组分类」）——
+  # 大廳頁／app 的桌清單用它；建桌嚮導（先選模組 → 再選劇本）也用它。
+  modules: [ModuleInfo!]!
+  health: Health!
+  # **桌就是一個欄位**（一個端點；不再有 /<桌>/graphql）
+  table(id: ID!): Table!
+  # 我是誰（憑證走標頭）：人級資料 ＋ 我在每一張桌的席位／角色／實例／錢包
+  # ★ 2026-10-19：大廳的根端點（沒掛桌）也答得出來——找第一張認得這把憑證的桌；沒登入＝null
+  me: Identity
+}
+
+# 一個模組（＝一個作品／世界）：底下是它的**劇本**；同一劇本可以開**多張桌**（設計者 2026-10-07）
+type ModuleInfo {
+  id: ID!                       # 模組 id（＝ `modules/` 底下的目錄名）
+  name: String!                 # 顯示名（模組自己給的；沒寫就＝id）
+  tableCount: Int!              # 這個模組底下現在有幾張桌
+  characters: Int!              # 角色表（`characters.json`）有幾個角色
+  scenarios: [ScenarioInfo!]!   # 劇本層
+  # ★ 2026-10-19 大廳改版：模組的素材入口（封面＝素材表的別名 `cover`；名字的譯名＝`locale`）。
+  #   沒素材也沒用語表的模組＝null（大廳就用純色＋模組名）。
+  assets: AssetManifest
+}
+
+# **開局難度**檔位（`scenario.json` 的 `starting_difficulty.levels`）——建桌時選，一局不變。
+# 與 `difficulty_presets`（L3 導演的運行時糾偏，只動 DC／行動格）是兩件事。
+type DifficultyInfo {
+  id: String!        # 檔名（建桌時 `createTable(difficulty:)` 傳這個：easy／normal／hard…）
+  label: String!     # 中文短名（劇本給的，例「轻松／标准／严酷」）
+  label_jp: String!  # 日文短名（例「ゆるめ／標準／きびしめ」）
+  doc: String!       # 一句話說明（這一檔改了什麼）
+  default: Boolean!  # 沒指定時用的那一檔
+}
+
+# 一個劇本（＝定義那一層：地圖／參與角色／坐席）；底下現在有幾張桌
+type ScenarioInfo {
+  id: String!
+  # 劇本**顯示名**：`scenarios/<劇本>/scenario.json` 的 `meta.name` → 沒寫退回 id（設計者 2026-10-07：
+  # 「模組名之外，已關局的還應該有一個**劇本名**」）。
+  name: String!
+  tableCount: Int!
+  tables: [TableInfo!]!
+  # 這張劇本支援的開局難度（沒寫 `starting_difficulty` ⇒ 空陣列 ⇒ 大廳不顯示選單）
+  difficulties: [DifficultyInfo!]!
+}
+
+type TableInfo {
+  id: ID!
+  module: String!         # 所屬模組
+  moduleName: String!     # 模組顯示名（module.json 的 name）
+  scenarioName: String!   # 劇本顯示名（scenario.json 的 meta.name）
+  scenario: String!       # 劇本
+  name: String            # 顯示名
+  online: Boolean!
+  ended: Boolean!
+  seats: Int
+  seatCap: Int            # 劇本設計的玩家席數（seats.json 的 human／agent 列；大廳顯示 n/m 的分母）
+  events: Int
+  watchable: Boolean!     # 有沒有開觀戰桌
+  session: ID             # 這一桌**現在這一局**的 session（選桌之後拿它去進場）
+  # ★ 2026-10-19 大廳改版（2026-10-21 拆景：`scene/sceneOpen` → `roundNo`）
+  roundNo: Int!           # 打到第幾輪（回合制）
+  paused: Boolean!        # 整桌暫停中
+  # ★ 2026-10-19：這一局的 owner（`runs/<run>/owner`）。只有 owner 能呼叫 requestGm／setWatchable。
+  owner: ID
+  isOwner: Boolean!       # 我是這局的 owner 嗎（前端據此顯示那兩顆）
+  archived: Boolean!      # 這一局封存了沒（Archive：不進選桌、不能再寫；2026-10-19）
+  waiting: [ID!]!         # 這一輪還在等誰出手（席位 id；＝ view 的 round_waiting）
+  # ★ 2026-10-21：開局難度（`config.difficulty`：easy／normal／hard；沒設＝null，大廳不顯示）
+  difficulty: String
+}
+
+type Table {
+  id: ID!                 # ＝（模組 × 劇本）的那張桌
+  module: String!
+  scenario: String!
+  name: String
+  online: Boolean!
+  ended: Boolean!
+  seats: Int
+  events: Int
+  watchable: Boolean!
+  # 這一副本的 id／狀態——**不需要 session**（發現層：還沒進場的人靠它拿 session）
+  # 這一桌的**工具目錄**（MCP 的 7 格；描述按這一桌的 config 調整過）——
+  # MCP 適配器就靠這格「逐字」拿到與 mcp_api 一模一樣的描述（**不做第二份**、不會漂移）。
+  tools: [ToolInfo!]!
+  session: SessionInfo!
+  # 這一桌的能力目錄（**MCP 適配器**靠它生工具描述；不需要 session）
+  # ★ 2026-10-19：這一局的 owner（只有 owner 能 requestGm／setWatchable）
+  owner: ID
+  isOwner: Boolean!
+  archived: Boolean!      # 這一局封存了沒（Archive）
+  capabilities: Capabilities!
+  # 席位投影（seat 省略＝公開投影）。**要 session**
+  # ⚠ **P0 契約：原樣端出既有的投影 JSON**（欄位以 `/api/state` 的輸出為準）。「逐欄型別化」
+  #   （把投影拆成 View／Seat／You／Board… 的 GraphQL 型別）＝ **P0b**：機械但量大的工，
+  #   先讓 UI／agent 有個能用的面；接回去時**只動 schema＋resolver，客戶端查詢不用改**。
+  view(session: ID!, seat: ID, detail: Detail): View!
+  # 公開日誌（filter 對應現有 logtabs；meta=true 只回筆數／尾序號）
+  log(session: ID!, sinceSeq: Int, filter: LogFilter, limit: Int, meta: Boolean): JSON!
+  map(session: ID!): JSON!
+  # **進場判定**（設計者 2026-10-07 的建桌／進場流程第 2 步）：這個帳號能不能進、怎麼進。
+  # 憑證走標頭（沒憑證 ⇒ 只算得出「有哪些席位還空」＋能不能旁觀）。
+  entry: EntryPlan!
+}
+
+# 進場選項：一個（席位 × 角色）
+type EntryOption {
+  seat: ID!
+  charId: ID!
+  kind: String                  # 席位種類——**這一局**誰坐，由劇本席位定。⚠ 對外（非 GM 視角）一律投影成
+                                # `player`（2026-10-07 玩家平等原則：agent 不知道誰是人、人不知道誰是 agent）；
+                                # 只有 GM 視角看得到真值 `human`／`agent`（`npc`／`gm` 兩種照舊公開）
+  className: String             # **角色的類——由模組定**（`modules/<模組>/characters.json` 的 `class`）
+  name: String                  # 角色顯示名（模組角色表）
+  inRoster: Boolean!            # 這個角色在模組角色表裡登記了嗎（沒登記＝作者漏了，看得見）
+  mine: Boolean!                # 這個角色是不是「我在這個模組已經有的實例」
+  instance: JSON                # 我的實例（成長：level／exp…）；沒有 ⇒ null
+}
+
+# 進場判定：UI 照這個畫「匯入已有角色／建立新角色／旁觀」三條路
+type EntryPlan {
+  session: ID!                  # 這一局的 session（進場操作要帶）
+  rosterSize: Int!              # 這個**模組**定了幾個角色（角色的類由模組定）
+  account: ID                   # 憑證帶來的帳號；沒有憑證 ⇒ null
+  hasInstance: Boolean!         # 我在這個模組有沒有角色實例
+  importable: [EntryOption!]!   # **匯入已有實例**：我有實例且那席位還空著
+  creatable: [EntryOption!]!    # **建立新角色**：席位還空、我還沒實例（選了就在這個模組建實例）
+  takenSeats: [EntryOption!]!   # 已被佔的席位（UI 顯示「誰在」）
+  spectateOk: Boolean!          # 可以旁觀（觀戰桌／公開投影；唯讀、不佔席、不擋回合）
+  watchPath: String             # 觀戰路徑（prefix 模式＝/<桌>/watch/）
+  reason: String                # 不能進時的人話（給 UI 直接顯示）
+}
+
+type SessionInfo {
+  id: ID!                 # ＝副本實例 id（UUID）
+  module: String!
+  scenario: String!
+  startedAt: String
+  ended: Boolean!
+  writtenBack: Boolean!   # 這一局的成長／錢包是否已寫回
+}
+
+# 這一桌的「能力目錄」——**MCP 適配器靠它生工具描述**（允許動作／機制包／節奏／棋盤／額度…）。
+# 有了它，MCP 那一層不需要認識引擎（設計者：「保持 trpg 應用本身乾淨」）。
+# 一格 MCP 工具（名稱／描述／輸入 schema）——**來源就是 `mcp_api.TOOLS` 那一份**（按桌調整過）
+type ToolInfo {
+  name: String!
+  description: String!
+  inputSchema: JSON!
+}
+
+type Capabilities {
+  tableId: ID!
+  module: String!
+  scenario: String!
+  mode: String!                 # 只有 turn（回合制）；scene 已停用
+  packs: [String!]!             # 本桌啟用的機制包（agent 靠它知道能做什麼）
+  allowedActions: [String!]!    # 看得見的動作目錄（隨 config 與節奏過濾）
+  attributes: [String!]!
+  board: Boolean!               # 有沒有棋盤
+  turnSeconds: Int
+  quota: JSON                   # 每景額度（agent 節流）等
+  toolPrefix: String            # 工具名前綴（沿用 wake.tool_prefix）
+}
+
+type Identity {
+  account: ID!
+  display: String
+  kind: String            # human／agent／gm／npc
+  tables: [TableMembership!]!
+}
+
+type TableMembership {
+  table: TableInfo!
+  seat: ID
+  charId: ID              # 這一桌我演哪個角色（＝角色ID）
+  instance: JSON          # P0：成長實例的 JSON（instance: CharInstance 是 P0b 目標形狀）
+  wallet: JSON            # 錢包＝(帳號 × 模組)
+  busyIn: [TableInfo!]!   # 這個角色還在哪些活桌出場（同帳號同角色不能同時兩桌）
+}
+
+type LoginPayload { account: ID! display: String kind: String token: String! }
+type Health { status: String! service: String! tables: [TableInfo!]! }
+
+# ───────────────────── 視圖型別（P0b：投影的**穩定核心**逐欄型別化）─────────────────────
+# 欄名照投影（`/api/state`）的 snake_case ⇒ GraphQL 這邊用 camelCase 對映；兩邊逐欄對得上（有閘）。
+# ⚠ 契約不縮水：**沒型別化的部分留在 `View.raw`**（＝`/api/state` 原樣；也正是 MCP 工具的輸出契約）。
+#   逐欄型別化是漸進的：先型別化穩定的核心（桌／席／你／日誌／動作／auth），棋盤與結局等形狀
+#   隨劇本而變的，先原樣端出，之後再收。
+
+type View {
+  session: ID!
+  table: TableMeta!
+  paused: Boolean!
+  pausedSeconds: Float!
+  seats: [SeatView!]!
+  you: YouView
+  log: [LogEntry!]!
+  actions: [ActionView!]!
+  allowedActions: [String!]!
+  rulesAttrs: [String!]!
+  yourSecrets: [JSON!]!
+  recent: [JSON!]!
+  turn: JSON
+  # ★ 2026-10-21：`raw.round_no`＝現在第幾輪（1 起算）、`raw.rounds_done`＝已打完的輪數。
+  #   （frontend 讀的是 raw；typed View 這裡沒有對應欄位，要的話再加。）
+  stage: JSON
+  settled: JSON
+  board: JSON
+  # ★ 音訊（2026-10-20）：播放控制。模組放了 `audio.json` 才非 null。
+  #   `{bgm, sfx, seq, library}`＋GM 才有的 `{available, cues}`。
+  #   前端：`bgm.seq` 變了 ⇒ 換曲（null ⇒ 停）；`sfx.seq` 比上次大 ⇒ 播一次。
+  #   `library.index`＝模組音訊表本身（`/assets/<模組>/audio.json`），可拿它預載。
+  audio: JSON
+  ended: JSON
+  endedInfo: JSON
+  summary: JSON
+  typing: JSON
+  auth: AuthState!
+  raw: JSON!
+}
+type TableMeta { tableId: ID! scenario: String! rules: String! roundNo: Int! now: Float! module: String assets: AssetManifest }
+# ★ 素材（2026-10-09；純附加）：**模組級**圖庫的入口。只有這一模組真的放了素材表
+#   （`modules/<模組>/assets/index.json`）時才非 null ⇒ 沒素材的桌（含舊桌）一字不變。
+#   `base`＝對外前綴（`/assets/<模組>/`）——**與桌 id 解耦**：同模組的多張桌、以及觀戰頁
+#   （匿名）都吃同一批圖。`index`＝素材清單本身（別名 → 檔名）。
+#   ★ 2026-10-19：`locale`＝模組的**畫面用語表**（`modules/<模組>/locale.json`：地名譯名／固有名詞／世界觀用語）。
+#   有用語表但沒有圖的模組也會有這一格 ⇒ `base`／`index` 改成可空（沒圖＝null）。
+type AssetManifest { module: String! base: String index: String locale: String }
+type SeatView { seat: ID! name: String kind: String hp: Int maxHp: Int status: [String!]! isTurn: Boolean! star: Int level: Int resources: JSON portrait: String avatar: String statusIcons: JSON }   # kind：非 GM 視角一律 "player"（玩家平等原則）；portrait／avatar／statusIcons＝素材（無素材 ⇒ null／空）
+type YouView {
+  seat: ID! name: String kind: String hp: Int maxHp: Int node: String
+  memory: Int maxMemory: Int maxMana: Int starCoins: Int
+  attrs: JSON! status: [String!]! resources: JSON skills: [JSON!]! artifacts: [JSON!]! roster: JSON
+  # ★ 素材（2026-10-09；純附加）：自己的立繪／頭像、道具清單（每列可帶 icon）、狀態圖示
+  portrait: String avatar: String items: [JSON!]! statusIcons: JSON
+}
+type ActionView { id: String! label: String desc: String }
+type LogEntry { seq: Int! ts: Float! type: String! data: JSON! }
+type AuthState { hasAccounts: Boolean! required: Boolean! seatLink: Boolean! }
+
+
+# ───────────────────────────── 動作（寫入）─────────────────────────────
+#
+# ⚠ **非表內操作**（前台層）：`newRun`／`createTable` 都是**建一個新的 play 實例（run＝桌）**，
+#   所以**不帶 session**；只有前台（hub）有 registry 可以建實例；單桌模式會明確拒絕。
+#   2026-10-20：「桌和 run 等价」⇒ 建出來的 run 的 `table_id`／`session`／`run_id` 是同一個值。
+#
+# 每一格都帶 `tableId`（桌是欄位、不是路徑）；表內操作另帶 `session`。
+# 逐一開欄位（而不是一個 `op` 大雜燴）：型別可檢查、agent 一眼看得出這桌能做什麼。
+
+type Mutation {
+  # **開一個新的 play 實例（run／桌）**：同一個劇本下再建一個 run（新目錄、新 `table_id`
+  # ＝`run_id`＝`session`）。**舊 run 原地不動**（它自己就是一張桌，留在大廳可回放）。
+  # 回 `{ok, table, home, parent, old_session, session}`。
+  # **不帶 session**（它就是要生一個新的）；**只有前台（hub）做得到**。
+  # `watchable`：新局開不開觀戰（不給＝config 預設；2026-10-19 設計者）
+  newRun(tableId: ID!, watchable: Boolean): JSON!
+
+  # **建立一個 run（桌）**（設計者 2026-10-07 第 1 條；2026-10-20「桌和 run 等价」）：
+  # 同一個（模組×劇本）可以有很多個 play 實例；`table_id`＝`run_id`＝`session`。
+  # 一樣是**前台層**（要動 registry）；不帶 session——它連 run 都還沒建出來。
+  # `watchable`：建出來的 run 給不給人觀戰（不給＝沿 config 預設；2026-10-19 設計者）
+  createTable(module: ID!, scenario: ID!, name: String, watchable: Boolean,
+              "開局難度（劇本 `starting_difficulty.levels` 的檔名，例 easy／normal／hard；不給＝劇本 default）"
+              difficulty: String): JSON!
+  # 調整可見性（這一局給不給人觀戰）——**只有 owner**；寫這一局的 `runs/<run>/watch.json`（2026-10-20）
+  setWatchable(tableId: ID!, session: ID!, watchable: Boolean!): JSON!
+  # 封存／解除封存這一局（Archive）——**只有 owner**；封存後不進選桌、所有寫入被拒（2026-10-19）
+  setArchived(tableId: ID!, session: ID!, archived: Boolean!): JSON!
+  # 整桌暫停／繼續——**只有 owner**（不必經 GM token；2026-10-19）
+  setPaused(tableId: ID!, session: ID!, paused: Boolean!, reason: String): JSON!
+
+  # ⚠ **適配器專用**：op 直通（＝舊 `/api/gm` **同一支 handler**；`op／args` 原樣帶）。
+  # 為什麼留這一格：MCP 的 `table_gm{op, …}` 就是這個形狀——直通＝**零欄名漂移**；
+  # 而客戶端／UI 該用的是下面那些**具名格**（`gmPause`／`gmExp`…），不是這一格。
+  gmRun(tableId: ID!, session: ID!, op: String!, args: JSON): JSON!
+  # 人級入口（不需要 tableId／session）
+  login(username: String!, password: String!): LoginPayload!
+
+  # 入場（要 session）
+  # 選角色：**同時建立「帳號 × 副本 × 角色ID」關聯**（設計者 2026-10-07）
+  # **匯入已有實例**用這一格（這個角色我在這個模組已經有 instance）。
+  pickChar(tableId: ID!, session: ID!, charId: ID!): JSON!
+  # **建立新角色**＝在這個**模組**底下給這個帳號開一個**新實例**（設計者：新角色是「該帳號在該模組
+  # 下的新角色實例」，角色的**類由模組定**）。與 `pickChar` 分工（設計者：「需要专门的接口比较卫生」）：
+  # 這一格**只做開新實例**——已經有實例時**明確拒絕**並請他用 `pickChar`；`pickChar` 只管匯入。
+  # `class` 不給（由模組角色表定）；`name`／`note` 可選（這一桌的顯示名／備註）。
+  createChar(tableId: ID!, session: ID!, charId: ID!, name: String): JSON!
+  # 入場：把局外成長（level／exp）與錢包帶進這一局；冪等
+  enter(tableId: ID!, session: ID!): JSON!
+  join(tableId: ID!, session: ID!, name: String!, kind: JoinKind, attrs: JSON,
+       wakeUrl: String, seat: ID): JSON!
+
+  # 玩家動作
+  act(tableId: ID!, session: ID!, action: String!, seat: ID, target: ID, attr: String,
+      dc: Int, note: String, skill: ID, item: ID, req: String): JSON!
+  say(tableId: ID!, session: ID!, text: String!, seat: ID): JSON!
+  tell(tableId: ID!, session: ID!, to: ID!, text: String!, seat: ID): JSON!
+  tellGm(tableId: ID!, session: ID!, text: String!, seat: ID): JSON!
+  typing(tableId: ID!, session: ID!, seat: ID, to: ID): JSON!   # 回 payload（＝舊 `/api/typing` 的回傳），不是布林
+
+  # GM／NPC（要 `X-Table-GM-Token` 標頭）
+  gmScene(tableId: ID!, session: ID!, text: String, by: ID): JSON!
+  gmSecret(tableId: ID!, session: ID!, to: ID!, text: String): JSON!
+  gmStartTurn(tableId: ID!, session: ID!): JSON!
+  gmEndTurn(tableId: ID!, session: ID!): JSON!
+  gmHeal(tableId: ID!, session: ID!, target: ID!, amount: Int!): JSON!
+  gmKick(tableId: ID!, session: ID!, seat: ID!): JSON!
+  gmReplay(tableId: ID!, session: ID!): JSON!
+  gmPause(tableId: ID!, session: ID!, reason: String): JSON!      # 整桌暫停（總閘）
+  gmResume(tableId: ID!, session: ID!): JSON!
+  gmExp(tableId: ID!, session: ID!, target: ID!, amount: Int!, note: String): JSON!
+  gmStar(tableId: ID!, session: ID!, target: ID!, star: Int!, note: String): JSON!
+  gmItem(tableId: ID!, session: ID!, target: ID!, id: ID!, count: Int, mode: String): JSON!
+  gmCondition(tableId: ID!, session: ID!, target: ID!, id: ID!, value: Boolean, turns: Int): JSON!
+  gmAttrMod(tableId: ID!, session: ID!, target: ID!, attr: String!, amount: Int!, note: String): JSON!
+  gmResource(tableId: ID!, session: ID!, target: ID!, name: String!, amount: Int!, mode: String): JSON!
+  gmRollFor(tableId: ID!, session: ID!, seat: ID, attr: String, dc: Int, secret: Boolean): JSON!
+  gmActFor(tableId: ID!, session: ID!, seat: ID!, action: String!, note: String): JSON!
+  gmNpcSay(tableId: ID!, session: ID!, as: ID!, text: String!): JSON!
+  gmLeakReport(tableId: ID!, session: ID!): JSON!
+
+  # **「要求 GM 就位」**（owner 2026-10-08）：全員落座之後，玩家畫面上那一顆按鈕——
+  # 把「開第一景」交給人按（回合制下第一輪要等開景；人齊時桌端本來也會自己叫一次）。
+  # **不需要 GM 憑證**（是玩家的請求，不是 GM 的操作）；桌端判據／幂等鍵都在
+  # `wake.maybe_kick_round` 那一支。回 `{ok, sent, skipped, reason, detail}`：
+  # 不該叫／叫過了**不是錯誤**（`skipped` 說明原因，按鈕可以多按）。
+  requestGm(tableId: ID!, session: ID!): JSON!
+}
+
+# ───────────────────────────── 唯讀前門（觀戰）─────────────────────────────
+# **同一支 `POST /graphql`**（不另開端點）：
+#   * 帶 `X-Table-Watch: <read_token>` 的請求 ⇒ **只放行 Query**，任何 mutation 一律拒；
+#     `view` 一律 `seat` 省略＝公開投影（觀眾沒有身分）。
+#   * 獨立的觀戰行程（自己一個埠）＝整支唯讀（不裝 mutation）。
+# 觀眾沒有席位 ⇒ 不進 order、不算「還沒出手」⇒ 不會擋回合、不會擋收景。
+#
+# JSON 標註（刻意不細拆的幾格；其餘都是結構化型別）：
+#   Stage.props／You.attrs／You.resources／You.monster／Goal.progress／LogEntry.data／
+#   Summary.goals／Summary.seats／Auth／Capabilities.quota／`log(meta:true)`／
+#   以及各 mutation 的回傳（＝引擎的 result 物件）

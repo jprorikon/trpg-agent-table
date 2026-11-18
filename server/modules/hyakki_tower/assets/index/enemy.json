@@ -1,0 +1,103 @@
+{
+ "schema": 1,
+ "kind": "enemy",
+ "module": "hyakki_tower",
+ "count": {
+  "files": 9,
+  "aliases": 9
+ },
+ "files": {
+  "enemy/gaki": {
+   "alpha": true,
+   "bytes": 86636,
+   "h": 1024,
+   "kind": "enemy",
+   "path": "enemy/gaki.webp",
+   "sha256": "aec52fe10d42447e",
+   "w": 683
+  },
+  "enemy/hitotsume": {
+   "alpha": true,
+   "bytes": 93884,
+   "h": 1024,
+   "kind": "enemy",
+   "path": "enemy/hitotsume.webp",
+   "sha256": "28f68634a14b00b9",
+   "w": 683
+  },
+  "enemy/hone_musha": {
+   "alpha": true,
+   "bytes": 109388,
+   "h": 1024,
+   "kind": "enemy",
+   "path": "enemy/hone_musha.webp",
+   "sha256": "6f269278fd32a4d9",
+   "w": 683
+  },
+  "enemy/hone_yumi": {
+   "alpha": true,
+   "bytes": 116572,
+   "h": 1024,
+   "kind": "enemy",
+   "path": "enemy/hone_yumi.webp",
+   "sha256": "0f77bd7fb09a404e",
+   "w": 683
+  },
+  "enemy/hyakki_no_aruji": {
+   "alpha": true,
+   "bytes": 95050,
+   "h": 1024,
+   "kind": "enemy",
+   "path": "enemy/hyakki_no_aruji.webp",
+   "sha256": "95978d85eacb4759",
+   "w": 683
+  },
+  "enemy/jorougumo": {
+   "alpha": true,
+   "bytes": 117392,
+   "h": 1024,
+   "kind": "enemy",
+   "path": "enemy/jorougumo.webp",
+   "sha256": "cbf9ab6e07c18d10",
+   "w": 683
+  },
+  "enemy/oni_sho": {
+   "alpha": true,
+   "bytes": 142538,
+   "h": 1024,
+   "kind": "enemy",
+   "path": "enemy/oni_sho.webp",
+   "sha256": "cd0baea63f84d97f",
+   "w": 683
+  },
+  "enemy/onibi": {
+   "alpha": true,
+   "bytes": 102864,
+   "h": 1024,
+   "kind": "enemy",
+   "path": "enemy/onibi.webp",
+   "sha256": "324c1fd7dc615f3a",
+   "w": 683
+  },
+  "enemy/yabusame": {
+   "alpha": true,
+   "bytes": 86216,
+   "h": 1024,
+   "kind": "enemy",
+   "path": "enemy/yabusame.webp",
+   "sha256": "540d0bd528b82162",
+   "w": 683
+  }
+ },
+ "aliases": {
+  "enemy:gaki": "enemy/gaki",
+  "enemy:hitotsume": "enemy/hitotsume",
+  "enemy:hone_musha": "enemy/hone_musha",
+  "enemy:hone_yumi": "enemy/hone_yumi",
+  "enemy:hyakki_no_aruji": "enemy/hyakki_no_aruji",
+  "enemy:jorougumo": "enemy/jorougumo",
+  "enemy:oni_sho": "enemy/oni_sho",
+  "enemy:onibi": "enemy/onibi",
+  "enemy:yabusame": "enemy/yabusame"
+ }
+}

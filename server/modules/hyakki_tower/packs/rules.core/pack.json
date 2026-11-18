@@ -1,0 +1,83 @@
+{
+  "id": "rules.core",
+  "name": "示範模組 規則書（技能／經驗）",
+  "version": 1,
+  "doc": "「規則書」型機制包（原創）：內核有通用機制（`skills.py` 的 cast 檢定鏈、`advancement.py` 的經驗／等級、`items.py` 的道具庫存），這一包只帶**內容**——技能表（8 條）、等級表（5 級）、道具表（4 件）。啟用後：多一個動作 `cast`（技能表決定屬性／熟練／消耗／難度／效果）、擊破小怪給經驗、升等級會發 `level_up`（屬性／上限／資源寫進事件）。屬性表（剛／技／心／運）是**這張桌的規則**⇒ 寫在 `config.json` 的 `rules.attributes`（config 是權威；這一包不搶）。改數值＝改表，不改程式。",
+  "requires": [
+    "d20core"
+  ],
+  "optional": [
+    "wound",
+    "board",
+    "semic"
+  ],
+  "conflicts": [],
+  "provides": {
+    "actions": [
+    ],
+    "effects": [
+      "damage",
+      "heal",
+      "item_grant",
+      "item_take",
+      "star_set",
+      "growth_gain",
+      "star_grant"
+    ],
+    "events": [
+      "skill_used",
+      "exp_gained",
+      "level_up",
+      "item_changed",
+      "star_up",
+      "star_grant"
+    ],
+    "text_keys": [
+      "skill.cast",
+      "skill.hit",
+      "skill.miss",
+      "skill.no_resource",
+      "skill.unknown",
+      "exp.gained",
+      "level.up"
+    ],
+    "state_keys": [
+      "exp",
+      "level",
+      "inventory",
+      "star",
+      "star_ch"
+    ],
+    "signals": [],
+    "tables": [
+      "tables/skills.json",
+      "tables/levels.json",
+      "tables/items.json",
+      "tables/stars.json"
+    ],
+    "defaults": {
+      "rules": {
+        "resources": {
+          "memory": {
+            "base": 60,
+            "per_wil": 10,
+            "per_level": 0
+          },
+          "mana": {
+            "base": 2,
+            "per_level": 1,
+            "per_star": 2
+          }
+        },
+        "levels": {
+          "exp_base": 30,
+          "exp_step": 20
+        }
+      }
+    }
+  },
+  "params": {
+    "exp_per_star_kill": 6,
+    "exp_per_boss_defeat": 20
+  }
+}

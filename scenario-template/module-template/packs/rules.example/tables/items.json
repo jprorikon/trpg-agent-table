@@ -1,0 +1,34 @@
+{
+  "kind": "items",
+  "doc": "道具表：use 欄位定義使用時的效果（effects）與目標（target）。",
+  "rows": [
+    {
+      "id": "potion",
+      "name_jp": "回復薬",
+      "name_cn": "回復藥水",
+      "stackable": true,
+      "price": 3,
+      "use": {
+        "target": "self",
+        "effects": [
+          {"heal": {"seat": "me", "die": 6, "bonus": 2}}
+        ]
+      },
+      "note": "基礎的治療藥劑，可回復生命值。"
+    },
+    {
+      "id": "mana_potion",
+      "name_jp": "魔力薬",
+      "name_cn": "魔力藥劑",
+      "stackable": true,
+      "price": 4,
+      "use": {
+        "target": "self",
+        "effects": [
+          {"resource_add": {"seat": "me", "name": "mana", "value": 2}}
+        ]
+      },
+      "note": "回復 2 點魔力資源。"
+    }
+  ]
+}

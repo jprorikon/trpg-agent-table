@@ -1,0 +1,817 @@
+{
+  "kind": "skills",
+  "doc": "技能表（原創；機制語彙沿用規則書包的元素／風格分類，內容是百鬼塔／鉄環地方自己的：祓い・火槌・星読み・鍛冶）。每一條＝純資料：用哪個屬性檢定（`attr`）、熟練加值（`prof`）、消耗（`cost`：先扣，不足就拒絕）、難度（`dc`，GM 可覆寫）、等級需求（`lvl`）、要不要目標（`target`: foe/self/none）、效果（`effects`：同一套 effect 語意——`damage`／`heal` 走引擎的算式，`condition_set` 需要這張桌也啟用帶條件表的包）。改數值＝改這張表。 2026-10-20 平衡定版（設計者交辦）：修掉「免費無限回血」（shuuzen）、「免費防禦還帶 str+1」（tate_nari）、「純控制技 dc 與傷害技同級」（meisou_no_me）、「L4 控制技比 L2 貴三倍」（kagenui）、「招牌只多 1 點傷害」（onibarai_no_tachi）；`ammo` 類技能（aogiri_shot／onibi）原本**沒有任何供給管道**＝永遠放不出來 ⇒ 供給開在 levels 的開局資源＋商店賣矢（items 的 `arrow`）。其餘 19 條的 dc／prof／lvl／die 梯度不動（L1 dc10-12／L5 dc15-16，die 4→10）。",
+  "rows": [
+    {
+      "id": "hoshikuzu_giri",
+      "name_jp": "星屑斬り",
+      "name_cn": "星屑斬",
+      "element": "Terra",
+      "style": "Steady",
+      "attr": "str",
+      "prof": 2,
+      "dc": 12,
+      "lvl": 1,
+      "target": "foe",
+      "cost": {
+        "resource": "mana",
+        "value": 1
+      },
+      "effects": [
+        {
+          "damage": {
+            "seat": "target",
+            "die": 8,
+            "attr": "str",
+            "bonus": 1
+          }
+        }
+      ],
+      "desc": "星屑の碎光を刀身に纏わせて振り下ろす。華はないが、塔の中で一番よく使われる一振り。"
+    },
+    {
+      "id": "aogiri_shot",
+      "name_jp": "青桐の射撃",
+      "name_cn": "青桐射擊",
+      "element": "Ventus",
+      "style": "Adventurous",
+      "attr": "agi",
+      "prof": 2,
+      "dc": 12,
+      "lvl": 1,
+      "target": "foe",
+      "cost": {
+        "resource": "ammo",
+        "value": 1
+      },
+      "effects": [
+        {
+          "damage": {
+            "seat": "target",
+            "die": 6,
+            "attr": "agi",
+            "bonus": 0
+          }
+        }
+      ],
+      "desc": "風を読んで撃つ。塔の狭い通路でも、小怪の関節だけを狙える。"
+    },
+    {
+      "id": "hyousou_no_sho",
+      "name_jp": "氷装の書",
+      "name_cn": "冰裝之書",
+      "element": "Aqua",
+      "style": "Inquisitive",
+      "attr": "wil",
+      "prof": 3,
+      "dc": 13,
+      "lvl": 2,
+      "target": "foe",
+      "cost": {
+        "resource": "mana",
+        "value": 2
+      },
+      "effects": [
+        {
+          "damage": {
+            "seat": "target",
+            "die": 6,
+            "attr": "wil",
+            "bonus": 0
+          }
+        },
+        {
+          "condition_set": {
+            "id": "chill",
+            "seat": "target",
+            "turns": 2
+          }
+        }
+      ],
+      "desc": "魔導書の頁が凍りつき、撃ち出される。当たった相手は動きが鈍る。"
+    },
+    {
+      "id": "kagaribi",
+      "name_jp": "篝火",
+      "name_cn": "篝火",
+      "element": "Ignis",
+      "style": "Creative",
+      "attr": "wil",
+      "prof": 2,
+      "dc": 12,
+      "lvl": 1,
+      "target": "foe",
+      "cost": {
+        "resource": "mana",
+        "value": 1
+      },
+      "effects": [
+        {
+          "damage": {
+            "seat": "target",
+            "die": 6,
+            "attr": "wil",
+            "bonus": 0
+          }
+        },
+        {
+          "condition_set": {
+            "id": "burn",
+            "seat": "target",
+            "turns": 2
+          }
+        }
+      ],
+      "desc": "小さな火を飛ばす。消えそうで消えない火は、戦いのあとも相手に纏わりつく。"
+    },
+    {
+      "id": "kageotoshi",
+      "name_jp": "影落とし",
+      "name_cn": "影落",
+      "element": "Umbra",
+      "style": "Collector",
+      "attr": "agi",
+      "prof": 3,
+      "dc": 14,
+      "lvl": 3,
+      "target": "foe",
+      "cost": {
+        "resource": "mana",
+        "value": 2
+      },
+      "effects": [
+        {
+          "damage": {
+            "seat": "target",
+            "die": 6,
+            "attr": "agi",
+            "bonus": 0
+          }
+        },
+        {
+          "attr_mod": {
+            "seat": "target",
+            "attr": "agi",
+            "value": -1,
+            "note": "影落とし"
+          }
+        }
+      ],
+      "desc": "影を踏ませて足を止める。痛みより、次の一手が遅れるほうが効く。"
+    },
+    {
+      "id": "inori_no_tomoshibi",
+      "name_jp": "祈りの灯",
+      "name_cn": "祈禱之燈",
+      "element": "Lux",
+      "style": "Steady",
+      "attr": "wil",
+      "prof": 2,
+      "dc": 11,
+      "lvl": 1,
+      "target": "self",
+      "cost": {
+        "resource": "mana",
+        "value": 2
+      },
+      "effects": [
+        {
+          "heal": {
+            "seat": "me",
+            "die": 6,
+            "bonus": 2
+          }
+        }
+      ],
+      "desc": "灯を掲げて息を整える。願いの形は人それぞれで、その灯も人それぞれの色をしている。"
+    },
+    {
+      "id": "meisou_no_me",
+      "name_jp": "迷走の眼",
+      "name_cn": "迷走之眼",
+      "element": "Umbra",
+      "style": "Inquisitive",
+      "attr": "wil",
+      "prof": 2,
+      "dc": 12,
+      "lvl": 2,
+      "target": "foe",
+      "cost": {
+        "resource": "mana",
+        "value": 1
+      },
+      "effects": [
+        {
+          "condition_set": {
+            "id": "confuse",
+            "seat": "target",
+            "turns": 1
+          }
+        }
+      ],
+      "desc": "視界をゆがませる。小怪には効きにくいが、人にはよく効く。",
+      "note_balance": "2026-10-20：唯一沒有傷害的技能（對小怪還打折）⇒ dc 13→12。"
+    },
+    {
+      "id": "soukou_no_kamae",
+      "name_jp": "装甲の構え",
+      "name_cn": "裝甲架勢",
+      "element": "Terra",
+      "style": "Steady",
+      "attr": "str",
+      "prof": 1,
+      "dc": 10,
+      "lvl": 1,
+      "target": "self",
+      "cost": {},
+      "effects": [
+        {
+          "emit": {
+            "type": "status_set",
+            "seat": "me",
+            "status": "defending",
+            "value": true
+          }
+        }
+      ],
+      "desc": "盾を構えて重心を落とす。地味だが、塔で一番長生きする構え。"
+    },
+    {
+      "id": "onibarai_no_tachi",
+      "name_jp": "鬼祓いの太刀",
+      "name_cn": "鬼祓之太刀",
+      "element": "Terra",
+      "style": "Steady",
+      "attr": "str",
+      "prof": 3,
+      "dc": 13,
+      "lvl": 2,
+      "target": "foe",
+      "cost": {
+        "resource": "mana",
+        "value": 2
+      },
+      "effects": [
+        {
+          "damage": {
+            "seat": "target",
+            "die": 10,
+            "attr": "str",
+            "bonus": 2
+          }
+        }
+      ],
+      "desc": "踏み込みと同時に振り抜く。十年前の鍛冶が最後に打った型だという。",
+      "note_balance": "2026-10-20：d10+1→d10+2（L2 的招牌要壓得住 L1 的星屑斬 d8+1）。"
+    },
+    {
+      "id": "hibachi_uchi",
+      "name_jp": "火槌の一撃",
+      "name_cn": "火槌一击",
+      "element": "Ignis",
+      "style": "Creative",
+      "attr": "str",
+      "prof": 2,
+      "dc": 13,
+      "lvl": 2,
+      "target": "foe",
+      "cost": {
+        "resource": "mana",
+        "value": 2
+      },
+      "effects": [
+        {
+          "damage": {
+            "seat": "target",
+            "die": 8,
+            "attr": "str",
+            "bonus": 0
+          }
+        },
+        {
+          "condition_set": {
+            "id": "burn",
+            "seat": "target",
+            "turns": 2
+          }
+        }
+      ],
+      "desc": "炉の火を槌に移して叩きつける。槌の跡が焦げて残る。"
+    },
+    {
+      "id": "sabi_no_ha",
+      "name_jp": "錆の刃",
+      "name_cn": "锈之刃",
+      "element": "Umbra",
+      "style": "Collector",
+      "attr": "agi",
+      "prof": 2,
+      "dc": 13,
+      "lvl": 2,
+      "target": "foe",
+      "cost": {
+        "resource": "mana",
+        "value": 1
+      },
+      "effects": [
+        {
+          "damage": {
+            "seat": "target",
+            "die": 6,
+            "attr": "agi",
+            "bonus": 0
+          }
+        },
+        {
+          "attr_mod": {
+            "seat": "target",
+            "attr": "str",
+            "value": -1,
+            "note": "錆の刃"
+          }
+        }
+      ],
+      "desc": "錆を含んだ刃で急所を浅く裂く。斬るというより、腐らせる。"
+    },
+    {
+      "id": "hone_kudaki",
+      "name_jp": "骨砕き",
+      "name_cn": "骨碎",
+      "element": "Terra",
+      "style": "Adventurous",
+      "attr": "str",
+      "prof": 2,
+      "dc": 14,
+      "lvl": 3,
+      "target": "foe",
+      "cost": {
+        "resource": "mana",
+        "value": 2
+      },
+      "effects": [
+        {
+          "damage": {
+            "seat": "target",
+            "die": 8,
+            "attr": "str",
+            "bonus": 0
+          }
+        },
+        {
+          "condition_set": {
+            "id": "wound_leg",
+            "seat": "target",
+            "turns": 3
+          }
+        }
+      ],
+      "desc": "膝と脛を狙って横から打つ。立っていられなくなった鬼は、もう追ってこない。"
+    },
+    {
+      "id": "kagenui",
+      "name_jp": "影縫い",
+      "name_cn": "影缝",
+      "element": "Umbra",
+      "style": "Steady",
+      "attr": "agi",
+      "prof": 3,
+      "dc": 15,
+      "lvl": 4,
+      "target": "foe",
+      "cost": {
+        "resource": "mana",
+        "value": 2
+      },
+      "effects": [
+        {
+          "damage": {
+            "seat": "target",
+            "die": 6,
+            "attr": "agi",
+            "bonus": 0
+          }
+        },
+        {
+          "condition_set": {
+            "id": "confuse",
+            "seat": "target",
+            "turns": 2
+          }
+        }
+      ],
+      "desc": "相手の影を踏み、灯を落とす。視界が戻るまで、しばらく自分の足元も分からない。",
+      "note_balance": "2026-10-20：mana 3→2（同樣是 confuse 系，L2 的 meisou 只收 1；kagenui 靠 2 回合＋dc15 站住）。"
+    },
+    {
+      "id": "okuribi",
+      "name_jp": "送り火",
+      "name_cn": "送火",
+      "element": "Lux",
+      "style": "Inquisitive",
+      "attr": "wil",
+      "prof": 3,
+      "dc": 13,
+      "lvl": 3,
+      "target": "foe",
+      "cost": {
+        "resource": "mana",
+        "value": 2
+      },
+      "effects": [
+        {
+          "damage": {
+            "seat": "target",
+            "die": 6,
+            "attr": "wil",
+            "bonus": 0
+          }
+        },
+        {
+          "heal": {
+            "seat": "me",
+            "die": 4,
+            "bonus": 0
+          }
+        }
+      ],
+      "desc": "鬼を送る火は、灯した者にも少しだけ暖かい。祈りは一方通行ではない。"
+    },
+    {
+      "id": "kekkai_no_fuda",
+      "name_jp": "結界の札",
+      "name_cn": "结界之札",
+      "element": "Lux",
+      "style": "Steady",
+      "attr": "wil",
+      "prof": 2,
+      "dc": 12,
+      "lvl": 1,
+      "target": "self",
+      "cost": {
+        "resource": "mana",
+        "value": 1
+      },
+      "effects": [
+        {
+          "attr_mod": {
+            "seat": "me",
+            "attr": "wil",
+            "value": 1,
+            "note": "結界の札"
+          }
+        },
+        {
+          "emit": {
+            "type": "status_set",
+            "seat": "me",
+            "status": "defending",
+            "value": true
+          }
+        }
+      ],
+      "desc": "札を一枚、胸に貼る。鬼の爪は紙一枚ぶん届かなくなる。"
+    },
+    {
+      "id": "harai_no_kotoba",
+      "name_jp": "祓いの詞",
+      "name_cn": "祓词",
+      "element": "Lux",
+      "style": "Inquisitive",
+      "attr": "wil",
+      "prof": 2,
+      "dc": 12,
+      "lvl": 1,
+      "target": "foe",
+      "cost": {
+        "resource": "mana",
+        "value": 1
+      },
+      "effects": [
+        {
+          "damage": {
+            "seat": "target",
+            "die": 4,
+            "attr": "wil",
+            "bonus": 2
+          }
+        },
+        {
+          "condition_set": {
+            "id": "chill",
+            "seat": "target",
+            "turns": 1
+          }
+        }
+      ],
+      "desc": "短い詞を唱える。声そのものは刃にならないが、鬼は立ち止まる。"
+    },
+    {
+      "id": "hoshiyomi_no_uranai",
+      "name_jp": "星読みの占",
+      "name_cn": "星读之占",
+      "element": "Aqua",
+      "style": "Inquisitive",
+      "attr": "wil",
+      "prof": 3,
+      "dc": 12,
+      "lvl": 2,
+      "target": "self",
+      "cost": {
+        "resource": "mana",
+        "value": 2
+      },
+      "effects": [
+        {
+          "attr_mod": {
+            "seat": "me",
+            "attr": "luck",
+            "value": 2,
+            "note": "星読みの占"
+          }
+        },
+        {
+          "resource_add": {
+            "seat": "me",
+            "name": "mana",
+            "value": 1
+          }
+        }
+      ],
+      "desc": "短い占い。今日の星の巡りは悪くない——祓った後の実りが少し増える。"
+    },
+    {
+      "id": "shuuzen",
+      "name_jp": "修繕",
+      "name_cn": "修缮",
+      "element": "Terra",
+      "style": "Steady",
+      "attr": "wil",
+      "prof": 2,
+      "dc": 11,
+      "lvl": 1,
+      "target": "self",
+      "cost": {
+        "resource": "mana",
+        "value": 1
+      },
+      "effects": [
+        {
+          "heal": {
+            "seat": "me",
+            "die": 4,
+            "bonus": 2
+          }
+        }
+      ],
+      "desc": "鎚で道具を叩き、包帯を巻き直す。鍛冶の治し方は荒いが、よく効く。",
+      "note_balance": "2026-10-20：原本 cost {}（免費）＝每回合可無限回血，戰鬥中破壞節奏 ⇒ 收 mana 1。"
+    },
+    {
+      "id": "nagare_giri",
+      "name_jp": "流れ斬り",
+      "name_cn": "流斩",
+      "element": "Ventus",
+      "style": "Adventurous",
+      "attr": "agi",
+      "prof": 3,
+      "dc": 14,
+      "lvl": 3,
+      "target": "foe",
+      "cost": {
+        "resource": "mana",
+        "value": 2
+      },
+      "effects": [
+        {
+          "damage": {
+            "seat": "target",
+            "die": 8,
+            "attr": "agi",
+            "bonus": 0
+          }
+        }
+      ],
+      "desc": "相手の動きに乗って斬る。力は要らない、速さだけが要る。"
+    },
+    {
+      "id": "onigoke",
+      "name_jp": "鬼哭",
+      "name_cn": "鬼哭",
+      "element": "Umbra",
+      "style": "Creative",
+      "attr": "wil",
+      "prof": 3,
+      "dc": 15,
+      "lvl": 4,
+      "target": "foe",
+      "cost": {
+        "resource": "mana",
+        "value": 3
+      },
+      "effects": [
+        {
+          "damage": {
+            "seat": "target",
+            "die": 8,
+            "attr": "wil",
+            "bonus": 0
+          }
+        },
+        {
+          "attr_mod": {
+            "seat": "target",
+            "attr": "wil",
+            "value": -1,
+            "note": "鬼哭"
+          }
+        }
+      ],
+      "desc": "鬼の哭き声を真似る。同じ声を聞いた鬼は、少しだけ弱くなる。"
+    },
+    {
+      "id": "tate_nari",
+      "name_jp": "盾鳴らし",
+      "name_cn": "鸣盾",
+      "element": "Terra",
+      "style": "Steady",
+      "attr": "str",
+      "prof": 2,
+      "dc": 12,
+      "lvl": 1,
+      "target": "self",
+      "cost": {
+        "resource": "mana",
+        "value": 1
+      },
+      "effects": [
+        {
+          "attr_mod": {
+            "seat": "me",
+            "attr": "str",
+            "value": 1,
+            "note": "盾鳴らし"
+          }
+        },
+        {
+          "emit": {
+            "type": "status_set",
+            "seat": "me",
+            "status": "defending",
+            "value": true
+          }
+        }
+      ],
+      "desc": "盾の縁を打って音を立てる。仲間には合図、鬼には威嚇。",
+      "note_balance": "2026-10-20：原本免費且有 str+1 ⇒ 壓過 soukou_no_kamae；收 mana 1，免費保命只留 soukou。"
+    },
+    {
+      "id": "gouka_no_jin",
+      "name_jp": "業火の陣",
+      "name_cn": "业火之阵",
+      "element": "Ignis",
+      "style": "Inquisitive",
+      "attr": "wil",
+      "prof": 3,
+      "dc": 15,
+      "lvl": 5,
+      "target": "foe",
+      "cost": {
+        "resource": "mana",
+        "value": 4
+      },
+      "effects": [
+        {
+          "damage": {
+            "seat": "target",
+            "die": 10,
+            "attr": "wil",
+            "bonus": 2
+          }
+        },
+        {
+          "condition_set": {
+            "id": "burn",
+            "seat": "target",
+            "turns": 3
+          }
+        }
+      ],
+      "desc": "足元に火の輪を描く。陣から出るまで、鬼は燃え続ける。"
+    },
+    {
+      "id": "yomi_no_kaeshi",
+      "name_jp": "黄泉返し",
+      "name_cn": "黄泉返",
+      "element": "Lux",
+      "style": "Steady",
+      "attr": "wil",
+      "prof": 3,
+      "dc": 16,
+      "lvl": 5,
+      "target": "self",
+      "cost": {
+        "resource": "mana",
+        "value": 4
+      },
+      "effects": [
+        {
+          "heal": {
+            "seat": "me",
+            "die": 10,
+            "bonus": 6
+          }
+        }
+      ],
+      "desc": "息を止めて、名を一度だけ呼び直す。まだ生きている、と身体に言い聞かせる。"
+    },
+    {
+      "id": "onibi",
+      "name_jp": "鬼火",
+      "name_cn": "鬼火",
+      "element": "Ignis",
+      "style": "Creative",
+      "attr": "agi",
+      "prof": 2,
+      "dc": 12,
+      "lvl": 1,
+      "target": "foe",
+      "cost": {
+        "resource": "ammo",
+        "value": 1
+      },
+      "effects": [
+        {
+          "damage": {
+            "seat": "target",
+            "die": 6,
+            "attr": "agi",
+            "bonus": 0
+          }
+        },
+        {
+          "condition_set": {
+            "id": "burn",
+            "seat": "target",
+            "turns": 1
+          }
+        }
+      ],
+      "desc": "指先に灯した火を飛ばす。塔の中では、なぜかよく燃える。"
+    },
+    {
+      "id": "kizuna_no_ichigeki",
+      "name_jp": "絆の一撃",
+      "name_cn": "绊之一击",
+      "element": "Terra",
+      "style": "Steady",
+      "attr": "str",
+      "prof": 2,
+      "dc": 12,
+      "lvl": 1,
+      "target": "foe",
+      "cost": {
+        "resource": "mana",
+        "value": 1
+      },
+      "effects": [
+        {
+          "damage": {
+            "seat": "target",
+            "die": 8,
+            "attr": "str",
+            "bonus": 2,
+            "ally_bonus": 2
+          }
+        }
+      ],
+      "desc": "同じ場所に立つ仲間の気配を刃に変える一撃。一緒に戦うほど重くなる（同じノードに味方が1人増えるごとに＋2）。"
+    },
+    {
+      "id": "tomoshibi_no_wa",
+      "name_jp": "灯火の輪",
+      "name_cn": "灯火之环",
+      "element": "Ignis",
+      "style": "Creative",
+      "attr": "wil",
+      "prof": 2,
+      "dc": 12,
+      "lvl": 1,
+      "target": "foe",
+      "cost": {
+        "resource": "mana",
+        "value": 1
+      },
+      "effects": [
+        {
+          "damage": {
+            "seat": "target",
+            "die": 6,
+            "attr": "wil",
+            "bonus": 3
+          }
+        }
+      ],
+      "desc": "仲間の灯を束ねて放つ一矢。硬い相手に少ない手数で届かせるために。"
+    }
+  ]
+}

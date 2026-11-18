@@ -1,0 +1,118 @@
+{
+ "schema": 1,
+ "kind": "portrait",
+ "module": "hyakki_tower",
+ "count": {
+  "files": 10,
+  "aliases": 15
+ },
+ "files": {
+  "portrait/char_a/a02": {
+   "alpha": true,
+   "bytes": 177172,
+   "h": 1536,
+   "kind": "portrait",
+   "path": "portrait/char_a/a02.webp",
+   "sha256": "d5af189f5cf33290",
+   "w": 1024
+  },
+  "portrait/char_b/a02": {
+   "alpha": true,
+   "bytes": 121796,
+   "h": 1536,
+   "kind": "portrait",
+   "path": "portrait/char_b/a02.webp",
+   "sha256": "77643d1c3b24be6f",
+   "w": 1024
+  },
+  "portrait/gai/a02": {
+   "alpha": true,
+   "bytes": 159466,
+   "h": 1536,
+   "kind": "portrait",
+   "path": "portrait/gai/a02.webp",
+   "sha256": "e9a541773971bc2f",
+   "w": 1024
+  },
+  "portrait/homura/a02": {
+   "alpha": true,
+   "bytes": 262072,
+   "h": 1536,
+   "kind": "portrait",
+   "path": "portrait/homura/a02.webp",
+   "sha256": "d2f3948ab1d92152",
+   "w": 1024
+  },
+  "portrait/isuka/a02": {
+   "alpha": true,
+   "bytes": 159810,
+   "h": 1536,
+   "kind": "portrait",
+   "path": "portrait/isuka/a02.webp",
+   "sha256": "c0e2f775df0bc6de",
+   "w": 1024
+  },
+  "portrait/nagi/a02": {
+   "alpha": true,
+   "bytes": 162324,
+   "h": 1536,
+   "kind": "portrait",
+   "path": "portrait/nagi/a02.webp",
+   "sha256": "167ec47a8acda45c",
+   "w": 1024
+  },
+  "portrait/rize/a02": {
+   "alpha": true,
+   "bytes": 94004,
+   "h": 1536,
+   "kind": "portrait",
+   "path": "portrait/rize/a02.webp",
+   "sha256": "56066c6530c51fc7",
+   "w": 1024
+  },
+  "portrait/sane/a02": {
+   "alpha": true,
+   "bytes": 119602,
+   "h": 1536,
+   "kind": "portrait",
+   "path": "portrait/sane/a02.webp",
+   "sha256": "53a2b554c0f69834",
+   "w": 1024
+  },
+  "portrait/setsu/a02": {
+   "alpha": true,
+   "bytes": 146836,
+   "h": 1536,
+   "kind": "portrait",
+   "path": "portrait/setsu/a02.webp",
+   "sha256": "7b9b948e2a7399c6",
+   "w": 1024
+  },
+  "portrait/tsurugi/a02": {
+   "alpha": true,
+   "bytes": 89958,
+   "h": 1536,
+   "kind": "portrait",
+   "path": "portrait/tsurugi/a02.webp",
+   "sha256": "18b13f5d887db8f1",
+   "w": 1024
+  }
+ },
+ "aliases": {
+  "npc:gai": "portrait/gai/a02",
+  "npc:rize": "portrait/rize/a02",
+  "npc:sane": "portrait/sane/a02",
+  "npc:setsu": "portrait/setsu/a02",
+  "npc:tsurugi": "portrait/tsurugi/a02",
+  "portrait:char_a": "portrait/char_a/a02",
+  "portrait:char_b": "portrait/char_b/a02",
+  "portrait:gai": "portrait/gai/a02",
+  "portrait:homura": "portrait/homura/a02",
+  "portrait:isuka": "portrait/isuka/a02",
+  "portrait:nagi": "portrait/nagi/a02",
+  "portrait:rize": "portrait/rize/a02",
+  "portrait:sane": "portrait/sane/a02",
+  "portrait:setsu": "portrait/setsu/a02",
+  "portrait:tsurugi": "portrait/tsurugi/a02"
+ }
+}

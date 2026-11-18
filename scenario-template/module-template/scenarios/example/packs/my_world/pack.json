@@ -1,0 +1,35 @@
+{
+  "id": "my_world",
+  "name": "（你的作品）世界數值（作品層包）",
+  "version": 1,
+  "doc": "**作品層包**（`campaigns/<劇本 id>/packs/<id>/`）：這一劇本專屬的**機制內容**。兩條路：① `provides.defaults`＝機制常數（config 沒寫時用它；**config 有寫的一律贏**）——塔／記憶經濟這種「只有這個作品才有的數值」放這裡；② `provides.tables`＝**內容表**（表住 `tables/*.json`，`board.json` 有寫的一份優先）。想改引擎層某個包的預設值 ⇒ 複製那個包到這裡同名覆蓋（權威鏈：config／劇本檔 ＞ 作品層包 ＞ 引擎層包）。不需要這個包就把它從 config.packs.enabled 拿掉、整個目錄刪掉。",
+  "requires": ["d20core", "board", "semic"],
+  "optional": ["mode.turn"],
+  "conflicts": [],
+  "provides": {
+    "defaults": {
+      "tower": {
+        "memory_per_turn_inside": 1,
+        "assimilation_food_memory_loss": 8,
+        "max_turns_inside": 12,
+        "confiscate_on_exit": true,
+        "star_coin_per_kill": 2,
+        "mob_damage_die": 4,
+        "rest_memory_gain": 6,
+        "rest_heal": 4,
+        "game_memory_gain": 3,
+        "search_memory_gain": 2,
+        "white_room_restore": 40,
+        "shop": {
+          "heal_pack": {"cost": 2, "heal": 6},
+          "coffee": {"cost": 1, "memory": 4},
+          "bento": {"cost": 1, "memory": -6}
+        }
+      },
+      "memory": {"start": 60, "low_threshold": 30}
+    },
+    "events": ["monster_damaged"],
+    "tables": ["tables/artifacts.json", "tables/monsters.json"]
+  },
+  "params": {}
+}

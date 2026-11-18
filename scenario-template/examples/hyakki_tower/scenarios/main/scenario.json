@@ -1,0 +1,116 @@
+{
+  "meta": {
+    "id": "hyakki_tower",
+    "rules_version": "1.0",
+    "note": "L1 規則資料：願望判據（requirements）／表層判據（surface）／NPC 專屬知識（entities）／難度（difficulty_presets）／導演（director）／結局（endings）／觸發（triggers）。語法與詞彙表見 SCENARIO_FORMAT.md §3。⚠ 這一桌**沒有任何 growth_gain 觸發**——經驗只能從戰鬥（擊破）產生。"
+  },
+
+  "entities": {
+    "tsurugi": {
+      "kind": "npc",
+      "display": "ツルギ（宿『折れ杭』の主・元鍛冶）",
+      "knowledge": [
+        "港町ミナトの宿『折れ杭』を一人で切り盛りしている。右手の指が三本ない。",
+        "十年前、鉄環市の炉で大剣を打った。打ち手は自分と、もう一人しかいなかった。",
+        "塔が急に高くなったのは、あの夜からだ。あの夜、炉の火を落とさなかった者がいる。",
+        "運び屋の組合が、塔の裏口（4 階の崩れた壁）の存在を隠している——担がれて出てくる者を減らしたいからだ。",
+        "「鬼を斬る」と言う若者には、できるだけ何も教えない。教えても、あの塔は返してくれない。"
+      ],
+      "note": "只講上面範圍內的事；被追問十年前的細節、或問到另一個人是誰，就用他的口吻含糊過去／岔開（他會去擦柜台）。"
+    }
+  },
+
+  "requirements": {
+    "g_blade": {
+      "doc": "カガリ的願望：拿到結論 c_blade ＋ 人站在最上階（把折斷的另外半截從鬼的腹中帶出來，得在最上階）",
+      "expr": {
+        "and": [
+          {"in": ["c_blade", {"var": "me.claims"}],
+           "why": {"need_claims": ["c_blade"], "you_have_claims": {"var": "me.claims"}}},
+          {"in": [{"var": "me.node"}, ["hyakki_f6"]],
+           "why": {"need_node": ["hyakki_f6"], "you_are": {"var": "me.node"}}}
+        ]
+      }
+    },
+    "g_record": {
+      "doc": "シズク的願望：拿到結論 c_night ＋ 至少一個『別人』向我出示過碎片（見せられない証言は記録にならない）",
+      "expr": {
+        "and": [
+          {"in": ["c_night", {"var": "me.claims"}],
+           "why": {"need_claims": ["c_night"], "you_have_claims": {"var": "me.claims"}}},
+          {">=": [{"len": {"var": "me.fragment_sources"}}, 1],
+           "why": {"need_sources": 1, "have": {"var": "me.fragment_sources"}}}
+        ]
+      }
+    }
+  },
+
+  "surface": {
+    "reached_top": {
+      "doc": "有人站上百鬼塔的最上階（hyakki_f6）",
+      "expr": {"in": ["hyakki_f6", {"pluck": [{"values": {"var": "seats"}}, "node"]}]}
+    },
+    "grand_box_touched": {
+      "doc": "最上階的大祈願箱被動過（有先手紀錄）＝表層共同目標的門檻",
+      "expr": {"exists": "world.pray_first.hyakki_f6"}
+    }
+  },
+
+  "difficulty_presets": {
+    "relaxed": {"doc": "鬆（賞）：檢定 DC −1、每回合行動格 +1", "dc_mod": -1, "act_mod": 1},
+    "normal":  {"doc": "標準（預設）：不動", "dc_mod": 0, "act_mod": 0},
+    "tight":   {"doc": "緊（罰）：檢定 DC +1、每回合行動格 −1", "dc_mod": 1, "act_mod": -1}
+  },
+
+  "director": {
+    "doc": "L3 導演＝超出劇本預期時的糾正力量：主線卡住＝收緊（罰）、跑得順＝放鬆（賞）。指標只吃『距離／窗口』（stall_hands／recent_idle／progress_recent）。門檻是難度設計 ⇒ 要開由作者決定（預設 false＝不擅自改進行中那局的難度）。",
+    "track": false,
+    "window": 8,
+    "progress_on": ["mob_killed", "entered_tower", "elevator", "boss_defeated",
+                    "wish_done", "fragment_granted", "scene_open", "entrance_found"],
+    "policy": [
+      {"when": {">=": [{"var": "signals.stall_hands"}, 20]}, "preset": "tight",
+       "why": "卡了 {stall_hands} 手沒有主線推進——收緊（DC +1／行動格 −1）"},
+      {"when": {">=": [{"var": "signals.progress_recent"}, 2]}, "preset": "relaxed",
+       "why": "最近 {window} 手推進了 {progress_recent} 次——放鬆（DC −1／行動格 +1）"},
+      {"when": true, "preset": "normal", "why": "回到標準難度"}
+    ]
+  },
+
+  "endings": [
+    {"id": "e_win", "kind": "win", "doc": "百鬼夜行の主を討った（最上階の小怪＝BOSS 被清掉）",
+     "when": {"==": [{"var": "world.event.type"}, "boss_defeated"]}},
+    {"id": "e_wipe", "kind": "lose", "doc": "全員躺平（安全網：本桌開了 death 之後很難成立——死了會被送還到城市）",
+     "when": {"and": [{">=": [{"len": {"var": "seats"}}, 2]},
+                      {"==": [{"len": {"var": "world.up"}}, 0]}]}}
+  ],
+
+  "triggers": [
+    {"id": "t_first_blood",
+     "doc": "第一次討鬼 ⇒ 寫一條事實（facts.oni_culled）。之後的 AST／GM 都可以查它——這是『劇情進度記在事件流裡』的最小示範。",
+     "on": ["mob_killed"],
+     "once": true,
+     "when": {"==": [{"var": "world.event.type"}, "mob_killed"]},
+     "then": [{"fact_set": {"key": "oni_culled", "value": true}}]},
+
+    {"id": "t_first_death",
+     "doc": "第一次有人死（`death` 事件＝death 機制發的）⇒ 記一條事實。GM 據此把運び屋帶進敘述（擔架、荷車、『又是這樣回來的』）。",
+     "on": ["death"],
+     "once": true,
+     "when": {"==": [{"var": "world.event.type"}, "death"]},
+     "then": [{"fact_set": {"key": "death_seen", "value": true}}]},
+
+    {"id": "t_tower_cleared",
+     "doc": "討伐 BOSS ⇒ 記 facts.tower_cleared（**星等表的 ★3 會吃這條事實**：塔已通）。",
+     "on": ["boss_defeated"],
+     "once": true,
+     "when": {"==": [{"var": "world.event.type"}, "boss_defeated"]},
+     "then": [{"fact_set": {"key": "tower_cleared", "value": true}}]}
+  ],
+ "terms": {
+  "fragment": {
+   "jp": "御札",
+   "cn": "御札"
+  }
+ }
+}

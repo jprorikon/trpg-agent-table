@@ -1,0 +1,579 @@
+{
+ "schema": 1,
+ "kind": "icon",
+ "module": "hyakki_tower",
+ "count": {
+  "files": 56,
+  "aliases": 62
+ },
+ "files": {
+  "icon/artifact_t0_1": {
+   "alpha": false,
+   "bytes": 11652,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/artifact_t0_1.webp",
+   "sha256": "0fb8666a6b53b3cc",
+   "w": 256
+  },
+  "icon/artifact_t1_1": {
+   "alpha": false,
+   "bytes": 3026,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/artifact_t1_1.webp",
+   "sha256": "28802d0269ea71eb",
+   "w": 256
+  },
+  "icon/artifact_t1_2": {
+   "alpha": false,
+   "bytes": 2958,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/artifact_t1_2.webp",
+   "sha256": "4fdf6b1c19d36cf2",
+   "w": 256
+  },
+  "icon/artifact_t2_1": {
+   "alpha": false,
+   "bytes": 8466,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/artifact_t2_1.webp",
+   "sha256": "f103ca9495394ec6",
+   "w": 256
+  },
+  "icon/artifact_t3_1": {
+   "alpha": false,
+   "bytes": 10560,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/artifact_t3_1.webp",
+   "sha256": "0b5f97c2543e59f7",
+   "w": 256
+  },
+  "icon/artifact_t3_2": {
+   "alpha": false,
+   "bytes": 5352,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/artifact_t3_2.webp",
+   "sha256": "97ed34f9b3def148",
+   "w": 256
+  },
+  "icon/cond_burn": {
+   "alpha": false,
+   "bytes": 7208,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/cond_burn.webp",
+   "sha256": "369382e2867423c0",
+   "w": 256
+  },
+  "icon/cond_chill": {
+   "alpha": false,
+   "bytes": 14148,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/cond_chill.webp",
+   "sha256": "fdc1a22e0b0c8bdb",
+   "w": 256
+  },
+  "icon/cond_confuse": {
+   "alpha": false,
+   "bytes": 7048,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/cond_confuse.webp",
+   "sha256": "ec934e431a34d514",
+   "w": 256
+  },
+  "icon/cond_poison": {
+   "alpha": false,
+   "bytes": 7752,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/cond_poison.webp",
+   "sha256": "6fce4c3cdadd75d1",
+   "w": 256
+  },
+  "icon/cond_wound_arm": {
+   "alpha": false,
+   "bytes": 4842,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/cond_wound_arm.webp",
+   "sha256": "c2c653a9c6c019cf",
+   "w": 256
+  },
+  "icon/cond_wound_chest": {
+   "alpha": false,
+   "bytes": 4840,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/cond_wound_chest.webp",
+   "sha256": "45d7c570bf9aa56f",
+   "w": 256
+  },
+  "icon/cond_wound_head": {
+   "alpha": false,
+   "bytes": 5922,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/cond_wound_head.webp",
+   "sha256": "e05e40cd94c2db63",
+   "w": 256
+  },
+  "icon/cond_wound_leg": {
+   "alpha": false,
+   "bytes": 3182,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/cond_wound_leg.webp",
+   "sha256": "0975ad6f68e9d167",
+   "w": 256
+  },
+  "icon/item_arrow": {
+   "alpha": false,
+   "bytes": 4738,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/item_arrow.webp",
+   "sha256": "6e2c7784d7a8aff1",
+   "w": 256
+  },
+  "icon/item_heal_pack": {
+   "alpha": false,
+   "bytes": 13912,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/item_heal_pack.webp",
+   "sha256": "78814cc7e5306c77",
+   "w": 256
+  },
+  "icon/item_mana_drop": {
+   "alpha": false,
+   "bytes": 6922,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/item_mana_drop.webp",
+   "sha256": "80af780331b9f898",
+   "w": 256
+  },
+  "icon/item_rope": {
+   "alpha": false,
+   "bytes": 7468,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/item_rope.webp",
+   "sha256": "442665a350a73251",
+   "w": 256
+  },
+  "icon/item_star_flare": {
+   "alpha": false,
+   "bytes": 7670,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/item_star_flare.webp",
+   "sha256": "642f630c0700ba8e",
+   "w": 256
+  },
+  "icon/mon_gaki": {
+   "alpha": false,
+   "bytes": 5426,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/mon_gaki.webp",
+   "sha256": "ee86537cbb21a94a",
+   "w": 256
+  },
+  "icon/mon_hitotsume": {
+   "alpha": false,
+   "bytes": 6680,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/mon_hitotsume.webp",
+   "sha256": "902d6d8cc5413ad7",
+   "w": 256
+  },
+  "icon/mon_hone_musha": {
+   "alpha": false,
+   "bytes": 7780,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/mon_hone_musha.webp",
+   "sha256": "96dea6b6637a254f",
+   "w": 256
+  },
+  "icon/mon_hone_yumi": {
+   "alpha": false,
+   "bytes": 6416,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/mon_hone_yumi.webp",
+   "sha256": "2f2ab3c26bcf9eda",
+   "w": 256
+  },
+  "icon/mon_hyakki_no_aruji": {
+   "alpha": false,
+   "bytes": 7650,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/mon_hyakki_no_aruji.webp",
+   "sha256": "4855664c569a829c",
+   "w": 256
+  },
+  "icon/mon_jorougumo": {
+   "alpha": false,
+   "bytes": 7324,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/mon_jorougumo.webp",
+   "sha256": "a6467b01f51303a4",
+   "w": 256
+  },
+  "icon/mon_oni_sho": {
+   "alpha": false,
+   "bytes": 8038,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/mon_oni_sho.webp",
+   "sha256": "b9009cb1341c59ff",
+   "w": 256
+  },
+  "icon/mon_onibi": {
+   "alpha": false,
+   "bytes": 6288,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/mon_onibi.webp",
+   "sha256": "61234ed6e282b371",
+   "w": 256
+  },
+  "icon/mon_yabusame": {
+   "alpha": false,
+   "bytes": 9382,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/mon_yabusame.webp",
+   "sha256": "07dea795a03e4758",
+   "w": 256
+  },
+  "icon/skill_aogiri_shot": {
+   "alpha": false,
+   "bytes": 4880,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/skill_aogiri_shot.webp",
+   "sha256": "67780cb69ea1f8d9",
+   "w": 256
+  },
+  "icon/skill_gouka_no_jin": {
+   "alpha": false,
+   "bytes": 9496,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/skill_gouka_no_jin.webp",
+   "sha256": "6a94bb81a68eb22e",
+   "w": 256
+  },
+  "icon/skill_harai_no_kotoba": {
+   "alpha": false,
+   "bytes": 4720,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/skill_harai_no_kotoba.webp",
+   "sha256": "2f2febbac2f81f13",
+   "w": 256
+  },
+  "icon/skill_hibachi_uchi": {
+   "alpha": false,
+   "bytes": 8778,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/skill_hibachi_uchi.webp",
+   "sha256": "36697ada97e9bf5a",
+   "w": 256
+  },
+  "icon/skill_hone_kudaki": {
+   "alpha": false,
+   "bytes": 6872,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/skill_hone_kudaki.webp",
+   "sha256": "d91dd218c951af2f",
+   "w": 256
+  },
+  "icon/skill_hoshikuzu_giri": {
+   "alpha": false,
+   "bytes": 6206,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/skill_hoshikuzu_giri.webp",
+   "sha256": "6e1bf1342ac92681",
+   "w": 256
+  },
+  "icon/skill_hoshiyomi_no_uranai": {
+   "alpha": false,
+   "bytes": 9758,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/skill_hoshiyomi_no_uranai.webp",
+   "sha256": "3d9bfd302921387c",
+   "w": 256
+  },
+  "icon/skill_hyousou_no_sho": {
+   "alpha": false,
+   "bytes": 12634,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/skill_hyousou_no_sho.webp",
+   "sha256": "6ae04c67988e4b82",
+   "w": 256
+  },
+  "icon/skill_inori_no_tomoshibi": {
+   "alpha": false,
+   "bytes": 7510,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/skill_inori_no_tomoshibi.webp",
+   "sha256": "41b1e0d1a02b39fe",
+   "w": 256
+  },
+  "icon/skill_kagaribi": {
+   "alpha": false,
+   "bytes": 12364,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/skill_kagaribi.webp",
+   "sha256": "5822df695fe04b67",
+   "w": 256
+  },
+  "icon/skill_kagenui": {
+   "alpha": false,
+   "bytes": 3180,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/skill_kagenui.webp",
+   "sha256": "6cabd26fae18dfcc",
+   "w": 256
+  },
+  "icon/skill_kageotoshi": {
+   "alpha": false,
+   "bytes": 1960,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/skill_kageotoshi.webp",
+   "sha256": "96aead8afc9d65bc",
+   "w": 256
+  },
+  "icon/skill_kekkai_no_fuda": {
+   "alpha": false,
+   "bytes": 15016,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/skill_kekkai_no_fuda.webp",
+   "sha256": "a4eec0f108ea1cfb",
+   "w": 256
+  },
+  "icon/skill_meisou_no_me": {
+   "alpha": false,
+   "bytes": 7032,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/skill_meisou_no_me.webp",
+   "sha256": "4175843b8f5d7a79",
+   "w": 256
+  },
+  "icon/skill_nagare_giri": {
+   "alpha": false,
+   "bytes": 4974,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/skill_nagare_giri.webp",
+   "sha256": "c0c75d0e005f120e",
+   "w": 256
+  },
+  "icon/skill_okuribi": {
+   "alpha": false,
+   "bytes": 11606,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/skill_okuribi.webp",
+   "sha256": "171f93af808d8f2c",
+   "w": 256
+  },
+  "icon/skill_onibarai_no_tachi": {
+   "alpha": false,
+   "bytes": 4520,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/skill_onibarai_no_tachi.webp",
+   "sha256": "75981d70feabb0ad",
+   "w": 256
+  },
+  "icon/skill_onibi": {
+   "alpha": false,
+   "bytes": 7064,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/skill_onibi.webp",
+   "sha256": "d70b159cb8cc8912",
+   "w": 256
+  },
+  "icon/skill_onigoke": {
+   "alpha": false,
+   "bytes": 10054,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/skill_onigoke.webp",
+   "sha256": "791a5345aa0a7f5c",
+   "w": 256
+  },
+  "icon/skill_sabi_no_ha": {
+   "alpha": false,
+   "bytes": 4110,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/skill_sabi_no_ha.webp",
+   "sha256": "4f37ad479563d8e5",
+   "w": 256
+  },
+  "icon/skill_shuuzen": {
+   "alpha": false,
+   "bytes": 6374,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/skill_shuuzen.webp",
+   "sha256": "4af6a1edea547612",
+   "w": 256
+  },
+  "icon/skill_soukou_no_kamae": {
+   "alpha": false,
+   "bytes": 8262,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/skill_soukou_no_kamae.webp",
+   "sha256": "6f0f3e0f3b154d64",
+   "w": 256
+  },
+  "icon/skill_tate_nari": {
+   "alpha": false,
+   "bytes": 6800,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/skill_tate_nari.webp",
+   "sha256": "42d40a6eee6d6e7b",
+   "w": 256
+  },
+  "icon/skill_yomi_no_kaeshi": {
+   "alpha": false,
+   "bytes": 7476,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/skill_yomi_no_kaeshi.webp",
+   "sha256": "e4ca71ec6e9d08f3",
+   "w": 256
+  },
+  "icon/star_1": {
+   "alpha": false,
+   "bytes": 13752,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/star_1.webp",
+   "sha256": "aedfa5e897115557",
+   "w": 256
+  },
+  "icon/star_2": {
+   "alpha": false,
+   "bytes": 9016,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/star_2.webp",
+   "sha256": "4e7edce4e20199e0",
+   "w": 256
+  },
+  "icon/star_3": {
+   "alpha": false,
+   "bytes": 9310,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/star_3.webp",
+   "sha256": "333935018cc3fbec",
+   "w": 256
+  },
+  "icon/star_4": {
+   "alpha": false,
+   "bytes": 12696,
+   "h": 256,
+   "kind": "icon",
+   "path": "icon/star_4.webp",
+   "sha256": "2083dd327f77c164",
+   "w": 256
+  }
+ },
+ "aliases": {
+  "icon:artifact:0:1": "icon/artifact_t0_1",
+  "icon:artifact:1:1": "icon/artifact_t1_1",
+  "icon:artifact:1:2": "icon/artifact_t1_2",
+  "icon:artifact:2:1": "icon/artifact_t2_1",
+  "icon:artifact:3:1": "icon/artifact_t3_1",
+  "icon:artifact:3:2": "icon/artifact_t3_2",
+  "icon:artifact:name:夜行の王冠": "icon/artifact_t3_1",
+  "icon:artifact:name:折れ刃の欠片": "icon/artifact_t1_2",
+  "icon:artifact:name:折れ剣の半身": "icon/artifact_t3_2",
+  "icon:artifact:name:百鬼の面": "icon/artifact_t2_1",
+  "icon:artifact:name:鉄環の短刀": "icon/artifact_t1_1",
+  "icon:artifact:name:鬼火の護符": "icon/artifact_t0_1",
+  "icon:condition:burn": "icon/cond_burn",
+  "icon:condition:chill": "icon/cond_chill",
+  "icon:condition:confuse": "icon/cond_confuse",
+  "icon:condition:poison": "icon/cond_poison",
+  "icon:condition:wound_arm": "icon/cond_wound_arm",
+  "icon:condition:wound_chest": "icon/cond_wound_chest",
+  "icon:condition:wound_head": "icon/cond_wound_head",
+  "icon:condition:wound_leg": "icon/cond_wound_leg",
+  "icon:item:arrow": "icon/item_arrow",
+  "icon:item:heal_pack": "icon/item_heal_pack",
+  "icon:item:mana_drop": "icon/item_mana_drop",
+  "icon:item:rope": "icon/item_rope",
+  "icon:item:star_flare": "icon/item_star_flare",
+  "icon:monster:gaki": "icon/mon_gaki",
+  "icon:monster:hitotsume": "icon/mon_hitotsume",
+  "icon:monster:hone_musha": "icon/mon_hone_musha",
+  "icon:monster:hone_yumi": "icon/mon_hone_yumi",
+  "icon:monster:hyakki_no_aruji": "icon/mon_hyakki_no_aruji",
+  "icon:monster:jorougumo": "icon/mon_jorougumo",
+  "icon:monster:oni_sho": "icon/mon_oni_sho",
+  "icon:monster:onibi": "icon/mon_onibi",
+  "icon:monster:yabusame": "icon/mon_yabusame",
+  "icon:skill:aogiri_shot": "icon/skill_aogiri_shot",
+  "icon:skill:gouka_no_jin": "icon/skill_gouka_no_jin",
+  "icon:skill:harai_no_kotoba": "icon/skill_harai_no_kotoba",
+  "icon:skill:hibachi_uchi": "icon/skill_hibachi_uchi",
+  "icon:skill:hone_kudaki": "icon/skill_hone_kudaki",
+  "icon:skill:hoshikuzu_giri": "icon/skill_hoshikuzu_giri",
+  "icon:skill:hoshiyomi_no_uranai": "icon/skill_hoshiyomi_no_uranai",
+  "icon:skill:hyousou_no_sho": "icon/skill_hyousou_no_sho",
+  "icon:skill:inori_no_tomoshibi": "icon/skill_inori_no_tomoshibi",
+  "icon:skill:kagaribi": "icon/skill_kagaribi",
+  "icon:skill:kagenui": "icon/skill_kagenui",
+  "icon:skill:kageotoshi": "icon/skill_kageotoshi",
+  "icon:skill:kekkai_no_fuda": "icon/skill_kekkai_no_fuda",
+  "icon:skill:meisou_no_me": "icon/skill_meisou_no_me",
+  "icon:skill:nagare_giri": "icon/skill_nagare_giri",
+  "icon:skill:okuribi": "icon/skill_okuribi",
+  "icon:skill:onibarai_no_tachi": "icon/skill_onibarai_no_tachi",
+  "icon:skill:onibi": "icon/skill_onibi",
+  "icon:skill:onigoke": "icon/skill_onigoke",
+  "icon:skill:sabi_no_ha": "icon/skill_sabi_no_ha",
+  "icon:skill:shuuzen": "icon/skill_shuuzen",
+  "icon:skill:soukou_no_kamae": "icon/skill_soukou_no_kamae",
+  "icon:skill:tate_nari": "icon/skill_tate_nari",
+  "icon:skill:yomi_no_kaeshi": "icon/skill_yomi_no_kaeshi",
+  "icon:star:1": "icon/star_1",
+  "icon:star:2": "icon/star_2",
+  "icon:star:3": "icon/star_3",
+  "icon:star:4": "icon/star_4"
+ }
+}
