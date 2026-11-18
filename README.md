@@ -1,96 +1,94 @@
-# TRPG Table Engine：人类玩家与 AI agent 同桌的跑团引擎
+**日本語** | [English](README.en.md) | [简体中文](README.zh-CN.md)
 
-> **One-line (EN):** A rules engine and game server for tabletop RPGs in which human players (web UI) and
-> LLM agents (via MCP tools) sit at the same table. The engine owns all dice and state, enforces per-seat
-> information firewalls, and records every change as an append-only, replayable event log.
+# TRPG Agent Table：人間と AI エージェントが同じ卓を囲む TRPG エンジン
 
-这是一个"多人在线跑团桌"的服务端与网页端。它要解决的核心问题是：**让 LLM agent 像人类玩家一样坐上同一张桌，
-同时又不能让它作弊、偷看别人的手牌，或者编造骰子结果。**
+オンライン TRPG 卓のサーバーと Web フロントエンドです。目指しているのは、**LLM エージェントを人間のプレイヤーと同じ卓に座らせつつ、
+ズル・他人の手札の盗み見・ダイス結果の捏造を構造的にできなくすること**です。
 
 ```
-human  ── 网页（GraphQL）──┐
-                           ├──►  server.py（唯一持有引擎）──► trpg/engine/（权威层：规则／骰子／事件）
-agent  ── MCP 工具 ────────┘                │
-                                            └─► runs/<session>/events.jsonl（append-only，可回放）
-"轮到你了" ◄── kick（出站 webhook，按账号唤醒 agent）
+human  ── Web（GraphQL）────┐
+                            ├──►  server.py（エンジンを持つ唯一のプロセス）──► trpg/engine/（権威層：ルール／ダイス／イベント）
+agent  ── MCP ツール ───────┘                │
+                                             └─► runs/<session>/events.jsonl（追記のみ・リプレイ可能）
+「あなたの番です」 ◄── kick（送信 webhook。アカウント単位でエージェントを起こす）
 ```
 
-## 设计上的三条硬规则
+## 設計の三原則
 
-1. **数值只由引擎产出**。骰子、HP、伤害、货币全部在 `server/trpg/engine/` 中计算。agent 只能"声明动作"
-   （`table_act`），没有任何写状态的通道。
-2. **信息防火墙**。`view()` 按席位投影：私密愿望、线索碎片、私信只有持有人看得到。GM 的叙述和 NPC 台词
-   走同一道**泄漏闸**，如果说出了别的席位的私密原文，引擎会直接拒绝。
-3. **一切可回放**。状态是事件流的折叠结果（event sourcing）。`op=replay` 会从头重放并与内存状态逐字段比对，
-   测试里大量用它当作不变式。
+1. **数値はエンジンだけが出す。** ダイス・HP・ダメージ・通貨はすべて `server/trpg/engine/` で計算します。
+   エージェントにできるのは「行動の宣言」（`table_act`）だけで、状態を書き換える経路はありません。
+2. **情報ファイアウォール。** `view()` は席ごとに状態を射影します。秘密の願望・手がかりの断片・私信は持ち主にしか見えません。
+   GM の語りと NPC の台詞は同じ**漏洩ゲート**を通り、他の席の秘密の原文を口にすればエンジンが拒否します。
+3. **すべてリプレイ可能。** 状態はイベント列の畳み込み（イベントソーシング）です。`op=replay` で最初から再生し、
+   メモリ上の状態とフィールド単位で突き合わせます。テストではこれを不変条件として多用しています。
 
-## 这份代码里比较值得看的部分
+## 見どころ
 
-| 主题 | 位置 | 说明 |
+| テーマ | 場所 | 内容 |
 |---|---|---|
-| 事件溯源与回放 | `server/trpg/core/replay.py`、`store.py` | 一局一个 `events.jsonl`；重启不丢局；replay 一致性是测试不变式 |
-| 投影与信息防火墙 | `server/trpg/engine/projection/` | 同一份状态按"谁在看"投影；观战面只给公开投影 |
-| MCP 适配层 | `server/trpg/api/mcp_api/`、`mcp_adapter.py` | 7 个工具（`table_view/act/say/tell/join/gm/secret`）；工具集随桌配置自适应 |
-| GraphQL 面 | `server/trpg/api/graphql/`、`docs/schema.graphql` | 唯一客户端端点；匿名只读（观战）按 query 做访问控制 |
-| 回合制与 agent 唤醒 | `server/trpg/service/wake/`、`trpg/kick/` | 按**账号**（而不是席位）唤醒 agent；幂等键去重；一次唤醒就给足上下文 |
-| 规则包三层叠加 | `server/trpg/rules/packs/`、`server/packs/README.md` | 引擎层 → 模组层 → 剧本层；内容（技能／道具／怪物／商店表）与机制分离 |
-| 剧本 DSL | `server/trpg/rules/dsl.py`、`expr.py`、`scenario/` | 愿望判据、触发器、结局都是 JSON AST，不写代码 |
-| 多桌单进程 hub | `server/trpg/api/hub/`、`docs/HUB.md` | 一个端口挂所有桌（子路径分桌），单点登录走遍各桌 |
-| agent 试玩工具 | `server/agent_harness/` | 让多个 agent 自动开局、统计每一手的分布（用来调剧本节奏） |
+| イベントソーシングとリプレイ | `server/trpg/core/replay.py`、`store.py` | 1 セッション 1 本の `events.jsonl`。再起動しても卓は失われず、リプレイ一致がテストの不変条件 |
+| 射影と情報ファイアウォール | `server/trpg/engine/projection/` | 同じ状態を「誰が見ているか」で射影。観戦面には公開射影のみ |
+| MCP アダプタ | `server/trpg/api/mcp_api/`、`mcp_adapter.py` | 7 ツール（`table_view/act/say/tell/join/gm/secret`）。卓の設定に応じてツール集合が変わる |
+| GraphQL | `server/trpg/api/graphql/`、`docs/schema.graphql` | クライアント向けの唯一のエンドポイント。匿名の読み取り（観戦）はクエリ単位でアクセス制御 |
+| ターン制とエージェントの起床 | `server/trpg/service/wake/`、`trpg/kick/` | 席ではなく**アカウント**単位で起こす。冪等キーで重複排除し、1 回の通知で必要な文脈を渡し切る |
+| ルールパックの三層構造 | `server/trpg/rules/packs/`、`server/packs/README.md` | エンジン層 → モジュール層 → シナリオ層。内容（スキル／アイテム／モンスター／ショップ表）と仕組みを分離 |
+| シナリオ DSL | `server/trpg/rules/dsl.py`、`expr.py`、`scenario/` | 願望の判定・トリガー・エンディングはすべて JSON AST。コードを書かずに作れる |
+| 単一プロセスの複数卓ハブ | `server/trpg/api/hub/`、`docs/HUB.md` | 1 ポートで全卓を配信（サブパスで卓を分ける）。一度のログインで全卓を回れる |
+| エージェント試遊ツール | `server/agent_harness/` | 複数のエージェントに自動で卓を回させ、手の分布を集計（シナリオのテンポ調整用） |
 
-## 规模
+## 規模
 
-- 引擎：约 **2.1 万行** Python（`server/trpg/`，按 core／engine／rules／api 分层）
-- 测试：**55 个测试文件，约 1.7 万行**，全部通过（包含真起 HTTP 服务、MCP 客户端、GraphQL 的端到端测试）
-- 前端：单文件、零构建（`frontend/web/index.html`，原生 JS，三语言，深浅色主题）
-- 依赖很少：标准库 + `vendor/` 中的 graphql-core / pg8000；MCP 端点需要官方 `mcp` SDK
+- エンジン：Python 約 **2.1 万行**（`server/trpg/`、core／engine／rules／api の層構造）
+- テスト：**55 ファイル・約 1.7 万行**、すべて成功（実 HTTP サーバー・MCP クライアント・GraphQL の E2E を含む）
+- フロントエンド：単一ファイル・ビルド不要（`frontend/web/index.html`、素の JS、3 言語、ライト／ダークテーマ）
+- 依存は最小限：標準ライブラリ ＋ `vendor/` の graphql-core / pg8000。MCP エンドポイントには公式 `mcp` SDK が必要
 
-## 目录
+## ディレクトリ構成
 
 ```
-server/              引擎与服务（Python）
-  trpg/                core（事件存储／回放）· engine（桌、投影、回合）· rules（规则机制）· api（GraphQL／MCP／hub）
-  packs/               引擎层机制包（d20core、board、death、wound…）
-  modules/hyakki_tower 示范模组「百鬼塔」（原创世界观：角色、地图、剧本、规则书包）
-  tests/               55 个测试文件；tools/run_tests.sh 是唯一入口
-  docs/                规格文档（API／AGENT／HUB／SCENARIO_FORMAT…）
-frontend/            网页端（单文件 index.html + lobby.html）＋本地假桌 mock_server
-scenario-template/   剧本作者用的模板、格式说明与自检工具（check_module.sh）
+server/              エンジンとサーバー（Python）
+  trpg/                core（イベント保存／リプレイ）· engine（卓・射影・ターン）· rules（ルール）· api（GraphQL／MCP／ハブ）
+  packs/               エンジン層の機制パック（d20core、board、death、wound…）
+  modules/hyakki_tower デモモジュール「百鬼塔」（オリジナル世界観：キャラ・マップ・シナリオ・ルールブック）
+  tests/               テスト 55 ファイル。入口は tools/run_tests.sh のみ
+  docs/                仕様書（API／AGENT／HUB／SCENARIO_FORMAT…）
+frontend/            Web フロント（単一の index.html ＋ lobby.html）＋ローカルのモック卓 mock_server
+scenario-template/   シナリオ作者向けのテンプレート・書式説明・セルフチェック（check_module.sh）
 ```
 
-## 跑起来
+## 動かし方
 
-需要 Python **3.10+**。
+Python **3.10 以上**が必要です。
 
 ```bash
 cd server
-TRPG_PY=python3.12 bash tools/run_tests.sh              # 全部测试
-TRPG_PY=python3.12 bash tools/run_tests.sh test_board   # 只跑一支（棋盘玩法的完整流程）
+TRPG_PY=python3.12 bash tools/run_tests.sh              # 全テスト
+TRPG_PY=python3.12 bash tools/run_tests.sh test_board   # 1 本だけ（盤面プレイの一連の流れ）
 ```
 
-部分测试会起本地 HTTP 服务（127.0.0.1 上的随机端口）。MCP 相关的断言需要官方 SDK：
-`pip install "mcp<2"`（没装时，那几条会明确报"mcp SDK 可用：失败"，其余测试照常跑）。
+一部のテストはローカルに HTTP サーバー（127.0.0.1 のランダムポート）を立てます。MCP 関連のアサーションには公式 SDK が必要です：
+`pip install "mcp<2"`（未インストールの場合、該当項目が「mcp SDK 可用」で失敗と明示され、他のテストは通常どおり走ります）。
 
-起一张单桌（开发模式）：
+卓を 1 つ起動する（開発モード）：
 
 ```bash
-cd server/modules/hyakki_tower/scenarios/sannenme_no_onibarai
-cp config.example.json config.json        # 填 auth.gm_token 等（config.json 不进版控）
-cd -  && python3 server.py --config modules/hyakki_tower/scenarios/sannenme_no_onibarai/config.json \
-                           --home   modules/hyakki_tower/scenarios/sannenme_no_onibarai --port 8971
-# agent 的 MCP 端点：http://127.0.0.1:8971/mcp
+cd server
+S=modules/hyakki_tower/scenarios/sannenme_no_onibarai
+cp $S/config.example.json $S/config.json      # auth.gm_token などを記入（config.json はバージョン管理外）
+python3 server.py --config $S/config.json --home $S --port 8971
+# エージェント用 MCP エンドポイント：http://127.0.0.1:8971/mcp
 ```
 
-更多起停方式见 `server/docs/RUN.md`，agent 接入见 `server/docs/AGENT.md`。
+起動・停止の詳細は `server/docs/RUN.md`、エージェントの接続方法は `server/docs/AGENT.md` を参照してください。
 
-## 关于示范内容
+## デモコンテンツについて
 
-`server/modules/hyakki_tower/`（百鬼塔）是**原创**世界观，角色、地图、剧本和数值都是本项目自己写的。
-素材图由本地生成模型产出，不进版控（仓库里只有素材清单 `assets/index*.json`）。
-`frontend/fixtures/` 是用这个模组在本机跑一小段示范对局后，用 `frontend/tools/grab_fixtures.py` 抓下来的快照。
+`server/modules/hyakki_tower/`（百鬼塔）は**オリジナル**の世界観で、キャラクター・マップ・シナリオ・数値はすべて本プロジェクトで作成したものです。
+素材画像はローカルの生成モデルで作っており、バージョン管理には含めていません（リポジトリにあるのは素材一覧 `assets/index*.json` のみ）。
+`frontend/fixtures/` は、このモジュールでローカルに短いデモセッションを回し、`frontend/tools/grab_fixtures.py` で取得したスナップショットです。
 
-## 已知限制
+## 既知の制限
 
-- `frontend/mock/mock_server.py`（假桌）只模拟旧的 REST 接口。前端已经改走 GraphQL 登录，所以假桌打开时会停在登录框；
-  要看完整页面需要接真桌（hub）。
-- 代码注释和文档以中文（繁／简）和日文为主。
+- `frontend/mock/mock_server.py`（モック卓）は旧 REST API しか模していません。フロントエンドは GraphQL ログインに移行済みのため、
+  モック卓ではログイン画面で止まります。画面全体を見るには実際の卓（ハブ）につなぐ必要があります。
+- コードのコメントとドキュメントは主に中国語（繁体／簡体）と日本語です。
